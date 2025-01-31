@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->Integer("id")-> autoIncrement();
             $table->Integer('roleId');
             $table->foreign('roleId')->references('id')->on('roles'); //Idegen kulcs    
             $table->Integer('groupId');
