@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->Integer("id") -> autoIncrement();
-            $table->string("role",25);
+            $table->string('poet',50 );
+            $table->string('title',15);
+            $table->Integer('groupId');
+            $table->foreign('groupId')->references('id')->on('groups');
             $table->timestamps();
-
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('books');
     }
 };

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->Integer("id") -> autoIncrement();
-            $table->string("class",10);
+            $table->string("group",10);
             $table->integer("teacherId") -> nullable();
             $table->timestamps();
         });
