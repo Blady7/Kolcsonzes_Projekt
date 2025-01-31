@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->Integer('roleId');
+            $table->foreign('roleId')->references('id')->on('roles'); //Idegen kulcs    
+            $table->Integer('groupId');
+            $table->foreign('groupId')->references('id')->on('groups'); //Idegen kulcs
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

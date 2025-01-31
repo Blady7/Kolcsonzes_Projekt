@@ -1,3 +1,39 @@
+# Parancok öszefoglaló
+- Laravel REST API projekt létrehozás
+    - `composer create-project laravel/laravel laravel-iskola`
+    - `php artisan install:api`
+
+- Adatbázis létrehozás konfigurálás
+```sql
+CREATE DATABASE `laravel-iskola`
+	CHARACTER SET utf8
+	COLLATE utf8_hungarian_ci;
+```
+**.env**
+```.env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel-iskola
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+- **Szerver indít**:  `php artisan serve`
+
+- Egy tábla (Diak) CRUD létrehozás
+    - **API generálás**: `php artisan make:model Diak -a --api` -
+    - **Migráló parancs**: `php artisan migrate`
+        -   Ellenőrzés, esetleges vissazvonás, javítás
+        -   Legutóbbi migráció visszavonása: `php artisan migrate:rollback`
+        -   Legutóbbi három migráció visszavonása: `php artisan migrate:rollback --steps=3`
+        -   Adott migrációs fájl visszavonása: `php artisan migrate:rollback create_sportok_table`
+        -   Az összes eddigi tábla törlése és a migrációk újrafuttatása: `php artisan migrate:refresh`
+    -   Migrációk lekérdezése: `php artisan migrate:status`
+- Seeder futtatás:  `php artisan db:seed`
+
+- Controller létrehozása: `php artisan make:controller UserController`
+
 # Laravel projekt létrehozás
 
 -   `composer create-project laravel/laravel laravel-iskola`
@@ -110,6 +146,68 @@ public function up(): void
     -   Az összes eddigi tábla törlése és a migrációk újrafuttatása: `php artisan migrate:refresh`
 -   Migrációk lekérdezése: `php artisan migrate:status`
 
+
+
+### Diákok tábla módosítása (migrációval)
+1. **új mező** utólag (hozzárakunk egy akarmi nevű string mezőt)
+Hozzunk létre egy új migrációs fájlt: php artisan `php artisan make:migration add_akarmi_to_diakok --table=diakok`
+- Létrejön az új migrációs fájl: **2024_11_17_155401_add_akarmi_to_diakok.php**
+- Figyeljük meg, hogy most az up metódusban **create** helyett **table** van!
+```php
+public function up(): void
+{
+    Schema::table('diakok', function (Blueprint $table) {
+        $table->string('akarmi', 50)->nullable(true);
+    });
+}
+```
+- Migráljunk: - `php artisan migrate`
+
+2. **mező átnevezés**
+- Átnevezés: **akarmi** -> **akarmiUj** névre
+- Új migrációs fájl: `php artisan make:migration rename_akarmi_to_diakok --table=diakok`
+- Új fájl: **2024_11_17_160536_rename_akarmi_to_diakok.php**
+```php
+    public function up(): void
+    {
+        Schema::table('diakok', function (Blueprint $table) {
+            $table->renameColumn('akarmi', 'akarmiUj');
+        });
+    }
+```
+- Migráljunk: - `php artisan migrate`
+
+3. mező **tulajdonság megváltoztatása**
+- Mezőhossz: **akarmi** 50 -> 75
+- Új migrációs fájl: `php artisan make:migration resize_akarmi_to_diakok --table=diakok`
+- Új fájl: **2024_11_17_160536_resize_akarmi_to_diakok.php**
+```php
+    public function up(): void
+    {
+        Schema::table('diakok', function (Blueprint $table) {
+            $table->string('akarmiUj', 75)->change();
+        });
+    }
+```
+- Migráljunk: - `php artisan migrate`
+
+4. mező törlése
+- Mező törlése: **akarmi**
+- Új migrációs fájl: `php artisan make:migration delete_akarmi_to_diakok --table=diakok`
+- Új fájl: **2024_11_17_160536_resize_akarmi_to_diakok.php**
+```php
+    public function up(): void
+    {
+        Schema::table('diakok', function (Blueprint $table) {
+            $table->dropColumn('akarmiUj');
+        });
+    }
+```
+- Migráljunk: - `php artisan migrate`
+
+
+
+
 ## Model konfigurálás
 
 Helye: **app\Models\Sport.php**
@@ -150,70 +248,104 @@ class Diak extends Model
 Helye: **app\Http\Controllers\DiakController.php**
 
 ```php
-    public function index()
-    {
-        $rows = Diak::all();
-        // $rows = Diak::orderBy('nev', 'asc')->get();
-        return response()->json(['rows' => $rows],
-            options: JSON_UNESCAPED_UNICODE);
-    }
+public function index()
+{
+    $rows = Diak::all();
+    // $rows = Diak::orderBy('nev', 'asc')->get();
+    $data = [
+        'message' => 'ok',
+        'data' => $rows
+    ];
+    return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+}
 
-    public function store(StoreDiakRequest $request)
-    {
+public function store(StoreDiakRequest $request)
+{
+    try {
         $row = Diak::create($request->all());
-        return response()->json(['row' => $row], 
-            options: JSON_UNESCAPED_UNICODE);
+        $data = [
+            'message' => 'ok',
+            'data' => $row
+        ];
+    } catch (\Illuminate\Database\QueryException $e) {
+        $data = [
+            'message' => 'The post failed',
+            'data' => $request->all()
+        ];
     }
 
-    public function show(int $id)
-    {
-        $row = Diak::find($id);
-        if ($row) {
-            $data = ['row' => $row];
-        } else {
-            $data = [
-                'message' => 'Not found',
+    return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+}
+
+public function show(int $id)
+{
+    $row = Diak::find($id);
+    if ($row) {
+        $data = [
+            'message' => 'ok',
+            'data' => $row
+        ];
+    } else {
+        $data = [
+            'message' => 'Not found',
+            'data' => [
                 'id' => $id
-            ];
-        }
-        return response()->json($data, 
-            options: JSON_UNESCAPED_UNICODE);
+            ]
+        ];
     }
+    return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+}
 
-    public function update(UpdateDiakRequest $request,  $id)
-    {
-        $row = Diak::find($id);
-        if ($row) {
+public function update(UpdateDiakRequest $request,  $id)
+{
+    $row = Diak::find($id);
+    if ($row) {
+
+        try {
             $row->update($request->all());
-            $data = ['row' => $row];
-        } else {
             $data = [
-                'message' => 'Not found',
-                'id' => $id
+                'message' => 'ok',
+                'data' => $row
+            ];
+        } catch (\Illuminate\Database\QueryException $e) {
+            $data = [
+                'message' => 'The patch failed',
+                'data' => $request->all()
             ];
         }
-        return response()->json($data, 
-            options: JSON_UNESCAPED_UNICODE);
-    }
 
-    public function destroy(int $id)
-    {
-        $row = Diak::find($id);
-        if ($row) {
-            $row->delete();
-            $data = [
-                'message' => 'Deleted successfully',
+    } else {
+        $data = [
+            'message' => 'Not found',
+            'data' => [
                 'id' => $id
-            ];
-        } else {
-            $data = [
-                'message' => 'Not found',
-                'id' => $id
-            ];
-        }
-        return response()->json($data,
-            options: JSON_UNESCAPED_UNICODE);
+            ]
+        ];
     }
+    return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+}
+
+public function destroy(int $id)
+{
+    $row = Diak::find($id);
+    if ($row) {
+        $row->delete();
+        $data = [
+            'message' => 'ok',
+            'data' => [
+                'id' => $id
+            ]
+        ];
+    } else {
+        $data = [
+            'message' => 'Not found',
+            'data' => [
+                'id' => $id
+            ]
+        ];
+    }
+    return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+}
 ```
 
 
@@ -290,9 +422,10 @@ Route::apiResource('diaks', DiakController::class);
 
 # Teszt adatok
 
-A külső táblákat érdemes teszt adatokkal feltölteni
+A táblákat érdemes teszt adatokkal feltölteni
 
-## Például sport tábla feltöltése
+## Adatok generálása tömbből
+Például sport tábla feltöltése
 
 1. **database/seeders/SportSeeder.php**
 
@@ -316,7 +449,7 @@ public function run(): void
     }
 }
 ```
-
+## Adatok generálása csv fájlból
 csv fájlból is beolvashatunk (Ez egy osztály beolvasása):
 
 ```csv
@@ -330,20 +463,10 @@ csv fájlból is beolvashatunk (Ez egy osztály beolvasása):
 8;2.d
 ```
 
+**database/seeders/SportSeeder.php**
 ```php
 public function run(): void
 {
-    // $data = [
-    //     ['id' => 1, 'osztalyNev' => '1.a'],
-    //     ['id' => 2, 'osztalyNev' => '1.b'],
-    //     ['id' => 3, 'osztalyNev' => '1.c'],
-    //     ['id' => 4, 'osztalyNev' => '1.d'],
-    //     ['id' => 5, 'osztalyNev' => '2.a'],
-    //     ['id' => 6, 'osztalyNev' => '2.b'],
-    //     ['id' => 7, 'osztalyNev' => '2.c'],
-    //     ['id' => 8, 'osztalyNev' => '2.d'],
-    // ];
-
     //A laravel az app/database mappát veszi alapnak
     $filePath = database_path('csv/osztalies.csv');
 
@@ -365,45 +488,475 @@ public function run(): void
 }
 ```
 
+## Véletlen teszt adatok generálás
+Egy tesztgeneráló composer csomag: [Fakerphp](https://fakerphp.org/)
+A legjobb módszer Teszt adatbázis létrehozására.
+1. Factory osztályokban (**database/factories** mappa) definiáljuk a véletlen módszereket.
+    - A véletlen adatgenerálást
+        - fake() függvényekkel vagy 
+        - faker-el hozhatjuk létre
+**database/factories/DiakFactory.php**
 ```php
-public function run(): void
+public function definition(): array
 {
-    $filePath = database_path('csv\osztalies.csv');
+    //Faker objektum létrehozás adott nyelven
+    $faker = Faker::create('hu_HU');
 
-    // Adatok beolvasása a CSV fájlból
-    $data = [];
-    if (($handle = fopen($filePath, "r")) !== FALSE) {
-        while (($row = fgetcsv($handle, 1000, ";")) !== FALSE) {
-            $data[] = [
-                'id' => $row[0],
-                'osztalyNev' => $row[1],
-            ];
-        }
-        fclose($handle);
+    //Dátum generálás
+    $minDate = '2010-01-01';
+    $maxDate = '2015-12-31';
+    $randomDate = fake()->date('Y-m-d', $maxDate);
+
+    // Ha a generált dátum kisebb, mint a minimális dátum, akkor újra generálunk
+    while ($randomDate < $minDate) {
+        $randomDate = fake()->date('Y-m-d', $maxDate);
     }
 
-    if (Osztaly::count() === 0) {
-        Osztaly::factory()->createMany($data);
+    //Neme generálás
+    $neme = fake()->boolean;
+    
+    //Megfelelő nemű név generálása Faker-el
+    if ($neme) {
+        //férfi
+        $nev =$faker->lastName(). " ". $faker->firstNameMale();
+    } else {
+        //nő
+        $nev =$faker->lastName(). " ". $faker->firstNameFemale();
+    }
+    
+    //Véletlen oszályId kiolvasása az ostalies táblából
+    $osztalyId = Osztaly::inRandomOrder()->first()->id;
+
+    return [
+        'nev' => $nev,
+        'neme' => $neme,
+        'osztalyId' => $osztalyId,
+        'szuletett' => $randomDate,
+        // 'helyseg' => VeletlenClass::randomVaros(),
+        'helyseg' =>  $faker->city(),
+        'osztondij' => fake()->numberBetween(5000, 7000),
+        'atlag' => fake()->randomFloat(1, 1, 5)
+    ];
+}
+
+```
+
+**database/factories/SportolasFactory.php**
+```php
+public function definition(): array
+{
+    //Az összetett kulcsnak együtt kell egyedinek lenni
+    //Olyan diák és sport párt keresünk, ami még nem volt
+    do {
+        $diakokId = Diak::inRandomOrder()->first()->id;
+        $sportokId = Sport::inRandomOrder()->first()->id;
+    } while (Sportolas::where('diakokId', $diakokId)->where('sportokId', $sportokId)->exists());
+
+
+    return [
+        'diakokId' => $diakokId,
+        'sportokId' => $sportokId,
+    ];
+}
+```
+**database/factories/SportolasFactory.php**
+```php
+class UserFactory extends Factory
+{
+    // A változó sztring, de lehet null
+    protected static ?string $password;
+
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            //Ha üres a $password statikus változó, akkor belegenerálódik egy Has-elt jelszó
+            'password' => static::$password ??= Hash::make('password'),
+            'remember_token' => Str::random(10),
+        ];
+    }
+
+    /**
+     * Indicate that the model's email address should be unverified.
+     */
+    public function unverified(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email_verified_at' => null,
+        ]);
     }
 }
 ```
 
+
+
+
+
+## A táblák Seedereinek egybefoglalása
+A `php artisan db:seed` paranccsal a **database/seeders/DatabaseSeeder.php** run() metódusa fut le.
+Ide teszük be megfelelő sorrendbe a seeder osztályainkat
 2. **database/seeders/DatabaseSeeder.php**
 
 ```php
 public function run(): void
 {
+    //A táblák törlése
+    DB::statement('DELETE FROM sportolas');
     DB::statement('DELETE FROM diaks');
     DB::statement('DELETE FROM osztalies');
     DB::statement('DELETE FROM sports');
 
+    //A táblák seeder osztályi run() metódusainak futtatása call paranccsal
+    //Elég megadni az osztályt, lefut a run() metódus
     $this->call([
+        UserSeeder::class,
         SportSeeder::class,
         OsztalySeeder::class,
         DiakSeeder::class,
+        SportolasSeeder::class,
         // ... (más seederek)
     ]);
 }
 ```
 
+## Seederek futtatása
 3. seederek futtatása: `php artisan db:seed`
+
+
+
+# Hitelesítés
+Alapban létre van hozva egy 
+    - User tábla
+    - User model
+    - User migráció
+    - User seeder a DatabaseSeeder.php-ban
+
+## User seeder
+Létre kell hoznunk egy usert a seederrel: 
+**UserSeeder.php**:
+```php
+public function run(): void
+{
+    if (User::count() === 0) {
+        # code...
+        User::factory()->create([
+            'name' => 'test',
+            'email' => 'test@example.com',
+            'password' => '123',
+        ]);
+    }
+}
+```
+- Lefuttatjuk a seeder-t: `php artisan db:seed` és létrejön egy user
+
+## User model
+User model: User.php
+```php
+protected $fillable = [
+    'name',
+    'email',
+    'password',
+];
+
+protected $hidden = [
+    'password',
+    'remember_token',
+    'email_verified_at',
+    'created_at',
+    'updated_at',    ];
+
+protected function casts(): array
+{
+    return [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+}
+```
+
+## Users controller
+- Készítünk egy konrollert: `php artisan make:controller UsersController`
+**UsersControllers.php**
+```php
+public function login(LoginUsersRequest $request)
+{
+    //Eltároljuk az adatokat változókba
+    $email = $request->input(('email'));
+    $password = $request->input(('password'));
+
+    //Az email alapján megkeressük a usert
+    $user = User::where('email', $email)->first();
+
+    //Stimmel-e az email és a jelszó?
+    if (!$user || !Hash::check($password, $password ? $user->password : '')) {
+        return response()->json([
+            'message' => 'invalid email or password'
+        ], 401);
+    }
+
+    //Jó az email és a jelszó
+    //Kitöröljük az esetleges tokenjeit
+    //$user->tokens()->delete();
+
+    //itt adjuk az új tokent
+    $user->token = $user->createToken('access')->plainTextToken;
+
+    //visszaadjuk a usert, ami a tokent is tartalmazni fogja
+    return response()->json([
+        'user' => $user
+    ]);
+}
+
+public function logout(Request $request)
+{
+    // Megkeresi a tokent és törli ---------------------
+    $token = $request->bearerToken(); // Kivonjuk a bearer tokent a kérésből
+
+    // Megkeressük a token modellt
+    $personalAccessToken = PersonalAccessToken::findToken($token);
+
+    if ($personalAccessToken) {
+        $personalAccessToken->delete();
+        return response()->json(['message' => 'Successfully logged out']);
+    } else {
+        return response()->json(['message' => 'Token not found'], 404);
+    }
+}
+
+//Visszaadja a usereket
+public function index()
+{
+    $rows = User::all();
+    return response()->json(['rows' => $rows], options: JSON_UNESCAPED_UNICODE);
+}
+
+public function store(StoreUsersRequest $request)
+{
+    $row = User::create($request->all());
+    return response()->json(['row' => $row], options: JSON_UNESCAPED_UNICODE);
+}
+
+public function show(int $id)
+{
+    $row = User::find($id);
+
+    if ($row) {
+        $data = ['row' => $row];
+    } else {
+        $data = [
+            'message' => 'Not found',
+            'id' => $id
+        ];
+    }
+    return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+}
+
+public function update(UpdateUsersRequest $request,  $id)
+{
+    $row = User::find($id);
+    if ($row) {
+        $row->update($request->all());
+        $data = ['row' => $row];
+    } else {
+        $data = [
+            'message' => 'Not found',
+            'id' => $id
+        ];
+    }
+    return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+}
+
+public function destroy(int $id)
+{
+    $row = User::find($id);
+    if ($row) {
+        $row->delete();
+        $data = [
+            'message' => 'Deleted successfully',
+            'id' => $id
+        ];
+    } else {
+        $data = [
+            'message' => 'Not found',
+            'id' => $id
+        ];
+    }
+    return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+}
+```
+## User validátorok
+
+**Requests/LoginUsersRequest.php**
+```php
+public function rules(): array
+{
+    return [
+        'email' => 'required|email',
+        'password' => 'required',
+    ];
+}
+```
+
+**Requests/StoreUsersRequest.php**
+```php
+public function rules(): array
+{
+    return [
+        'name' => 'required|string',
+        'email' => 'required|email',
+        'password' => 'required',
+    ];
+}
+```
+
+**Requests/UpdateUsersRequest.php**
+```php
+public function rules(): array
+{
+    return [
+        'name' => 'nullable|string',
+        'email' => 'nullable|email',
+        'password' => 'nullable',
+    ];
+}
+```
+
+
+## Users endpoint 
+**route/api.php**
+```php 
+Route::post('users/login', [UsersController::class, 'login']);
+Route::post('users/logout', [UsersController::class, 'logout']);
+Route::get('users', [UsersController::class, 'index'])
+    ->middleware('auth:sanctum');
+Route::get('users/{id}', [UsersController::class, 'show'])
+    ->middleware('auth:sanctum');
+Route::post('users', [UsersController::class, 'store'])
+    ->middleware('auth:sanctum');    
+Route::patch('users/{id}', [UsersController::class, 'update'])
+    ->middleware('auth:sanctum');    
+Route::delete('users/{id}', [UsersController::class, 'destroy'])
+    ->middleware('auth:sanctum');
+```
+
+
+## Token élettatam beállítás
+**app/config/sanctum.php**
+```php
+'expiration' => null,
+//Token élettartam percben
+//'expiration' => 1,
+
+```
+
+
+## request.rest
+```rest
+### változók
+@protocol = http://
+@hostname = localhost
+@port = 8000
+@host = {{protocol}}{{hostname}}:{{port}}
+
+# ------------- login, user -------------
+### login
+# @name login
+POST {{host}}/api/users/login 
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "123"
+}
+
+###
+@token = {{login.response.body.user.token}}
+
+### get users
+GET  {{host}}/api/users
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### get user by id
+GET  {{host}}/api/users/4
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### post user
+POST {{host}}/api/users 
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name":  "test2",
+    "email": "test2@example.com",
+    "password": "123"
+}
+
+### patch user
+PATCH {{host}}/api/users/5
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "password": "1234"
+}
+
+### delete user
+DELETE {{host}}/api/users/4
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+# ------------- /login, user -------------
+
+```
+
+## Toenek törlése az adatbázisból
+`php artisan passport:purge`
+
+# Cors kezelés
+[cors (gemini)](https://g.co/gemini/share/477e6307e707)
+A CORS egy olyan biztonsági mechanizmus, amely lehetővé teszi, hogy különböző domain-ekről származó weboldalak egymás erőforrásait hozzáférjék. Ez azért fontos, mert a böngészők alapértelmezett beállítása szerint csak az azonos domainről származó kéréseket engedélyezik. 
+Ha ezt nem állítanánk be, a kliens oldal nem férne hozzá az API erőforrásaihoz.
+A cors beállítások a http kérésre adott válasz fejlécében érkeznek, és ennek alapján befolyásolja a böngésző működését.
+
+- A cors beállítás létrehozása: `php artisan config:publish cors`
+- Létrejön egy **app/config/cors.php** fájl. Itt állíthatjuk be, hogy milyen **metódusokat**, illetve milyen **doménról** szolgálhat ki az API
+
+```php
+return [
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+
+    // 'allowed_methods' => ['*'],
+    'allowed_methods' => ['OPTIONS','GET','POST','PATCH','DELETE'],
+
+    //*: Ez a beállítás engedélyezi a CORS-t bármely domainről érkező kérésekhez.
+    //A valóságban itt egy adott (egy-vagy több) domaint engedélyezünk.
+    'allowed_origins' => ['*'],
+
+    'allowed_origins_patterns' => [],
+
+    //Mely fejlécek engedélyezettek a kérésekben
+    'allowed_headers' => ['*'],
+
+    'exposed_headers' => [],
+
+    'max_age' => 0,
+
+    'supports_credentials' => false,
+];    
+```
+
+# Helper fájlok
+Elhelyezés: app/Helpers mappában.
+Használat: A helpers.php fájlban definiált függvényeket bárhonnan meghívhatod az alkalmazásban.
+Regisztrálás: A config/app.php fájlban az aliases tömbben kell regisztrálni a helper fájlt.
+
+
+# $phpFaker
+[phpFaker](https://fakerphp.org/locales/hu_HU/#fakerproviderhu_huaddress)
