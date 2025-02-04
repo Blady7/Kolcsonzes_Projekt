@@ -1,8 +1,21 @@
-# *Documentation*
+# Feladat leírása
 
-## *Feladat leírása*
+A feladat, egy online kötelező olvasmány kölcsönzés adminisztrálásáról szól. A  a tanárok évfolmyanonként előírják hogy milyen könyvet kell a diákonak elovasniuk azokat kikölcsönzik és az elovasás után olvasónaplót kell készíteniük. A rendszer nyomom követi hogy ki mit kölcsönzött ki és milyen kötelező olvasmáynok vannak előírva évfolyamonként.
+## Szerepkörök
+- Admin: 
+    - Tanárok, diákok regisztrálása (személyesen kell regisztrálni a könyvtárban mint a tanároknak és diákoknak).
+    - Kölcsönzés adminisztrációja.
+- Tanár: 
+    - Meghatározza hogy évfolyamonként milyen kötelező olvasmányok vannak előírva.
+    - Le tudja osztályozni az elkészült olvasónaplót.
+- Diák: Kikölcsönzi a megfelelő könyveket és elkészíti az olvasmány naplót.
 
-A feladat, egy online könyv kölcsönzésről szól diákoknak és tanároknak. Lehetőséget ad a tanulóknak, hogy a tanárok által előírt könyvet kikölcsönözzék és véleményt adjanak róla, amit a tanárok értékelnek. Emellett a tanárok megtudják változtatni évfolyamonként a kötelező olvasmányt és a határidőt is tudják csúsztatni.
+
+## Technológia
+
+## Csapat tagjai
+
+# Adatbázis
 
 ## *Table*
 
