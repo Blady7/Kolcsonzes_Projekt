@@ -55,7 +55,7 @@
             </CustomProperties>
             <Location>
               <X>-200 px</X>
-              <Y>-340 px</Y>
+              <Y>-310 px</Y>
             </Location>
             <Size>
               <Width>194 px</Width>
@@ -77,8 +77,8 @@
               <Parent>0</Parent>
             </CustomProperties>
             <Location>
-              <X>-470 px</X>
-              <Y>-300 px</Y>
+              <X>-500 px</X>
+              <Y>-350 px</Y>
             </Location>
             <Size>
               <Width>194 px</Width>
@@ -133,11 +133,11 @@
             <BendPoints>
               <PointD>
                 <X>-220 px</X>
-                <Y>-251 px</Y>
+                <Y>-221 px</Y>
               </PointD>
               <PointD>
                 <X>-220 px</X>
-                <Y>-266 px</Y>
+                <Y>-316 px</Y>
               </PointD>
             </BendPoints>
             <IsManuallyRouted>false</IsManuallyRouted>
@@ -156,8 +156,8 @@
             <PortAnchors>
               <Port xsi:type="LinkPort">
                 <Location>
-                  <X>48 px</X>
-                  <Y>15 px</Y>
+                  <X>20 px</X>
+                  <Y>47.5 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Left</Align>
@@ -179,8 +179,8 @@
               <Parent>0</Parent>
             </CustomProperties>
             <Location>
-              <X>80 px</X>
-              <Y>-180 px</Y>
+              <X>50 px</X>
+              <Y>-170 px</Y>
             </Location>
             <Size>
               <Width>199 px</Width>
@@ -203,7 +203,7 @@
             </CustomProperties>
             <Location>
               <X>50 px</X>
-              <Y>-360 px</Y>
+              <Y>-350 px</Y>
             </Location>
             <Size>
               <Width>217 px</Width>
@@ -258,11 +258,11 @@
             <BendPoints>
               <PointD>
                 <X>20 px</X>
-                <Y>-287 px</Y>
+                <Y>-277 px</Y>
               </PointD>
               <PointD>
                 <X>20 px</X>
-                <Y>-305 px</Y>
+                <Y>-275 px</Y>
               </PointD>
             </BendPoints>
             <IsManuallyRouted>false</IsManuallyRouted>
@@ -281,8 +281,8 @@
             <PortAnchors>
               <Port xsi:type="LinkPort">
                 <Location>
-                  <X>30 px</X>
-                  <Y>9 px</Y>
+                  <X>15 px</X>
+                  <Y>0 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Left</Align>
@@ -304,8 +304,8 @@
               <Parent>0</Parent>
             </CustomProperties>
             <Location>
-              <X>-170 px</X>
-              <Y>-180 px</Y>
+              <X>-200 px</X>
+              <Y>-150 px</Y>
             </Location>
             <Size>
               <Width>194 px</Width>
@@ -327,7 +327,7 @@
               <Parent>0</Parent>
             </CustomProperties>
             <Location>
-              <X>-480 px</X>
+              <X>-500 px</X>
               <Y>-160 px</Y>
             </Location>
             <Size>
@@ -387,7 +387,7 @@
               </PointD>
               <PointD>
                 <X>-519 px</X>
-                <Y>-263 px</Y>
+                <Y>-313 px</Y>
               </PointD>
             </BendPoints>
             <IsManuallyRouted>false</IsManuallyRouted>
@@ -406,8 +406,8 @@
             <PortAnchors>
               <Port xsi:type="LinkPort">
                 <Location>
-                  <X>39 px</X>
-                  <Y>87.5 px</Y>
+                  <X>19 px</X>
+                  <Y>112.5 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Left</Align>
@@ -466,7 +466,7 @@
               </PointD>
               <PointD>
                 <X>-222 px</X>
-                <Y>-80 px</Y>
+                <Y>-50 px</Y>
               </PointD>
             </BendPoints>
             <IsManuallyRouted>false</IsManuallyRouted>
@@ -485,8 +485,8 @@
             <PortAnchors>
               <Port xsi:type="LinkPort">
                 <Location>
-                  <X>-30 px</X>
-                  <Y>-35 px</Y>
+                  <X>-50 px</X>
+                  <Y>-50 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Right</Align>
@@ -541,7 +541,7 @@
             <BendPoints>
               <PointD>
                 <X>-510 px</X>
-                <Y>-225 px</Y>
+                <Y>-275 px</Y>
               </PointD>
               <PointD>
                 <X>-510 px</X>
@@ -564,8 +564,8 @@
             <PortAnchors>
               <Port xsi:type="LinkPort">
                 <Location>
-                  <X>40 px</X>
-                  <Y>-51 px</Y>
+                  <X>10 px</X>
+                  <Y>-76 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Left</Align>
@@ -587,8 +587,8 @@
               <Parent>0</Parent>
             </CustomProperties>
             <Location>
-              <X>-210 px</X>
-              <Y>-10 px</Y>
+              <X>-220 px</X>
+              <Y>0 px</Y>
             </Location>
             <Size>
               <Width>217 px</Width>
@@ -617,11 +617,11 @@
             <PortAnchors>
               <Port>
                 <Location>
-                  <X>217 px</X>
-                  <Y>54 px</Y>
+                  <X>0 px</X>
+                  <Y>55 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
-                <Align>Right</Align>
+                <Align>Left</Align>
                 <CustomProperties>
                   <OID>35</OID>
                   <PortType>FixedAnchor</PortType>
@@ -642,12 +642,12 @@
             </PortAnchors>
             <BendPoints>
               <PointD>
-                <X>-230 px</X>
-                <Y>44 px</Y>
+                <X>-240 px</X>
+                <Y>55 px</Y>
               </PointD>
               <PointD>
-                <X>-230 px</X>
-                <Y>-306 px</Y>
+                <X>-240 px</X>
+                <Y>-276 px</Y>
               </PointD>
             </BendPoints>
             <IsManuallyRouted>true</IsManuallyRouted>
@@ -666,8 +666,8 @@
             <PortAnchors>
               <Port xsi:type="LinkPort">
                 <Location>
-                  <X>237 px</X>
-                  <Y>175 px</Y>
+                  <X>20 px</X>
+                  <Y>165.5 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Left</Align>
@@ -721,12 +721,12 @@
             </PortAnchors>
             <BendPoints>
               <PointD>
-                <X>60 px</X>
-                <Y>-124 px</Y>
+                <X>30 px</X>
+                <Y>-114 px</Y>
               </PointD>
               <PointD>
-                <X>60 px</X>
-                <Y>20 px</Y>
+                <X>30 px</X>
+                <Y>30 px</Y>
               </PointD>
             </BendPoints>
             <IsManuallyRouted>false</IsManuallyRouted>

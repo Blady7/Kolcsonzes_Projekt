@@ -1,10 +1,10 @@
-# Documantacion
+# *Documentation*
 
-## Feladat leírása
+## *Feladat leírása*
 
 A feladat, egy online könyv kölcsönzésről szól diákoknak és tanároknak. Lehetőséget ad a tanulóknak, hogy a tanárok által előírt könyvet kikölcsönözzék és véleményt adjanak róla, amit a tanárok értékelnek. Emellett a tanárok megtudják változtatni évfolyamonként a kötelező olvasmányt és a határidőt is tudják csúsztatni.
 
-## Table
+## *Table*
 
 - Books (Muvek)
     - id: A művek azonosítója.
@@ -47,6 +47,6 @@ A feladat, egy online könyv kölcsönzésről szól diákoknak és tanároknak.
     - role (szerepkor): A felhasználó jogosultságait meghatározó megnevezés.
 
 
-## Diagram
+## *Diagram*
 
 ![diagram](Kép.png)
