@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('specimens', function (Blueprint $table) {
-            $table->Integer("id") -> autoIncrement();
+        Schema::create('readingdiaries', function (Blueprint $table) {
+            $table->id();
+            $table->string('studentOpinion',250);
             $table->Integer('bookId');
             $table->foreign('bookId')->references('id')->on('books');
-            $table->Integer("price");
-            $table->date('acquisitionDate')->nullable();
-            $table->date('acquisitionDate')->change();
+            $table->Integer("grade");
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('specimens');
+        Schema::dropIfExists('readingdiaries');
     }
 };

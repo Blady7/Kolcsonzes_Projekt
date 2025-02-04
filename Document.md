@@ -1,5 +1,9 @@
 # Documantacion
 
+## Feladat leírása
+
+A feladat, egy online könyv kölcsönzésről szól diákoknak és tanároknak. Lehetőséget ad a tanulóknak, hogy a tanárok által előírt könyvet kikölcsönözzék és véleményt adjanak róla, amit a tanárok értékelnek. Emellett a tanárok megtudják változtatni évfolyamonként a kötelező olvasmányt és a határidőt is tudják csúsztatni.
+
 ## Table
 
 - Books (Muvek)
@@ -45,4 +49,4 @@
 
 ## Diagram
 
-![diagram](mappa neve)
+![diagram](Kép.png)

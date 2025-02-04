@@ -12,9 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rentals', function (Blueprint $table) {
-            $table->Integer("id") -> autoIncrement();
+            $table->Integer("id")->autoIncrement();
             $table->Integer('specimenId');
             $table->foreign('specimenId')->references('id')->on('specimens');
+            $table->Integer('studentId');
+            $table->date('startindDate');
+            $table->date('endingDate');
+            $table->date('startingDate')->change();
+            $table->date('endingDate')->change();
             $table->timestamps();
         });
     }
