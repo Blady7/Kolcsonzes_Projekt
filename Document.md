@@ -15,6 +15,10 @@ A feladat, egy online kötelező olvasmány kölcsönzés adminisztrálásáról
 
 ## Csapat tagjai
 
+- Oláh Péter
+    
+- Nagy Ferenc
+
 # Adatbázis
 
 ## *Table*
