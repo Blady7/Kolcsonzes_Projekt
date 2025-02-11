@@ -1,0 +1,5 @@
+az	nev	evfolyam
+1	Orsós Erzsébet	9
+2	Nikk András	10
+3	Gyulainé Bangó Edit	11
+4	Oláh Ferenc	12
