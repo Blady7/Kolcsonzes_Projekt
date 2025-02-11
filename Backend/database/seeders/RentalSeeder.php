@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Rental;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,26 @@ class RentalSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $filePath = database_path('txt\osztalies.txt');
+
+        // Adatok beolvasása a TXT fájlból
+        $data = [];
+        if (($handle = fopen($filePath, "r")) !== FALSE) {
+            while (($line = fgets($handle)) !== FALSE) {
+                $row = explode(" ", trim($line));  // Elválasztás szóközzel
+                $data[] = [
+                    'id' => $row[0],
+                    'specimenId' => $row[1],
+                    'studentId' => $row[2],
+                    'startindDate' => $row[3],
+                    'endingDate' => $row[4],
+                ];
+            }
+            fclose($handle);
+        }
+
+        if (Rental::count() === 0) {
+            Rental::factory()->createMany($data);
+        }
     }
 }
