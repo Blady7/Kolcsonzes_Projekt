@@ -15,8 +15,8 @@ class UserController extends Controller
     public function login(LoginUsersRequest $request)
     {
         //Eltároljuk az adatokat változókba
-        $email = $request->input(('email'));
-        $password = $request->input(('password'));
+        $email = $request->input('email');
+        $password = $request->input('password');
 
         //Az email alapján megkeressük a usert
         $user = User::where('email', $email)->first();
@@ -45,7 +45,6 @@ class UserController extends Controller
         ];
         return response()
             ->json($data, options: JSON_UNESCAPED_UNICODE);
-
     }
 
     public function logout(Request $request)
@@ -74,7 +73,6 @@ class UserController extends Controller
                 'message' => 'ok',
                 'data' => []
             ];
-            
         } else {
             $data = [
                 'message' => 'Token not found',
@@ -105,7 +103,7 @@ class UserController extends Controller
     {
         $rows = User::where('email', $request['email'])
             ->get();
-        if (count($rows)!=0) {
+        if (count($rows) != 0) {
             # már van ilyen email
             $data = [
                 'message' => 'This email alredy exists',
@@ -121,8 +119,8 @@ class UserController extends Controller
                 'data' => $rows
             ];
         }
-                    
-        return response()->json($data, options:JSON_UNESCAPED_UNICODE);
+
+        return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
 
     public function show(int $id)
@@ -150,8 +148,8 @@ class UserController extends Controller
         $row = User::find($id);
         if ($row) {
             $rows = User::where('email', $request['email'])
-            ->get();
-            if (count($rows)!=0) {
+                ->get();
+            if (count($rows) != 0) {
                 # már van ilyen email
                 $data = [
                     'message' => 'This email alredy exists',
@@ -159,7 +157,7 @@ class UserController extends Controller
                         'email' => $request['email']
                     ]
                 ];
-            }else{
+            } else {
                 //nincs még ilyen email
                 $row->update($request->all());
                 $data = [
@@ -175,7 +173,7 @@ class UserController extends Controller
                 ]
             ];
         }
-        return response()->json($data, options:JSON_UNESCAPED_UNICODE);
+        return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
 
     public function destroy(int $id)
