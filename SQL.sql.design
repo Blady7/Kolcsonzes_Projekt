@@ -5,10 +5,17 @@
   <Properties>
     <Type>SQL Document Design</Type>
     <DatabaseProvider>59f90733-4d68-4fdf-82a7-f0fcbf5460aa</DatabaseProvider>
+<<<<<<< HEAD
     <ProviderVersion>8.2.23.0</ProviderVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </Properties>
   <Connection Name="localhost">
+=======
+    <ProviderVersion>8.1.22.0</ProviderVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+  </Properties>
+  <Connection Name="localhost1">
+>>>>>>> b57cf26232cee143db9a1e505dba867ad48cce36
     <Category>00000000-0000-0000-0000-000000000000</Category>
     <ConnectionString>User Id=root;Host=localhost;Character Set=utf8</ConnectionString>
     <Database>kolcsonzes</Database>
