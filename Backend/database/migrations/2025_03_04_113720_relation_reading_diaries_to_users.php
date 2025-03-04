@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('groups', function (Blueprint $table) {
-            $table->Integer("id") -> autoIncrement();
-            $table->string("group",10);
-            $table->integer("userId") -> nullable();
-            //$table->foreign('userId')->references('id')->on('users');
-            $table->timestamps();
+        Schema::table('readingDiaries', function (Blueprint $table) {
+            $table->foreign('userId')->references('id')->on('users');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('groups');
+        Schema::table('readingDiaries', function (Blueprint $table) {
+            //
+        });
     }
 };
