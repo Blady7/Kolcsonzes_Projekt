@@ -11,11 +11,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = 'id';
-    public $incrementing = true;
-
     protected $fillable = [
-        'id',
         'roleId',
         'groupId',
         'name',
@@ -40,16 +36,5 @@ class User extends Authenticatable
     public function group()
     {
         return $this->belongsTo(Group::class, 'groupId', 'id');
-    }
-
-    public function toArray()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'role' => $this->role, // Automatikusan betölti a kapcsolódó szerepkört
-            'group' => $this->group, // Automatikusan betölti a kapcsolódó csoportot
-        ];
     }
 }
