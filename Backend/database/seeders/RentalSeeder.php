@@ -13,7 +13,7 @@ class RentalSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = database_path('csv\kolcsonzes.csv');
+        $filePath = database_path('csv\rentals.csv');
 
         // Adatok beolvasása a TXT fájlból
         $data = [];

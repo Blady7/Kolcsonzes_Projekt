@@ -13,7 +13,7 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = database_path('csv/mu.csv');
+        $filePath = database_path('csv/books.csv');
         // Adatok beolvasása a TXT fájlból
         $data = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {

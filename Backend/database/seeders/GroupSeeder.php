@@ -13,7 +13,7 @@ class GroupSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = database_path('txt\osztalies.csv');
+        $filePath = database_path('txt\groups.csv');
 
         // Adatok beolvasása a TXT fájlból
         $data = [];

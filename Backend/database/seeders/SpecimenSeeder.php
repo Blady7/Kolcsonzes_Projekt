@@ -13,7 +13,7 @@ class SpecimenSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = database_path('csv\peldany.csv');
+        $filePath = database_path('csv\specimens.csv');
 
         // Adatok beolvasása a TXT fájlból
         $data = [];

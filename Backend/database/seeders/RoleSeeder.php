@@ -13,7 +13,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = database_path('txt\osztalies.txt');
+        $filePath = database_path('txt\roles.csv');
 
         // Adatok beolvasása a TXT fájlból
         $data = [];

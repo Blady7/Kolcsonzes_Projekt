@@ -13,7 +13,7 @@ class ReadingdiarieSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = database_path('txt\osztalies.txt');
+        $filePath = database_path('txt\readingDiaries.csv');
 
         // Adatok beolvasása a TXT fájlból
         $data = [];
