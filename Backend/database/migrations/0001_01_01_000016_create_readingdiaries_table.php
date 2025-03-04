@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('readingdiaries', function (Blueprint $table) {
             $table->id();
+            $table->Integer('userId');
+            $table->foreign('userId')->references('id')->on('users');
             $table->string('studentOpinion',250);
             $table->Integer('bookId');
             $table->foreign('bookId')->references('id')->on('books');

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->Integer("id")->autoIncrement();
             $table->Integer('specimenId');
             $table->foreign('specimenId')->references('id')->on('specimens');
-            $table->Integer('studentId');
+            $table->Integer('userId');
+            $table->foreign('userId')->references('id')->on('users');
             $table->date('startindDate');
             $table->date('endingDate');
             $table->date('startingDate')->change();

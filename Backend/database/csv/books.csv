@@ -1,0 +1,110 @@
+id;poet;title;groupId
+1;Ibsen, Henrik;A vadkacsa;3
+2;Garcia Marquez, Gabriel;Száz év magány;4
+3;Mikszáth, Kálmán;Beszterce ostroma;3
+4;Madách, Imre;Az ember tragédiája;3
+5;Hoffmann, Ernst Theodor Amadeus;Az arany virágcserép;2
+6;Szabó, Magda;Abigél;1
+7;Babits, Mihály;A gólyakalifa;4
+8;Flaubert, Gustave;Bovaryné;3
+9;Puskin, Alekszandr Szergejevics;Anyegin;3
+10;Márai, Sándor;Béke Ithakában;3
+11;Shakespeare, William;Othello;3
+12;Goethe, Johann Wolfgang;Faust;2
+13;Mikszáth, Kálmán;A tót atyafiak;3
+14;Bulgakov, Mihail;A Mester és Margarita;4
+15;Gogol, Nyikolaj Vasziljevics;Az orr;3
+16;Petőfi, Sándor;A helység kalapácsa;3
+17;Poe, Edgar Allan;Válogatott novellák;2
+18;Arany, János;Toldi estéje;3
+19;Dürrenmatt, Friedrich;A fizikusok;4
+20;Shakespeare, William;Hamlet;1
+21;Hugo, Victor;A nyomorultak;2
+22;Örkény, István;Tóték;4
+23;Hugo, Victor;A párizsi Notre-Dame;2
+24;Karinthy, Frigyes;Tanár úr kérem;3
+25;Brecht, Bertolt;Kurázsi mama;4
+26;Petőfi, Sándor;Az apostol;3
+27;Dosztojevszkij, Fjodor Mihajlovics;Bűn és bűnhődés;3
+28;Goethe, Johann Wolfgang;Az ifjú Werther szenvedései;2
+29;Rejtő, Jenő;Piszkos Fred, a kapitány;1
+30;Móricz, Zsigmond;Rokonok;4
+31;Szophoklész;Elektra;1
+32;Shakespeare, William;Julius Caesar;3
+33;Racine, Jean;Phaedra;2
+34;Moliere;A fösvény;1
+35;Verne, Jules;Kétévi vakáció;1
+36;Eco, Umberto;A rózsa neve;2
+37;Mikes, Kelemen;Törökországi levelek;2
+38;Zrínyi, Miklós;Szigeti veszedelem;1
+39;Shakespeare, William;Rómeó és Júlia;1
+40;Jókai, Mór;Az arany ember;3
+41;Kármán, József;Fanni hagyományai;2
+42;Swift, Jonathan;Gulliver utazásai;1
+43;Shakespeare, William;III Richard;3
+44;Shelley, Mary;Frankenstein;1
+45;Csokonai Vitéz, Mihály;Dorottya;2
+46;Karinthy, Frigyes;Capillária;4
+47;Gárdonyi, Géza;A láthatatlan ember;1
+48;Csehov, Anton Pavlovics;Ványa bácsi;3
+49;Schiller, Friedrich;Don Carlos;2
+50;Karinthy, Frigyes;Így írtok ti;3
+51;Shakespeare, William;A vihar;2
+52;Moliere;Képzelt beteg;1
+53;Kosztolányi, Dezső;Édes Anna;4
+54;Móricz, Zsigmond;Légy jó mindhalálig;1
+55;Szophoklész;Oidipusz király;1
+56;Scott, Walter;Ivanhoe;1
+57;Moliere;Don Juan;1
+58;Dante, Alighieri;Isteni Színjáték;2
+59;Boccaccio, Giovanni;Dekameron;2
+60;Villon, Francois;A Nagy Testamentum;1
+61;Moliere;Az embergyűlölő;1
+62;Dumas, Alexandre;A három testőr;1
+63;Móricz, Zsigmond;Árvácska;1
+64;Jarry, Alfred;Übü király;2
+65;Verne, Jules;A rejtelmes sziget;1
+66;Katona, József;Bánk bán;2
+67;Voltaire;Candide;2
+68;Mann, Thomas;Mario és a varázsló;4
+69;Tolsztoj, Lev;Ivan Iljics halála;3
+70;Móricz, Zsigmond;Úri muri;4
+71;Dumas, Alexandre;Monte Christo grófja;2
+72;Ottlik, Géza;Iskola a határon;4
+73;Defoe, Daniel;Robinson Crusoe;2
+74;Tolsztoj, Lev;Anna Karenina;3
+75;Ibsen, Henrik;Nóra;3
+76;Kafka, Franz;A per;4
+77;Orwell, George;Állatfarm;4
+78;Vergilius;Aeneis;3
+79;;Biblia;1
+80;Bronte, Emily;Üvöltő szelek;3
+81;Szophoklész;Antigoné;1
+82;Mann, Thomas;A Buddenbrook-ház;4
+83;Schiller, Friedrich;Ármány és szerelem;2
+84;Gogol, Nyikolaj Vasziljevics;A köpönyeg;3
+85;Shakespeare, William;Lear király;3
+86;Tamási, Áron;Ábel a rengetegben;1
+87;Vörösmarty, Mihály;Csongor és Tünde;3
+88;Moliere;Tartuffe;1
+89;Cervantes, Miguel de;Don Quijote;1
+90;Krúdy, Gyula;Szindbád;4
+91;Shakespeare, William;Macbeth;3
+92;Homérosz;Odüsszeia;1
+93;Mikszáth, Kálmán;A jó palócok;3
+94;Jókai, Mór;Fekete gyémántok;3
+95;Jókai, Mór;A kőszívű ember fiai;4
+96;Jókai, Mór;Sárga rózsa;3
+97;Mikszáth, Kálmán;A Sipsirica;3
+98;Mikszáth, Kálmán;Szent Péter esernyője;1
+99;Stendhal;Vörös és fekete;3
+100;Keyes, Daniel;Virágot Algernonnak;1
+101;Csehov, Anton Pavlovics;Sirály;4
+102;Mikszáth, Kálmán;Új Zrínyiász;3
+103;Balzac, Honoré de;Goriot apó;2
+104;Steinbeck, John;Édentől keletre;2
+105;Hesse, Hermann;A pusztai farkas;4
+106;Golding, William Gerald;A legyek ura;1
+107;Örkény, István;Egyperces novellák;4
+108;Eötvös, József;A falu jegyzője;3
+109;Shakespeare, William;Szentivánéji álom;1
