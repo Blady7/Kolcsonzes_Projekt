@@ -17,6 +17,7 @@ class BookSeeder extends Seeder
         // Adatok beolvasása a TXT fájlból
         $data = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {
+            $line = fgets($handle);
             while (($line = fgets($handle)) !== FALSE) {
                 $row = explode(" ", trim($line));  // Elválasztás szóközzel
                 $data[] = [

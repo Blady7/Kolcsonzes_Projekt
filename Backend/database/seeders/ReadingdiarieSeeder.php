@@ -18,13 +18,15 @@ class ReadingdiarieSeeder extends Seeder
         // Adatok beolvasása a TXT fájlból
         $data = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {
+            $line = fgets($handle);
             while (($line = fgets($handle)) !== FALSE) {
                 $row = explode(" ", trim($line));  // Elválasztás szóközzel
                 $data[] = [
                     'id' => $row[0],
-                    'studentOpinion' => $row[1],
-                    'bookId' => $row[2],
-                    'grade' => $row[3],
+                    'userId' => $row[1],
+                    'studentOpinion' => $row[2],
+                    'bookId' => $row[3],
+                    'grade' => $row[4],
                 ];
             }
             fclose($handle);

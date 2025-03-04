@@ -23,7 +23,7 @@ class RentalSeeder extends Seeder
                 $data[] = [
                     'id' => $row[0],
                     'specimenId' => $row[1],
-                    'studentId' => $row[2],
+                    'userId' => $row[2],
                     'startindDate' => $row[3],
                     'endingDate' => $row[4],
                 ];

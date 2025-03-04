@@ -18,12 +18,13 @@ class GroupSeeder extends Seeder
         // Adatok beolvasása a TXT fájlból
         $data = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {
+            $line = fgets($handle);
             while (($line = fgets($handle)) !== FALSE) {
                 $row = explode(" ", trim($line));  // Elválasztás szóközzel
                 $data[] = [
                     'id' => $row[0],
                     'group' => $row[1],
-                    'teacherId' => $row[2]
+                    'userId' => $row[2]
                 ];
             }
             fclose($handle);
