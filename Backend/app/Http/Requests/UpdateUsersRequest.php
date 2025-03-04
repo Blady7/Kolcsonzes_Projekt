@@ -22,7 +22,9 @@ class UpdateUsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'nullable|string',
+            'email' => 'nullable|email',
+            'password' => 'nullable'
         ];
     }
 }
