@@ -13,13 +13,13 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = database_path('txt\roles.csv');
+        $filePath = database_path('csv\roles.csv');
 
         // Adatok beolvasása a TXT fájlból
         $data = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {
-            while (($line = fgets($handle)) !== FALSE) {
-                $row = explode(" ", trim($line));  // Elválasztás szóközzel
+            $line = fgets($handle);
+            while (($row = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 $data[] = [
                     'id' => $row[0],
                     'role' => $row[1],
@@ -27,7 +27,6 @@ class RoleSeeder extends Seeder
             }
             fclose($handle);
         }
-
         if (Role::count() === 0) {
             Role::factory()->createMany($data);
         }
