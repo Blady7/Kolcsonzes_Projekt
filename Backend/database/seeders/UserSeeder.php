@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\UserSeeders;
+namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -36,8 +36,7 @@ class UserSeeder extends Seeder
         $data = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {
             $line = fgets($handle);
-            while (($line = fgets($handle)) !== FALSE) {
-                $row = explode(" ", trim($line));  // Elválasztás szóközzel
+            while (($row = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 $data[] = [
                     'id' => $row[0],
                     'name' => $row[1],

@@ -18,8 +18,8 @@ class RentalSeeder extends Seeder
         // Adatok beolvasása a TXT fájlból
         $data = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {
-            while (($line = fgets($handle)) !== FALSE) {
-                $row = explode(" ", trim($line));  // Elválasztás szóközzel
+            $line = fgets($handle);
+            while (($row = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 $data[] = [
                     'id' => $row[0],
                     'specimenId' => $row[1],

@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-
-use Database\UserSeeders\UserSeeder;
+use Database\Seeders\UserSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

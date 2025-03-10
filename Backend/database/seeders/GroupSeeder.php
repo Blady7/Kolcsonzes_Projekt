@@ -13,14 +13,13 @@ class GroupSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = database_path('txt\groups.csv');
+        $filePath = database_path('csv\groups.csv');
 
         // Adatok beolvasása a TXT fájlból
         $data = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {
             $line = fgets($handle);
-            while (($line = fgets($handle)) !== FALSE) {
-                $row = explode(" ", trim($line));  // Elválasztás szóközzel
+            while (($row = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 $data[] = [
                     'id' => $row[0],
                     'group' => $row[1],
