@@ -29,9 +29,10 @@ return new class extends Migration
     {
         Schema::table('groups', function (Blueprint $table) {
             // Ellenőrizzük, hogy az idegen kulcs létezik-e, mielőtt eltávolítanánk
-            if (Schema::hasColumn('groups', 'roleId') && Schema::hasTable('users')) {
-                $table->dropForeign(['roleId']);
-            }
+            // if (Schema::hasColumn('groups', 'roleId') && Schema::hasTable('users')) {
+            //     $table->dropForeign(['roleId']);
+            // }
+            $table->foreign('teacherId')->references('id')->on('users');
         });
     }
 };
