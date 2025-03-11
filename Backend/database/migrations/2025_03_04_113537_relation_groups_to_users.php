@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('groups', function (Blueprint $table) {
-            $table->foreign('teacherId')->references('id')->on('users');
+            // Ellenőrizzük, hogy a roleId oszlop létezik-e
+            if (Schema::hasColumn('groups', 'roleId')) {
+                $table->foreign('roleId')->references('id')->on('users')->onDelete('set null');
+            } else {
+                // Ha nem létezik, akkor hibaüzenet vagy más kezelés
+                echo "A roleId oszlop nem létezik a groups táblában.\n";
+            }
         });
     }
 
@@ -22,7 +28,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('groups', function (Blueprint $table) {
-            //
+            // Ellenőrizzük, hogy az idegen kulcs létezik-e, mielőtt eltávolítanánk
+            if (Schema::hasColumn('groups', 'roleId') && Schema::hasTable('users')) {
+                $table->dropForeign(['roleId']);
+            }
         });
     }
 };

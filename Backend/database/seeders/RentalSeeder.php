@@ -19,13 +19,22 @@ class RentalSeeder extends Seeder
         $data = [];
         if (($handle = fopen($filePath, "r")) !== FALSE) {
             $line = fgets($handle);
+            $row = fgetcsv($handle, 1000, ";");
+            //print_r($row[4]);
+           //die;
             while (($row = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                if (count($row) < 5) {
+                    $endingDate = null;
+                }
+                else{
+                    $endingDate = $row[4];
+                }
                 $data[] = [
                     'id' => $row[0],
                     'specimenId' => $row[1],
                     'userId' => $row[2],
-                    'startindDate' => $row[3],
-                    'endingDate' => $row[4],
+                    'startingDate' => $row[3],
+                    'endingDate' => $endingDate,
                 ];
             }
             fclose($handle);

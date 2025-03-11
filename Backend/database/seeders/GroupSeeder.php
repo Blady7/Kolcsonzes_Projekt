@@ -20,10 +20,11 @@ class GroupSeeder extends Seeder
         if (($handle = fopen($filePath, "r")) !== FALSE) {
             $line = fgets($handle);
             while (($row = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                $teacherId = null;
                 $data[] = [
                     'id' => $row[0],
                     'group' => $row[1],
-                    'teacherId' => $row[2]
+                    'teacherId' => $teacherId
                 ];
             }
             fclose($handle);

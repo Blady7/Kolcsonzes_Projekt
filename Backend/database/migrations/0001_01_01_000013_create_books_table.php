@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->Integer("id") -> autoIncrement();
             $table->string('poet',50 );
-            $table->string('title',15);
+            $table->string('title',50);
             $table->Integer('groupId');
             $table->foreign('groupId')->references('id')->on('groups');
             $table->timestamps();

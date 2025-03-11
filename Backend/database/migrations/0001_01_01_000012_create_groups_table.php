@@ -15,7 +15,7 @@ return new class extends Migration
             $table->Integer("id") -> autoIncrement();
             $table->string("group",10);
             $table->integer("teacherId") -> nullable();
-            //$table->foreign('userId')->references('id')->on('users');
+            //$table->foreign('teacherId')->references('id')->on('users');
             $table->timestamps();
         });
     }

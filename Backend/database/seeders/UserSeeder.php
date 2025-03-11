@@ -40,8 +40,8 @@ class UserSeeder extends Seeder
                 $data[] = [
                     'id' => $row[0],
                     'name' => $row[1],
-                    'roleId' => $row[2],
-                    'groupId' => $row[3],
+                    'groupId' => $row[2],
+                    'roleId' => $row[3],
                     'email' => $row[4],
                     'password' => Hash::make($row[5]),
                     
