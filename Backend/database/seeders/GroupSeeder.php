@@ -23,7 +23,7 @@ class GroupSeeder extends Seeder
                 $data[] = [
                     'id' => $row[0],
                     'group' => $row[1],
-                    'userId' => $row[2]
+                    'teacherId' => $row[2]
                 ];
             }
             fclose($handle);

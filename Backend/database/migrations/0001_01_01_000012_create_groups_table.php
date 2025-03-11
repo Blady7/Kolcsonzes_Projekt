@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->Integer("id") -> autoIncrement();
             $table->string("group",10);
-            $table->integer("userId") -> nullable();
+            $table->integer("teacherId") -> nullable();
             //$table->foreign('userId')->references('id')->on('users');
             $table->timestamps();
         });
