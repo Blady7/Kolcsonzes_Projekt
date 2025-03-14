@@ -22,7 +22,9 @@ class UpdateSpecimenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'bookId' => 'required|integer|exists:books,id',
+            'price' => 'required|integer',
+            'acquisitionDate' => 'nullable|date',
         ];
     }
 }

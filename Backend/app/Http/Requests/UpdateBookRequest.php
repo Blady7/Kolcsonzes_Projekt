@@ -11,7 +11,7 @@ class UpdateBookRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // Általában true, ha bejelentkezett a felhasználó
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'poet' => 'required|string|max:50',
+            'title' => 'required|string|max:50',
+            'groupId' => 'required|integer|exists:groups,id',
         ];
     }
 }

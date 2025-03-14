@@ -11,7 +11,7 @@ class StoreRoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // Általában true, ha bejelentkezett a felhasználó
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'role' => 'required|string|max:25',
         ];
     }
 }

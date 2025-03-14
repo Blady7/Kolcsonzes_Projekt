@@ -11,7 +11,7 @@ class StoreGroupRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // Általában true, ha bejelentkezett a felhasználó
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'group' => 'required|string|max:10',
+            'teacherId' => 'nullable|integer',
         ];
     }
 }

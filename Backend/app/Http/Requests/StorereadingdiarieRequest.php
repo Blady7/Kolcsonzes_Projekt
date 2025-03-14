@@ -11,7 +11,7 @@ class StorereadingdiarieRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // Általában true, ha bejelentkezett a felhasználó
     }
 
     /**
@@ -22,7 +22,10 @@ class StorereadingdiarieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'userId' => 'required|integer',
+            'studentOpinion' => 'required|string|max:250',
+            'bookId' => 'required|integer|exists:books,id',
+            'grade' => 'required|integer',
         ];
     }
 }

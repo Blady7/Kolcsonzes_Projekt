@@ -11,7 +11,7 @@ class UpdateGroupRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'group' => 'required|string|max:10',
+            'teacherId' => 'required|integer|exists:users,id',
         ];
     }
 }

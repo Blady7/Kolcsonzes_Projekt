@@ -11,7 +11,7 @@ class StoreRentalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // Általában true, ha bejelentkezett a felhasználó
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreRentalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'specimenId' => 'required|integer',
+            'userId' => 'required|integer',
+            'startingDate' => 'nullable|date',
+            'endingDate' => 'nullable|date',
         ];
     }
 }

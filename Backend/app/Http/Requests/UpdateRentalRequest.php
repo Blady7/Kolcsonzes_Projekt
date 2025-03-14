@@ -22,7 +22,10 @@ class UpdateRentalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'specimenId' => 'required|integer',
+            'userId' => 'required|integer',
+            'startingDate' => 'nullable|date',
+            'endingDate' => 'nullable|date',
         ];
     }
 }

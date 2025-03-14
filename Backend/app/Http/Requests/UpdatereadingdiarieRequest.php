@@ -22,7 +22,10 @@ class UpdatereadingdiarieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'userId' => 'required|integer',
+            'studentOpinion' => 'nullable|string|max:250',
+            'bookId' => 'required|integer|exists:books,id',
+            'grade' => 'nullable|integer',
         ];
     }
 }
