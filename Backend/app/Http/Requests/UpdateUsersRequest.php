@@ -11,7 +11,8 @@ class UpdateUsersRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        //Bármely felhasználó csinálhatja
+        return true;
     }
 
     /**
@@ -24,7 +25,7 @@ class UpdateUsersRequest extends FormRequest
         return [
             'name' => 'nullable|string',
             'email' => 'nullable|email',
-            'password' => 'nullable'
+            'password' => 'nullable',
         ];
     }
 }
