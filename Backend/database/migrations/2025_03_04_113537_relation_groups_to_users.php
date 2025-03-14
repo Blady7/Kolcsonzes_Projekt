@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::table('groups', function (Blueprint $table) {
             // Ellenőrizzük, hogy a roleId oszlop létezik-e
-            if (Schema::hasColumn('groups', 'roleId')) {
-                $table->foreign('roleId')->references('id')->on('users')->onDelete('set null');
+            if (Schema::hasColumn('groups', 'teacherId')) {
+                $table->foreign('teacherId')->references('id')->on('users')->onDelete('set null');
             } else {
                 // Ha nem létezik, akkor hibaüzenet vagy más kezelés
-                echo "A roleId oszlop nem létezik a groups táblában.\n";
+                echo "A teacherId oszlop nem létezik a groups táblában.\n";
             }
         });
     }
