@@ -1,0 +1,337 @@
+HTTP/1.1 500 Internal Server Error
+Host: localhost:8000
+Connection: close
+X-Powered-By: PHP/8.2.12
+Cache-Control: no-cache, private
+Date: Mon, 17 Mar 2025 12:53:33 GMT
+Content-Type: application/json
+Access-Control-Allow-Origin: *
+
+{
+  "message": "SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`rentals`.`rentals`, CONSTRAINT `rentals_userid_foreign` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)) (Connection: mysql, SQL: delete from `users` where `id` = 4)",
+  "exception": "Illuminate\\Database\\QueryException",
+  "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php",
+  "line": 825,
+  "trace": [
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php",
+      "line": 779,
+      "function": "runQueryCallback",
+      "class": "Illuminate\\Database\\Connection",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php",
+      "line": 584,
+      "function": "run",
+      "class": "Illuminate\\Database\\Connection",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php",
+      "line": 548,
+      "function": "affectingStatement",
+      "class": "Illuminate\\Database\\Connection",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Builder.php",
+      "line": 4066,
+      "function": "delete",
+      "class": "Illuminate\\Database\\Connection",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php",
+      "line": 1338,
+      "function": "delete",
+      "class": "Illuminate\\Database\\Query\\Builder",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php",
+      "line": 1500,
+      "function": "delete",
+      "class": "Illuminate\\Database\\Eloquent\\Builder",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php",
+      "line": 1432,
+      "function": "performDeleteOnModel",
+      "class": "Illuminate\\Database\\Eloquent\\Model",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\app\\Http\\Controllers\\UserController.php",
+      "line": 185,
+      "function": "delete",
+      "class": "Illuminate\\Database\\Eloquent\\Model",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php",
+      "line": 46,
+      "function": "destroy",
+      "class": "App\\Http\\Controllers\\UserController",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php",
+      "line": 264,
+      "function": "dispatch",
+      "class": "Illuminate\\Routing\\ControllerDispatcher",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php",
+      "line": 210,
+      "function": "runController",
+      "class": "Illuminate\\Routing\\Route",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
+      "line": 808,
+      "function": "run",
+      "class": "Illuminate\\Routing\\Route",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 144,
+      "function": "Illuminate\\Routing\\{closure}",
+      "class": "Illuminate\\Routing\\Router",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php",
+      "line": 51,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 183,
+      "function": "handle",
+      "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php",
+      "line": 64,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 183,
+      "function": "handle",
+      "class": "Illuminate\\Auth\\Middleware\\Authenticate",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 119,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
+      "line": 807,
+      "function": "then",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
+      "line": 786,
+      "function": "runRouteWithinStack",
+      "class": "Illuminate\\Routing\\Router",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
+      "line": 750,
+      "function": "runRoute",
+      "class": "Illuminate\\Routing\\Router",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
+      "line": 739,
+      "function": "dispatchToRoute",
+      "class": "Illuminate\\Routing\\Router",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
+      "line": 201,
+      "function": "dispatch",
+      "class": "Illuminate\\Routing\\Router",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 144,
+      "function": "Illuminate\\Foundation\\Http\\{closure}",
+      "class": "Illuminate\\Foundation\\Http\\Kernel",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",
+      "line": 21,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php",
+      "line": 31,
+      "function": "handle",
+      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 183,
+      "function": "handle",
+      "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",
+      "line": 21,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php",
+      "line": 51,
+      "function": "handle",
+      "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 183,
+      "function": "handle",
+      "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePostSize.php",
+      "line": 27,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 183,
+      "function": "handle",
+      "class": "Illuminate\\Http\\Middleware\\ValidatePostSize",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php",
+      "line": 110,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 183,
+      "function": "handle",
+      "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php",
+      "line": 62,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 183,
+      "function": "handle",
+      "class": "Illuminate\\Http\\Middleware\\HandleCors",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php",
+      "line": 58,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 183,
+      "function": "handle",
+      "class": "Illuminate\\Http\\Middleware\\TrustProxies",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks.php",
+      "line": 22,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 183,
+      "function": "handle",
+      "class": "Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
+      "line": 119,
+      "function": "Illuminate\\Pipeline\\{closure}",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
+      "line": 176,
+      "function": "then",
+      "class": "Illuminate\\Pipeline\\Pipeline",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
+      "line": 145,
+      "function": "sendRequestThroughRouter",
+      "class": "Illuminate\\Foundation\\Http\\Kernel",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php",
+      "line": 1190,
+      "function": "handle",
+      "class": "Illuminate\\Foundation\\Http\\Kernel",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\public\\index.php",
+      "line": 17,
+      "function": "handleRequest",
+      "class": "Illuminate\\Foundation\\Application",
+      "type": "->"
+    },
+    {
+      "file": "C:\\Tanul\u00f3k\\2024-2025\\13.D\\Ol\u00e1h P\u00e9ter\\vizsgaprojekt\\k\u00f6lcs\u00f6nz\u00e9s\\Kolcsonzes_Projekt\\Backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php",
+      "line": 23,
+      "function": "require_once"
+    }
+  ]
+}

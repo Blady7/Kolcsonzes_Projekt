@@ -20,6 +20,8 @@ class UserController extends Controller
 
         //Az email alapján megkeressük a usert
         $user = User::where('email', $email)->first();
+        // print_r($user);
+        // die;
 
         //Stimmel-e az email és a jelszó?
         if (!$user || !Hash::check($password, $password ? $user->password : '')) {
