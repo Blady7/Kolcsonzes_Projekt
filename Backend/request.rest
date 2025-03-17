@@ -44,7 +44,9 @@ Authorization: Bearer {{token}}
 {
     "name":  "test2",
     "email": "test2@example.com",
-    "password": "123"
+    "password": "123",
+    "roleId": 1,
+    "groupId": 1
 }
 
 ### patch user
@@ -67,6 +69,3 @@ Authorization: Bearer {{token}}
 
 ### teszt 
 get {{host}}/api/
-
-
-### get 
