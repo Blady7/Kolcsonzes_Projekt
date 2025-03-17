@@ -3,9 +3,10 @@
 namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Role;
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class RoleTest extends TestCase
 {
     /**
      * A basic test example.
