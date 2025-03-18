@@ -72,12 +72,12 @@ GET {{host}}/api/books?limit=100
 Accept: application/json
 Authorization: Bearer {{token}}
 
-### get books by id
-GET  {{host}}/api/books/5
+### get book by id
+GET  {{host}}/api/books/1
 Accept: application/json
 Authorization: Bearer {{token}}
 
-### post user
+### post book
 POST {{host}}/api/books 
 Content-Type: application/json
 Accept: application/json

@@ -11,7 +11,7 @@ class Specimen extends Model
     /** @use HasFactory<\Database\Factories\SpecimenFactory> */
     use HasFactory, Notifiable;
 
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
     public $incrementing = true;
 
     protected $fillable = [
@@ -21,18 +21,18 @@ class Specimen extends Model
         'acquisitionDate',
     ];
 
-    public function book()
-    {
-        return $this->belongsTo(Book::class, 'bookId', 'id');
-    }
+    // public function book()
+    // {
+    //     return $this->belongsTo(Book::class, 'bookId', 'id');
+    // }
 
-    public function toArray()
-    {
-        return [
-            'id' => $this->id,
-            'price' => $this->price,
-            'acquisitionDate' => $this->acquisitionDate,
-            'book' => $this->book, // Automatikusan betölti a kapcsolódó könyvet
-        ];
-    }
+    // public function toArray()
+    // {
+    //     return [
+    //         'id' => $this->id,
+    //         'price' => $this->price,
+    //         'acquisitionDate' => $this->acquisitionDate,
+    //         'book' => $this->book, // Automatikusan betölti a kapcsolódó könyvet
+    //     ];
+    // }
 }

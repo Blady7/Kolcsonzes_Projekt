@@ -11,7 +11,7 @@ class readingdiarie extends Model
     /** @use HasFactory<\Database\Factories\ReadingDiaryFactory> */
     use HasFactory, Notifiable;
 
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
     public $incrementing = true;
 
     protected $fillable = [
@@ -21,18 +21,18 @@ class readingdiarie extends Model
         'grade',
     ];
 
-    public function book()
-    {
-        return $this->belongsTo(Book::class, 'bookId', 'id');
-    }
+    // public function book()
+    // {
+    //     return $this->belongsTo(Book::class, 'bookId', 'id');
+    // }
 
-    public function toArray()
-    {
-        return [
-            'id' => $this->id,
-            'studentOpinion' => $this->studentOpinion,
-            'grade' => $this->grade,
-            'book' => $this->book, // Automatikusan betölti a kapcsolódó könyvet
-        ];
-    }
+    // public function toArray()
+    // {
+    //     return [
+    //         'id' => $this->id,
+    //         'studentOpinion' => $this->studentOpinion,
+    //         'grade' => $this->grade,
+    //         'book' => $this->book, // Automatikusan betölti a kapcsolódó könyvet
+    //     ];
+    // }
 }
