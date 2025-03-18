@@ -68,7 +68,7 @@ Authorization: Bearer {{token}}
 # ------------- book -------------
 
 ### get books
-GET  {{host}}/api/books
+GET {{host}}/api/books?limit=100
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -76,6 +76,19 @@ Authorization: Bearer {{token}}
 GET  {{host}}/api/books/5
 Accept: application/json
 Authorization: Bearer {{token}}
+
+### post user
+POST {{host}}/api/books 
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "poet": "Kis Juliska",
+    "title": "szakács könyv",
+    "groupId": "2"
+    
+}
 
 ### teszt 
 get {{host}}/api/
