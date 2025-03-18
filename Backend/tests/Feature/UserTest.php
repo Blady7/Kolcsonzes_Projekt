@@ -34,9 +34,9 @@ class UserTest extends TestCase
     public function test_login()
     {
 
-        $name = 'test99';
-        $email = 'test99@example.com';
-        $password = '123';
+        $name = 'admin';
+        $email = 'admin@gmail.com';
+        $password = 'admin';
 
         $user = User::factory()->create([
             'name' => $name,
@@ -78,9 +78,9 @@ class UserTest extends TestCase
         $token = $this->login();
 
         $data = [
-            'name' => 'John Doe',
-            'email' => 'johndoe@example.com',
-            'password' => 'password123',
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => 'admin',
         ];
 
         $response = $this
@@ -93,9 +93,9 @@ class UserTest extends TestCase
         // dd($response);
 
         $response->assertStatus(200);
-        $this->assertDatabaseHas('users', ['email' => 'johndoe@example.com']);
+        $this->assertDatabaseHas('users', ['email' => 'admin@gmail.com']);
 
-        $user = User::where('email', 'johndoe@example.com')->first();
+        $user = User::where('email', 'a')->first();
         $this->assertNotNull($user);
     }
 
