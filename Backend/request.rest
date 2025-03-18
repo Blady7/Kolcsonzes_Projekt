@@ -65,5 +65,17 @@ Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{token}}
 
+# ------------- book -------------
+
+### get books
+GET  {{host}}/api/books
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### get books by id
+GET  {{host}}/api/books/5
+Accept: application/json
+Authorization: Bearer {{token}}
+
 ### teszt 
 get {{host}}/api/
