@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('specimens', function (Blueprint $table) {
             $table->Integer("id") -> autoIncrement();
             $table->Integer('bookId');
-            $table->foreign('bookId')->references('id')->on('books');
+            $table->foreign('bookId')->references('id')->on('books')->onDelete('cascade');
             $table->Integer("price");
             $table->date('acquisitionDate')->nullable();
             $table->date('acquisitionDate')->change();

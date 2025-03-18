@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('poet',50 );
             $table->string('title',50);
             $table->Integer('groupId');
-            $table->foreign('groupId')->references('id')->on('groups');
+            $table->foreign('groupId')->references('id')->on('groups')->onDelete('cascade');
             $table->timestamps();
         });
     }

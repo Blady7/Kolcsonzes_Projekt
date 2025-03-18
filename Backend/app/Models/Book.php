@@ -13,9 +13,9 @@ class Book extends Model
 
     // Ha az id nem auto-increment, meg kell adni a primaryKey-t
     // protected $primaryKey = 'id';
-    public $incrementing = false;
+    public $incrementing = true;
     
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'id',

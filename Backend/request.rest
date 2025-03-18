@@ -68,7 +68,7 @@ Authorization: Bearer {{token}}
 # ------------- book -------------
 
 ### get books
-GET {{host}}/api/books?limit=100
+GET {{host}}/api/books
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -89,6 +89,232 @@ Authorization: Bearer {{token}}
     "groupId": "2"
     
 }
+
+### patch book
+PATCH {{host}}/api/books/5
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "poet": "Kiss Ádám",
+    "title": "Almafa",
+    "groupId": "1"
+}
+
+### delete book
+DELETE {{host}}/api/books/122
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+# ------------- group -------------
+
+### get group
+GET {{host}}/api/groups
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### get group by id
+GET  {{host}}/api/groups/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### post group
+POST {{host}}/api/groups
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "group": "5",
+    "teacherId": null
+}
+
+### patch group
+PATCH {{host}}/api/groups/9
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "group": "1",
+    "teacherId": "3"
+}
+
+### delete group
+DELETE {{host}}/api/groups/11
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+# ------------- readingDiare -------------
+
+### get readingDiare
+GET {{host}}/api/readingdiaries
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### get readingDiare by id
+GET  {{host}}/api/readingdiaries/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### post readingDiare
+POST {{host}}/api/readingdiaries
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "userId": "4",
+    "studentOpinion": "jó",
+    "bookId": "2",
+    "grade": "5"
+}
+
+### patch readingDiare
+PATCH {{host}}/api/readingdiaries/9
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "group": "1",
+    "teacherId": "3"
+}
+
+### delete readingDiare
+DELETE {{host}}/api/readingdiaries/11
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+# ------------- rental -------------
+
+### get rentals
+GET {{host}}/api/rentals?limit=100
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### get rental by id
+GET  {{host}}/api/rentals/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### post rental
+POST {{host}}/api/rentals
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "userId": "4",
+    "studentOpinion": "jó",
+    "bookId": "2",
+    "grade": "5"
+}
+
+### patch rental
+PATCH {{host}}/api/rentals/9
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "group": "1",
+    "teacherId": "3"
+}
+
+### delete rental
+DELETE {{host}}/api/rentals/11
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+# ------------- roles -------------
+
+### get roles
+GET {{host}}/api/roles
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### get roles by id
+GET  {{host}}/api/roles/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### post roles
+POST {{host}}/api/roles
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "userId": "4",
+    "studentOpinion": "jó",
+    "bookId": "2",
+    "grade": "5"
+}
+
+### patch roles
+PATCH {{host}}/api/roles/9
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "group": "1",
+    "teacherId": "3"
+}
+
+### delete roles
+DELETE {{host}}/api/roles/11
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+# ------------- specimens -------------
+
+### get specimens
+GET {{host}}/api/specimens
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### get specimens by id
+GET  {{host}}/api/specimens/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### post specimens
+POST {{host}}/api/specimens
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "userId": "4",
+    "studentOpinion": "jó",
+    "bookId": "2",
+    "grade": "5"
+}
+
+### patch specimens
+PATCH {{host}}/api/specimens/9
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "group": "1",
+    "teacherId": "3"
+}
+
+### delete specimens
+DELETE {{host}}/api/specimens/11
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
 
 ### teszt 
 get {{host}}/api/

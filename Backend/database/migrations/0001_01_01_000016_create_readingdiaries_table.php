@@ -17,7 +17,7 @@ return new class extends Migration
             //$table->foreign('userId')->references('id')->on('users');
             $table->string('studentOpinion',250);
             $table->Integer('bookId');
-            $table->foreign('bookId')->references('id')->on('books');
+            $table->foreign('bookId')->references('id')->on('books')->onDelete('cascade');
             $table->Integer("grade");
             $table->timestamps();
         });

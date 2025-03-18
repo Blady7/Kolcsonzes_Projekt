@@ -13,8 +13,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        //$rows = Book::all();
-        $rows = Book::orderBy('title', 'asc')->get();
+        $rows = Book::all();
         $data = [
             'message' => 'ok',
             'data' => $rows
@@ -27,23 +26,23 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        // try {
-        //     $row = Book::create($request->all());
-        //     $data = [
-        //         'message' => 'ok',
-        //         'data' => $row
-        //     ];
-        // } catch (\Illuminate\Database\QueryException $e) {
-        //     $data = [
-        //         'message' => 'The post failed',
-        //         'data' => $request->all()
-        //     ];
-        // }
-        $row = Book::create($request->all());
-        $data = [
-            'message' => 'ok',
-            'data' => $row
-        ];
+        try {
+            $row = Book::create($request->all());
+            $data = [
+                'message' => 'ok',
+                'data' => $row
+            ];
+        } catch (\Illuminate\Database\QueryException $e) {
+            $data = [
+                'message' => 'The post failed',
+                'data' => $request->all()
+            ];
+        }
+        // $row = Book::create($request->all());
+        // $data = [
+        //     'message' => 'ok',
+        //     'data' => $row
+        // ];
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
 
     }
@@ -73,13 +72,14 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBookRequest $request,  $id)
+    public function update(UpdateBookRequest $request, $id)
     {
         $row = Book::find($id);
         if ($row) {
 
             try {
                 $row->update($request->all());
+                
                 $data = [
                     'message' => 'ok',
                     'data' => $row
@@ -109,21 +109,27 @@ class BookController extends Controller
     {
         $row = Book::find($id);
         if ($row) {
-            $row->delete();
-            $data = [
-                'message' => 'ok',
-                'data' => [
+            try {
+                $row->delete();
+                $message = "ok";
+                $rows = [
                     'id' => $id
-                ]
-            ];
+                ];
+            } catch (\Throwable $th) {
+                $message = 'a rekordot nem lehet törölni';
+                $rows = [];
+            }
         } else {
-            $data = [
-                'message' => 'Not found',
-                'data' => [
-                    'id' => $id
-                ]
+            $message = "Not found";
+            $rows = [
+                'id' => $id
             ];
         }
+        $data = [
+            'message' => $message,
+            'data' => $rows
+        ];
+
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
 }
