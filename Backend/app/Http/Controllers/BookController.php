@@ -13,8 +13,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        $rows = Book::all();
-
+        //$rows = Book::all();
+        $rows = Book::orderBy('title', 'asc')->get();
         $data = [
             'message' => 'ok',
             'data' => $rows
@@ -27,20 +27,25 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        try {
-            $row = Book::create($request->all());
-            $data = [
-                'message' => 'ok',
-                'data' => $row
-            ];
-        } catch (\Illuminate\Database\QueryException $e) {
-            $data = [
-                'message' => 'The post failed',
-                'data' => $request->all()
-            ];
-        }
-
+        // try {
+        //     $row = Book::create($request->all());
+        //     $data = [
+        //         'message' => 'ok',
+        //         'data' => $row
+        //     ];
+        // } catch (\Illuminate\Database\QueryException $e) {
+        //     $data = [
+        //         'message' => 'The post failed',
+        //         'data' => $request->all()
+        //     ];
+        // }
+        $row = Book::create($request->all());
+        $data = [
+            'message' => 'ok',
+            'data' => $row
+        ];
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+
     }
 
     /**

@@ -11,7 +11,7 @@ class Role extends Model
     /** @use HasFactory<\Database\Factories\RoleFactory> */
     use HasFactory, Notifiable;
 
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
     public $incrementing = true;
 
     protected $fillable = [

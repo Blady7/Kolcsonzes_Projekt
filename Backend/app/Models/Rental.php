@@ -11,7 +11,7 @@ class Rental extends Model
     /** @use HasFactory<\Database\Factories\RentalFactory> */
     use HasFactory, Notifiable;
 
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
     public $incrementing = true;
 
     protected $fillable = [
@@ -22,18 +22,18 @@ class Rental extends Model
         'endingDate',
     ];
 
-    public function specimen()
-    {
-        return $this->belongsTo(Specimen::class, 'specimenId', 'id');
-    }
+    // public function specimen()
+    // {
+    //     return $this->belongsTo(Specimen::class, 'specimenId', 'id');
+    // }
 
-    public function toArray()
-    {
-        return [
-            'id' => $this->id,
-            'startingDate' => $this->startingDate,
-            'endingDate' => $this->endingDate,
-            'specimen' => $this->specimen, // Automatikusan betölti a kapcsolódó példányt
-        ];
-    }
+    // public function toArray()
+    // {
+    //     return [
+    //         'id' => $this->id,
+    //         'startingDate' => $this->startingDate,
+    //         'endingDate' => $this->endingDate,
+    //         'specimen' => $this->specimen, // Automatikusan betölti a kapcsolódó példányt
+    //     ];
+    // }
 }

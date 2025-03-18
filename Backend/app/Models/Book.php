@@ -12,7 +12,7 @@ class Book extends Model
     use HasFactory, Notifiable;
 
     // Ha az id nem auto-increment, meg kell adni a primaryKey-t
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
     public $incrementing = false;
     
     public $timestamps = false;
@@ -25,19 +25,19 @@ class Book extends Model
     ];
 
     // Kapcsolat a Group modellel (Many-to-One)
-    public function group()
-    {
-        return $this->belongsTo(Group::class, 'groupId', 'id');
-    }
+    // public function group()
+    // {
+    //     return $this->belongsTo(Group::class, 'groupId', 'id');
+    // }
 
     // Ezt az osztályt a kérésre adott válasz testreszabására használjuk
-    public function toArray()
-    {
-        return [
-            'id' => $this->id,
-            'poet' => $this->poet,
-            'title' => $this->title,
-            'group' => $this->group, // Automatikusan betölti a kapcsolódó csoportot
-        ];
-    }
+    // public function toArray()
+    // {
+    //     return [
+    //         'id' => $this->id,
+    //         'poet' => $this->poet,
+    //         'title' => $this->title,
+    //         'group' => $this->group, // Automatikusan betölti a kapcsolódó csoportot
+    //     ];
+    // }
 }
