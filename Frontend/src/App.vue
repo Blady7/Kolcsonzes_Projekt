@@ -4,11 +4,14 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    
-  </header>
+  <div class="container-fluid my-border my-container">
+    <h1>Online Könyvkölcsönző</h1>
 
-  <RouterView />
+    <Menu />
+    <div class="my-border p-2">
+      <RouterView />
+    </div>
+  </div>
 </template>
 
 <style scoped>
