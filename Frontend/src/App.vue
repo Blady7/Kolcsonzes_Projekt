@@ -1,171 +1,163 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-</script>
-
-<template>
-  <div>
-
-    <!-- Fő fejléc -->
-    <header>
-      <div class="wrapper">
-        <!-- Logo / Weboldal neve -->
-        <div class="logo">
-          <RouterLink to="/">Könyvkölcsönző</RouterLink>
-        </div>
-
-        <!-- Navigációs menü -->
-        <nav>
-          <ul>
-            <li>
-              <RouterLink to="/" class="nav-link">Kezdőlap</RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/temakor" class="nav-link" v-if="stateAuth.user">Témakörök</RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/test" class="nav-link" v-if="stateAuth.user">Tesztelés</RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/login" class="nav-link" v-if="!stateAuth.user">Bejelentkezés</RouterLink>
-            </li>
-            <li>
-              <RouterLink class="nav-link" to="#" @click="Logout()" v-if="stateAuth.user">Kijelentkezés</RouterLink>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Dinamikus tartalom megjelenítése -->
-    <RouterView />
-  </div>
-</template>
-
-<script>
 import { useCounterStore } from '@/stores/counter'
-import { RouterLink, RouterView } from "vue-router"
 import { useAuthStore } from "@/stores/useAuthStore.js";
 import axios from "axios";
 import { BASE_URL } from "@/helpers/baseUrls";
 
-export default {
-  data(){
-    return{
-      state: useCounterStore(),
-      stateAuth: useAuthStore(),
-    }
-  },
-  methods:{
-    async Logout(){const url = `${BASE_URL}/users/logout`;
+const state = useCounterStore()
+const stateAuth = useAuthStore()
+
+async function Logout() {
+    const url = `${BASE_URL}/users/logout`;
     const headers = {
         Accept: 'application/json',
-        Authorization: `Bearer ${this.stateAuth.token}`
+        Authorization: `Bearer ${stateAuth.token}`
     };
     try {
-      const response = await axios.post(url, null, { headers });
-            // this.errorMessage = "Successful logout!";
-          } 
-          catch (error) {
-            console.error('Error:', error); // Logold a hibát
-            // this.errorMessage = "Logout failed";
-          }
-          this.stateAuth.clearStoredData()
-          this.$router.push('/')
-        }
-  }
-};
+        await axios.post(url, null, { headers });
+    } catch (error) {
+        console.error('Error:', error);
+    }
+    stateAuth.clearStoredData()
+    this.$router.push('/')
+}
 </script>
+
+<template>
+    <div>
+        <header>
+            <div class="wrapper">
+                <div class="logo">
+                    <RouterLink to="/">Könyvkölcsönző</RouterLink>
+                </div>
+                <nav>
+                    <ul>
+                        <li>
+                            <RouterLink to="/könyvek" class="nav-link" v-if="stateAuth.user">
+                              Könyvek <i class="bi bi-book"></i>
+                            </RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink to="/diákok" class="nav-link" v-if="stateAuth.user">
+                              Diákok <i class="bi bi-person-lines-fill"></i>
+                            </RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink to="/olvasónapló" class="nav-link" v-if="stateAuth.user">
+                              Olvasónaplók <i class="bi bi-book-half"></i>
+                            </RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink to="/login" class="nav-link" v-if="!stateAuth.user">
+                              <i class="bi bi-bookmark"></i>
+                            </RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink class="nav-link" to="#" @click="Logout()" v-if="stateAuth.user">
+                              <i class="bi bi-bookmark-check"></i>
+                            </RouterLink>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <RouterView />
+    </div>
+</template>
 
 <style scoped>
 /* Alap stílusok */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+    line-height: 1.6;
 }
 
 /* Fejléc és navigáció */
 .wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #2c3e50; /* Sötét kékeszöld háttér */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background-color: #2c3e50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo a {
-  font-size: 28px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
+    font-size: 32px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 nav {
-  display: flex;
+    display: flex;
 }
 
 nav ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
+    display: flex;
+    list-style: none;
+    margin: 0;
 }
 
 nav li {
-  margin-left: 10px;
+    margin-left: 20px;
 }
 
 .nav-link {
-  color: #ecf0f1; /* Világos szürke szín */
-  text-decoration: none;
-  font-size: 16px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-link:hover {
-  background-color: #3498db; /* Kék szín hover esetén */
-  color: white;
+    background-color: #3498db;
+    color: #fff;
 }
 
 /* Mobil reszponzív menü */
 @media (max-width: 768px) {
-  nav {
-    display: none; /* Elrejtjük a menüt mobil nézetben */
-  }
+    nav {
+        display: none;
+    }
 
-  .wrapper {
-    justify-content: center; /* Középre igazítjuk a menüt mobil nézetben */
-  }
+    .wrapper {
+        justify-content: space-between;
+    }
 
-  nav ul {
-    display: block;
-    width: 100%;
-    text-align: center;
-  }
+    nav ul {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
 
-  nav li {
-    margin: 10px 0;
-  }
+    nav li {
+        margin: 10px 0;
+    }
 
-  .nav-link {
-    display: block;
-    padding: 15px;
-    font-size: 18px;
-  }
+    .nav-link {
+        display: block;
+        padding: 15px;
+        font-size: 18px;
+    }
 
-  /* Hamburger ikon a mobil verzióhoz */
-  .hamburger {
-    display: block;
-    cursor: pointer;
-    font-size: 30px;
-    color: #fff;
-  }
+    .hamburger {
+        display: block;
+        cursor: pointer;
+        font-size: 30px;
+        color: #fff;
+    }
 }
 </style>
-
