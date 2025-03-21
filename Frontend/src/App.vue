@@ -25,7 +25,7 @@ async function Logout() {
 </script>
 
 <template>
-    <div>
+    <div class="my-container">
         <header>
             <div class="wrapper">
                 <div class="logo">
@@ -67,6 +67,8 @@ async function Logout() {
 </template>
 
 <style scoped>
+
+
 /* Alap stílusok */
 * {
     margin: 0;
@@ -76,8 +78,8 @@ async function Logout() {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f8f8;
-    color: #333;
+    background-color: #7d5618;
+    color: #CF720E;
     line-height: 1.6;
 }
 
@@ -87,13 +89,13 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 30px;
-    background-color: #2c3e50;
+    background-color: #f0a24f85;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo a {
     font-size: 32px;
-    color: #fff;
+    color: #164652;
     text-decoration: none;
     font-weight: 600;
     letter-spacing: 1px;
@@ -114,7 +116,7 @@ nav li {
 }
 
 .nav-link {
-    color: #ecf0f1;
+    color: #164652;
     text-decoration: none;
     font-size: 18px;
     padding: 10px 15px;
@@ -123,7 +125,7 @@ nav li {
 }
 
 .nav-link:hover {
-    background-color: #3498db;
+    background-color: #164652;
     color: #fff;
 }
 
