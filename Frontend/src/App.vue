@@ -25,7 +25,7 @@ async function Logout() {
 </script>
 
 <template>
-    <div class="my-container">
+    <div class="container-fluid">
         <header>
             <div class="wrapper">
                 <div class="logo">
