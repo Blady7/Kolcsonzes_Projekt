@@ -1,31 +1,21 @@
 <template>
   <div>
-    <table class="table">
+    <h2>Könyvek listája</h2>
+    <table>
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Költő</th>
-          <th scope="col">Cím</th>
-          <th scope="col">Évfolyam</th>
+          <th>ID</th>
+          <th>Szerző</th>
+          <th>Cím</th>
+          <th>Évfolyam</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
+        <tr v-for="book in books" :key="book.id">
+          <td>{{ book.id }}</td>
+          <td>{{ book.poet }}</td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.groupId }}</td>
         </tr>
       </tbody>
     </table>
@@ -33,8 +23,44 @@
 </template>
 
 <script>
-export default {};
+import Papa from 'papaparse';
+
+export default {
+  data() {
+    return {
+      books: []
+    };
+  },
+  mounted() {
+    fetch('/database/csv/book.csv')
+      .then(response => response.text())
+      .then(csvData => {
+        Papa.parse(csvData, {
+          header: true,
+          delimiter: ';',
+          dynamicTyping: true,
+          complete: (result) => {
+            this.books = result.data;
+          }
+        });
+      })
+      .catch(error => console.error('Hiba a CSV beolvasásakor:', error));
+  }
+};
 </script>
 
 <style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f4f4f4;
+}
 </style>
