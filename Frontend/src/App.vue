@@ -34,7 +34,7 @@ async function Logout() {
                 <nav>
                     <ul>
                         <li>
-                            <RouterLink to="/könyvek" class="nav-link" v-if="stateAuth.user">
+                            <RouterLink to="/konyvek" class="nav-link" v-if="stateAuth.user">
                               Könyvek <i class="bi bi-book"></i>
                             </RouterLink>
                         </li>

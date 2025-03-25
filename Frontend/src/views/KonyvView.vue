@@ -13,9 +13,11 @@
       <tbody>
         <tr v-for="book in books" :key="book.id">
           <td>{{ book.id }}</td>
-          <td>{{ book.poet }}</td>
+          <td>{{ book.poet || book.author }}</td>
+          <!-- Ha más a mezőnév -->
           <td>{{ book.title }}</td>
-          <td>{{ book.groupId }}</td>
+          <td>{{ book.groupId || book.group }}</td>
+          <!-- Ha más a mezőnév -->
         </tr>
       </tbody>
     </table>
@@ -23,29 +25,38 @@
 </template>
 
 <script>
-import Papa from 'papaparse';
+import Papa from "papaparse";
 
 export default {
   data() {
     return {
-      books: []
+      books: [],
     };
   },
   mounted() {
-    fetch('/database/csv/book.csv')
-      .then(response => response.text())
-      .then(csvData => {
+    fetch("/database/csv/books.csv") // Frissítsd az elérési utat!
+      .then((response) => {
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
+        return response.text();
+      })
+      .then((csvData) => {
         Papa.parse(csvData, {
           header: true,
-          delimiter: ';',
-          dynamicTyping: true,
+          delimiter: ";",
           complete: (result) => {
+            console.log("Sikeresen feldolgozva:", result.data);
             this.books = result.data;
-          }
+          },
+          error: (error) => {
+            console.error("CSX hiba:", error);
+          },
         });
       })
-      .catch(error => console.error('Hiba a CSV beolvasásakor:', error));
-  }
+      .catch((error) => {
+        console.error("Fetch hiba:", error);
+      });
+  },
 };
 </script>
 
@@ -55,7 +66,8 @@ table {
   border-collapse: collapse;
   margin-top: 10px;
 }
-th, td {
+th,
+td {
   border: 1px solid black;
   padding: 8px;
   text-align: left;

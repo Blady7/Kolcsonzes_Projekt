@@ -36,8 +36,8 @@ const router = createRouter({
       meta: {title: (route) => 'Login'}
     },
     {
-      path: '/könyvek',
-      name: 'könyvek',
+      path: '/konyvek',
+      name: 'konyvek',
       component: () => import('../views/KonyvView.vue'),
     },
     {
