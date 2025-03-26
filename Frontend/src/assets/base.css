@@ -15,4 +15,13 @@
     text-align: left;
     border-bottom: 1px solid #8b5e3c; /* Barna vonalak */
   }
+
+  .my-table tbody tr:hover {
+    background-color: #e3d5b7; /* Enyhe sárgás kiemelés */
+    transition: 0.2s;
+  }
+
   
+.my-table tbody tr:nth-child(odd) {
+    background-color: #f9f0dd; /* Enyhén eltérő sávos háttér */
+  }

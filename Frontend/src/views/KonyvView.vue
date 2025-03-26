@@ -89,14 +89,6 @@ td {
   color: #4a3b2d; /* Sötétebb barna betűszín */
 }
 
-tbody tr:hover {
-  background-color: #e3d5b7; /* Enyhe sárgás kiemelés */
-  transition: 0.2s;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #f9f0dd; /* Enyhén eltérő sávos háttér */
-}
 
 </style>
 
