@@ -1,9 +1,9 @@
 .my-table {
     width: 90%;
     max-width: 800px;
-    margin: 30px auto; /* Lentebb helyezés */
+    margin: 30px auto;
     border-collapse: collapse;
-    background: #f5e6c8; /* Sárgás papír szín */
+    background: #f5e6c8;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -13,15 +13,14 @@
   .my-table th, .my-table td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #8b5e3c; /* Barna vonalak */
+    border-bottom: 1px solid #8b5e3c;
   }
 
   .my-table tbody tr:hover {
-    background-color: #e3d5b7; /* Enyhe sárgás kiemelés */
+    background-color: #e3d5b7;
     transition: 0.2s;
   }
 
-  
 .my-table tbody tr:nth-child(odd) {
-    background-color: #f9f0dd; /* Enyhén eltérő sávos háttér */
+    background-color: #f9f0dd;
   }
