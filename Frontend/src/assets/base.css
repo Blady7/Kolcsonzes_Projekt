@@ -1,0 +1,18 @@
+.my-table {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto; /* Lentebb helyezés */
+    border-collapse: collapse;
+    background: #f5e6c8; /* Sárgás papír szín */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Times New Roman', serif;
+  }
+
+  .my-table th, .my-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #8b5e3c; /* Barna vonalak */
+  }
+  

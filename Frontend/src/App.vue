@@ -1,165 +1,178 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import { useCounterStore } from '@/stores/counter'
+import { RouterLink, RouterView } from "vue-router";
+import { useCounterStore } from "@/stores/counter";
 import { useAuthStore } from "@/stores/useAuthStore.js";
 import axios from "axios";
 import { BASE_URL } from "@/helpers/baseUrls";
 
-const state = useCounterStore()
-const stateAuth = useAuthStore()
+const state = useCounterStore();
+const stateAuth = useAuthStore();
 
 async function Logout() {
-    const url = `${BASE_URL}/users/logout`;
-    const headers = {
-        Accept: 'application/json',
-        Authorization: `Bearer ${stateAuth.token}`
-    };
-    try {
-        await axios.post(url, null, { headers });
-    } catch (error) {
-        console.error('Error:', error);
-    }
-    stateAuth.clearStoredData()
-    this.$router.push('/')
+  const url = `${BASE_URL}/users/logout`;
+  const headers = {
+    Accept: "application/json",
+    Authorization: `Bearer ${stateAuth.token}`,
+  };
+  try {
+    await axios.post(url, null, { headers });
+  } catch (error) {
+    console.error("Error:", error);
+  }
+  stateAuth.clearStoredData();
+  this.$router.push("/");
 }
 </script>
 
 <template>
-    <div class="container-fluid">
-        <header>
-            <div class="wrapper">
-                <div class="logo">
-                    <RouterLink to="/">Könyvkölcsönző</RouterLink>
-                </div>
-                <nav>
-                    <ul>
-                        <li>
-                            <RouterLink to="/konyvek" class="nav-link" v-if="stateAuth.user">
-                              Könyvek <i class="bi bi-book"></i>
-                            </RouterLink>
-                        </li>
-                        <li>
-                            <RouterLink to="/diákok" class="nav-link" v-if="stateAuth.user">
-                              Diákok <i class="bi bi-person-lines-fill"></i>
-                            </RouterLink>
-                        </li>
-                        <li>
-                            <RouterLink to="/olvasónapló" class="nav-link" v-if="stateAuth.user">
-                              Olvasónaplók <i class="bi bi-book-half"></i>
-                            </RouterLink>
-                        </li>
-                        <li>
-                            <RouterLink to="/login" class="nav-link" v-if="!stateAuth.user">
-                              <i class="bi bi-bookmark"></i>
-                            </RouterLink>
-                        </li>
-                        <li>
-                            <RouterLink class="nav-link" to="#" @click="Logout()" v-if="stateAuth.user">
-                              <i class="bi bi-bookmark-check"></i>
-                            </RouterLink>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-        <RouterView />
-    </div>
+  <div class="container-fluid">
+    <!-- Fejléc -->
+    <header>
+      <div class="wrapper">
+        <div class="logo">
+          <RouterLink to="/">Könyvkölcsönző</RouterLink>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <RouterLink to="/konyvek" class="nav-link" v-if="stateAuth.user">
+                Könyvek <i class="bi bi-book"></i>
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/diákok" class="nav-link" v-if="stateAuth.user">
+                Diákok <i class="bi bi-person-lines-fill"></i>
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink
+                to="/olvasónapló"
+                class="nav-link"
+                v-if="stateAuth.user"
+              >
+                Olvasónaplók <i class="bi bi-book-half"></i>
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/login" class="nav-link" v-if="!stateAuth.user">
+                <i class="bi bi-bookmark"></i>
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink
+                class="nav-link"
+                to="#"
+                @click="Logout()"
+                v-if="stateAuth.user"
+              >
+                <i class="bi bi-bookmark-check"></i>
+              </RouterLink>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Tartalom -->
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>
-
-
 /* Alap stílusok */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+html,
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #7d5618;
-    color: #CF720E;
-    line-height: 1.6;
+  height: 100%; /* Teljes magasságot biztosít */
+  background-image: url("https://media.istockphoto.com/id/959104114/vector/light-colored-beige-vintage-paper.jpg?s=612x612&w=0&k=20&c=JvE0rI9Htw-dwm6VlxW7UVbHtxKi_SnMEjpvXfwISa8="); /* Háttérkép URL */
+  background-size: cover; /* A kép kitölti az egész képernyőt */
+  background-position: center; /* Kép középre igazítása */
+  background-repeat: no-repeat; /* Ne ismétlődjön */
 }
 
 /* Fejléc és navigáció */
 .wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    background-color: #f0a24f85;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background-color: rgba(240, 162, 79, 0.8); /* Átlátszó barna háttér */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Fejléc fölé helyezés */
 }
 
 .logo a {
-    font-size: 32px;
-    color: #164652;
-    text-decoration: none;
-    font-weight: 600;
-    letter-spacing: 1px;
+  font-size: 32px;
+  color: #164652;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 nav {
-    display: flex;
+  display: flex;
 }
 
 nav ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
+  display: flex;
+  list-style: none;
+  margin: 0;
 }
 
 nav li {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .nav-link {
-    color: #164652;
-    text-decoration: none;
-    font-size: 18px;
-    padding: 10px 15px;
-    border-radius: 6px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  color: #164652;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-link:hover {
-    background-color: #164652;
-    color: #fff;
+  background-color: #164652;
+  color: #fff;
 }
 
 /* Mobil reszponzív menü */
 @media (max-width: 768px) {
-    nav {
-        display: none;
-    }
+  nav {
+    display: none;
+  }
 
-    .wrapper {
-        justify-content: space-between;
-    }
+  .wrapper {
+    justify-content: space-between;
+  }
 
-    nav ul {
-        display: block;
-        width: 100%;
-        text-align: center;
-    }
+  nav ul {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
 
-    nav li {
-        margin: 10px 0;
-    }
+  nav li {
+    margin: 10px 0;
+  }
 
-    .nav-link {
-        display: block;
-        padding: 15px;
-        font-size: 18px;
-    }
+  .nav-link {
+    display: block;
+    padding: 15px;
+    font-size: 18px;
+  }
 
-    .hamburger {
-        display: block;
-        cursor: pointer;
-        font-size: 30px;
-        color: #fff;
-    }
+  .hamburger {
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
+    color: #fff;
+  }
 }
 </style>
