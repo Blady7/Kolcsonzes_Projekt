@@ -68,27 +68,20 @@ export default {
 </script>
 
 <style scoped>
-/* 📚 Általános konténer */
 .container {
-  margin-top: 40px; /* Lentebb toltuk a táblázatot */
+  margin-top: 40px;
   text-align: center;
 }
 
-/* 📚 Könyvtári táblázat stílus */
-
-
-
 th {
-  background-color: #c19a6b; /* Világosbarna fejléc */
+  background-color: #c19a6b;
   color: white;
   font-weight: bold;
   text-transform: uppercase;
 }
 
 td {
-  color: #4a3b2d; /* Sötétebb barna betűszín */
+  color: #4a3b2d;
 }
-
-
 </style>
 
