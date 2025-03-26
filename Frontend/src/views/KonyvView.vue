@@ -1,27 +1,22 @@
 <template>
-  <div>
-    <h2>Könyvek listája</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Szerző</th>
-          <th>Cím</th>
-          <th>Évfolyam</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="book in books" :key="book.id">
-          <td>{{ book.id }}</td>
-          <td>{{ book.poet || book.author }}</td>
-          <!-- Ha más a mezőnév -->
-          <td>{{ book.title }}</td>
-          <td>{{ book.groupId || book.group }}</td>
-          <!-- Ha más a mezőnév -->
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Költő</th>
+        <th>Cím</th>
+        <th>Évfolyam</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(book, index) in allBooks" :key="index">
+        <td>{{ book.id }}</td>
+        <td>{{ book.poet }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.groupId }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
@@ -34,7 +29,7 @@ export default {
     };
   },
   mounted() {
-    fetch("/database/csv/books.csv") // Frissítsd az elérési utat!
+    fetch("/database/csv/books.csv") 
       .then((response) => {
         if (!response.ok)
           throw new Error(`HTTP error! status: ${response.status}`);
