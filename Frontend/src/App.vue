@@ -87,13 +87,7 @@ async function Logout() {
 }
 
 html,
-body {
-  height: 100%; /* Teljes magasságot biztosít */
-  background-image: url("https://media.istockphoto.com/id/959104114/vector/light-colored-beige-vintage-paper.jpg?s=612x612&w=0&k=20&c=JvE0rI9Htw-dwm6VlxW7UVbHtxKi_SnMEjpvXfwISa8="); /* Háttérkép URL */
-  background-size: cover; /* A kép kitölti az egész képernyőt */
-  background-position: center; /* Kép középre igazítása */
-  background-repeat: no-repeat; /* Ne ismétlődjön */
-}
+
 
 /* Fejléc és navigáció */
 .wrapper {
