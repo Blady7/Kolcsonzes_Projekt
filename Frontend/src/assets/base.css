@@ -24,3 +24,11 @@
 .my-table tbody tr:nth-child(odd) {
     background-color: #f9f0dd;
   }
+
+  body {
+    background-image: url("https://media.istockphoto.com/id/959104114/vector/light-colored-beige-vintage-paper.jpg?s=612x612&w=0&k=20&c=JvE0rI9Htw-dwm6VlxW7UVbHtxKi_SnMEjpvXfwISa8=");
+    background-size: cover; /* Kitölti az egész képernyőt */
+    background-position: center; /* Középre igazítás */
+    background-repeat: no-repeat; /* Nem ismétlődik */
+    background-attachment: fixed; /* Rögzített háttér, hogy görgetéskor is látszódjon */
+}
