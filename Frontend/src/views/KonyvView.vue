@@ -1,55 +1,81 @@
 <template>
   <div>
-    <table class="my-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Költő</th>
-          <th>Cím</th>
-          <th>Évfolyam</th>
-          <th>Műveletek</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(book, index) in paginatedItems" :key="index">
-          <td>{{ book.id }}</td>
-          <td>{{ book.poet }}</td>
-          <td>{{ book.title }}</td>
-          <td>{{ book.groupId }}</td>
-          <td class="text-nowrap text-center">
-            <OperationsCrud
-              @onClickDeleteButton="onClickDeleteButton"
-              @onClickUpdate="onClickUpdate"
-              @onClickCreate="onClickCreate"
-              :data="item"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <Paginator
-      :totalItems="items.length"
-      :itemsPerPage="20"
-      :currentPage="currentPage"
-      @page-changed="updatePage"
+    <h1 class="text-center my-4">Könyvek</h1>
+    <ErrorMessage
+      :errorMessages="errorMessages"
+      @close="onClickCloseErrorMessage"
     />
-    <Modal
-      :title="title"
-      :yes="yes"
-      :no="no"
-      :size="size"
-      @yesEvent="yesEventHandler"
-    ></Modal>
+    <div>
+      <table class="my-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Költő</th>
+            <th>Cím</th>
+            <th>Évfolyam</th>
+            <th>Műveletek</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in paginatedItems" :key="index">
+            <td>{{ item.id }}</td>
+            <td>{{ item.poet }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.groupId }}</td>
+            <td class="text-nowrap text-center">
+              <Operations
+                @onClickDeleteButton="onClickDeleteButton"
+                @onClickUpdate="onClickUpdate"
+                @onClickCreate="onClickCreate"
+                :data="item"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <Paginator
+        :totalItems="items.length"
+        :itemsPerPage="20"
+        :currentPage="currentPage"
+        @page-changed="updatePage"
+      />
+      <Modal
+        :title="title"
+        :yes="yes"
+        :no="no"
+        :size="size"
+        @yesEvent="yesEventHandler"
+      >
+        <div v-if="state == 'Delete'">
+          {{ messageYesNo }}
+        </div>
+
+        <ItemForm
+          v-if="state == 'Create' || state == 'Update'"
+          :itemForm="item"
+          :debug="debug"
+          @saveItem="saveItemHandler"
+        />
+      </Modal>
+      <div class="d-flex justify-content-center my-3">
+        <div class="pagination-container d-flex">
+          <div
+            v-for="page in totalPages"
+            :key="page"
+            @click="goToPage(page)"
+            :class="['page-box', { 'active-page': currentPage === page }]"
+          >
+            {{ page }}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 class Item {
-  constructor(
-    poet = null,
-    title = null,
-    groupId = null,
-  ) {
+  constructor(poet = null, title = null, groupId = null) {
     this.poet = poet;
     this.title = title;
     this.groupId = groupId;
@@ -58,16 +84,22 @@ class Item {
 import Paginator from "@/components/Paginator.vue";
 import axios from "axios";
 import { BASE_URL } from "../helpers/baseUrls";
-import KonyvForm from "@/components/KonyvForm.vue";
+import ItemForm from "@/components/KonyvForm.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
+import Operations from "@/components/Operations.vue";
+import { useAuthStore } from "@/stores/useAuthStore.js";
+import * as bootstrap from "bootstrap";
+
+
 
 export default {
-  components: { Paginator, KonyvForm, ErrorMessage },
+  components: { Paginator, ItemForm, ErrorMessage, Operations },
   data() {
     return {
       items: [],
       currentPage: 1,
       itemsPerPage: 20,
+      stateAuth: useAuthStore(),
       item: new Item(),
       messageYesNo: null,
       state: "Read",
@@ -88,6 +120,9 @@ export default {
   },
   async mounted() {
     await this.getItems();
+    this.modal = new bootstrap.Modal("#modal", {
+      keyboard: false,
+    });
   },
   methods: {
     async getItems() {
@@ -137,7 +172,6 @@ export default {
       };
       try {
         const response = await axios.post(url, data, { headers });
-        // this.items.push(response.data.data);
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A bővítés nem sikerült.";

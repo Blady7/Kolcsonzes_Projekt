@@ -5,13 +5,13 @@
   >
     <p v-if="debug">{{ itemForm }}</p>
     <div class="col-md-4 position-relative">
-      <label for="tittle" class="form-label">Cím:</label>
+      <label for="title" class="form-label">Cím:</label>
       <input
         type="text"
         class="form-control"
-        id="tittle"
+        id="title"
         required
-        v-model="itemForm.tittle"
+        v-model="itemForm.title"
       />
     </div>
 
@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  props: ["itemForm", "items", "debug"],
+  props: ["itemForm", "debug"],
   emits: ["saveItem"],
   methods: {
     onClickSubmit() {
