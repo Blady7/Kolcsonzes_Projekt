@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(book, index) in paginatedBooks" :key="index">
+        <tr v-for="(book, index) in paginatedItems" :key="index">
           <td>{{ book.id }}</td>
           <td>{{ book.poet }}</td>
           <td>{{ book.title }}</td>
@@ -20,7 +20,7 @@
     </table>
 
     <Paginator 
-      :totalItems="books.length" 
+      :totalItems="items.length" 
       :itemsPerPage="20"
       :currentPage="currentPage"
       @page-changed="updatePage"
@@ -37,25 +37,25 @@ export default {
   components: { Paginator },
   data() {
     return {
-      books: [],
+      items: [],
       currentPage: 1,
       itemsPerPage: 20,
     };
   },
   computed: {
-    paginatedBooks() {
+    paginatedItems() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
-      return this.books.slice(start, start + this.itemsPerPage);
+      return this.items.slice(start, start + this.itemsPerPage);
     },
   },
   async mounted() {
-    await this.getBooks();
+    await this.getItems();
   },
   methods: {
-    async getBooks() {
+    async getItems() {
       try {
         const response = await axios.get(`${BASE_URL}/books`);
-        this.books = response.data.data;
+        this.items = response.data.data;
       } catch (error) {
         console.error("Hiba történt az adatok lekérése közben:", error);
       }
