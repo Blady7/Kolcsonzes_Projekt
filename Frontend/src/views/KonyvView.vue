@@ -83,6 +83,7 @@ class Item {
 }
 import Paginator from "@/components/Paginator.vue";
 import axios from "axios";
+import { DEBUG } from "../helpers/debug";
 import { BASE_URL } from "../helpers/baseUrls";
 import ItemForm from "@/components/KonyvForm.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
@@ -111,12 +112,16 @@ export default {
       modal: null,
       selectedRowId: null,
       urlApi: `${BASE_URL}/books`,
+      debug: DEBUG,
     };
   },
   computed: {
     paginatedItems() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       return this.items.slice(start, start + this.itemsPerPage);
+    },
+    totalPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage);
     },
   },
   async mounted() {
