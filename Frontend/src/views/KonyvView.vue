@@ -110,6 +110,7 @@ export default {
       errorMessages: null,
       modal: null,
       selectedRowId: null,
+      urlApi: `${BASE_URL}/books`,
     };
   },
   computed: {
