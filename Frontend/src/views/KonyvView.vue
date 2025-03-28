@@ -49,6 +49,7 @@
         :no="no"
         :size="size"
         @yesEvent="yesEventHandler"
+        v-if="showModal"
       >
         <div v-if="state == 'Delete'">
           {{ messageYesNo }}
@@ -87,7 +88,7 @@ import ItemForm from "@/components/KonyvForm.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Operations from "@/components/Operations.vue";
 import { useAuthStore } from "@/stores/useAuthStore.js";
-import { Modal } from "bootstrap";
+import Modal from "@/components/Modal.vue";  // Frissített Modal import
 
 class Item {
   constructor(poet = null, title = null, groupId = null) {
@@ -98,7 +99,7 @@ class Item {
 }
 
 export default {
-  components: { Paginator, ItemForm, ErrorMessage, Operations },
+  components: { Paginator, ItemForm, ErrorMessage, Operations, Modal },
   data() {
     return {
       items: [],
@@ -113,10 +114,10 @@ export default {
       no: null,
       size: null,
       errorMessages: null,
-      modalInstance: null,
       selectedRowId: null,
       urlApi: `${BASE_URL}/books`,
       debug: DEBUG,
+      showModal: false,  // Egyszerűsített flag a modal megjelenítéshez
     };
   },
   computed: {
@@ -130,7 +131,7 @@ export default {
   },
   async mounted() {
     await this.getItems();
-    this.modalInstance = new Modal(this.$refs.modal.$el, { keyboard: false });
+    // Töröltük a modalInstance kezelését, mert most a Modal komponens kezeli
   },
   methods: {
     async getItems() {
@@ -189,32 +190,35 @@ export default {
 
     onClickDeleteButton(item) {
       this.state = "Delete";
+      this.selectedRowId = item.id;
       this.title = "Törlés";
       this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} nevű könyvet?`;
       this.yes = "Igen";
       this.no = "Nem";
       this.size = null;
-      this.showModal();
+      this.showModal = true;
     },
 
     onClickUpdate(item) {
       this.state = "Update";
+      this.selectedRowId = item.id;
       this.title = "Könyv módosítása";
       this.yes = null;
       this.no = "Mégsem";
       this.size = "lg";
       this.item = { ...item };
-      this.showModal();
+      this.showModal = true;
     },
 
     onClickCreate() {
       this.state = "Create";
+      this.selectedRowId = null;
       this.title = "Új könyv bevitele";
       this.yes = null;
       this.no = "Mégsem";
       this.size = "lg";
       this.item = new Item();
-      this.showModal();
+      this.showModal = true;
     },
 
     onClickCloseErrorMessage() {
@@ -231,16 +235,8 @@ export default {
       this.hideModal();
     },
 
-    showModal() {
-      if (this.modalInstance) {
-        this.modalInstance.show();
-      }
-    },
-
     hideModal() {
-      if (this.modalInstance) {
-        this.modalInstance.hide();
-      }
+      this.showModal = false;
     },
 
     goToPage(page) {
