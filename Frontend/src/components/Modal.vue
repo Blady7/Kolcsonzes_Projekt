@@ -1,6 +1,7 @@
 <template>
   <!-- Modal -->
   <div
+    v-if="isVisible"
     class="modal fade"
     id="modal"
     tabindex="-1"
@@ -19,7 +20,7 @@
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
+            @click="closeModal"
             aria-label="Close"
           ></button>
         </div>
@@ -30,8 +31,8 @@
           <button
             type="button"
             class="btn btn-secondary"
-            data-bs-dismiss="modal"
             v-if="no"
+            @click="onClickNoButton"
           >
             {{ no }}
           </button>
@@ -39,8 +40,7 @@
             type="button"
             class="btn btn-primary"
             v-if="yes"
-            @click="onClickYesButton()"
-            data-bs-dismiss="modal"
+            @click="onClickYesButton"
           >
             {{ yes }}
           </button>
@@ -52,14 +52,19 @@
 
 <script>
 export default {
-  props: ["title", "yes", "no", "size"],
-  emits: ["yesEvent", "noEvent"],
+  props: ["title", "yes", "no", "size", "isVisible"],
+  emits: ["yesEvent", "noEvent", "close"],
 
   methods: {
     onClickYesButton() {
       this.$emit("yesEvent");
     },
-
+    onClickNoButton() {
+      this.$emit("noEvent");
+    },
+    closeModal() {
+      this.$emit("close");
+    }
   },
 };
 </script>

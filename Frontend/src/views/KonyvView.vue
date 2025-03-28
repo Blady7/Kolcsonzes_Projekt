@@ -5,6 +5,7 @@
       :errorMessages="errorMessages"
       @close="onClickCloseErrorMessage"
     />
+
     <div>
       <table class="my-table">
         <thead>
@@ -33,13 +34,16 @@
           </tr>
         </tbody>
       </table>
+
       <Paginator
         :totalItems="items.length"
         :itemsPerPage="20"
         :currentPage="currentPage"
         @page-changed="updatePage"
       />
+
       <Modal
+        ref="modal"
         :title="title"
         :yes="yes"
         :no="no"
@@ -57,6 +61,7 @@
           @saveItem="saveItemHandler"
         />
       </Modal>
+
       <div class="d-flex justify-content-center my-3">
         <div class="pagination-container d-flex">
           <div
@@ -74,13 +79,6 @@
 </template>
 
 <script>
-class Item {
-  constructor(poet = null, title = null, groupId = null) {
-    this.poet = poet;
-    this.title = title;
-    this.groupId = groupId;
-  }
-}
 import Paginator from "@/components/Paginator.vue";
 import axios from "axios";
 import { DEBUG } from "../helpers/debug";
@@ -89,9 +87,15 @@ import ItemForm from "@/components/KonyvForm.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Operations from "@/components/Operations.vue";
 import { useAuthStore } from "@/stores/useAuthStore.js";
-import * as bootstrap from "bootstrap";
+import { Modal } from "bootstrap";
 
-
+class Item {
+  constructor(poet = null, title = null, groupId = null) {
+    this.poet = poet;
+    this.title = title;
+    this.groupId = groupId;
+  }
+}
 
 export default {
   components: { Paginator, ItemForm, ErrorMessage, Operations },
@@ -109,7 +113,7 @@ export default {
       no: null,
       size: null,
       errorMessages: null,
-      modal: null,
+      modalInstance: null,
       selectedRowId: null,
       urlApi: `${BASE_URL}/books`,
       debug: DEBUG,
@@ -126,9 +130,7 @@ export default {
   },
   async mounted() {
     await this.getItems();
-    this.modal = new bootstrap.Modal("#modal", {
-      keyboard: false,
-    });
+    this.modalInstance = new Modal(this.$refs.modal.$el, { keyboard: false });
   },
   methods: {
     async getItems() {
@@ -144,41 +146,22 @@ export default {
     },
 
     async deleteItemById() {
-      const id = this.selectedRowId;
-      const token = this.stateAuth.token;
-
-      const url = `${this.urlApi}/${id}`;
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-
       try {
-        const response = await axios.delete(url, { headers });
-        this.getCollections();
+        await axios.delete(`${this.urlApi}/${this.selectedRowId}`, {
+          headers: { Authorization: `Bearer ${this.stateAuth.token}` },
+        });
+        this.getItems();
       } catch (error) {
         this.errorMessages = "A könyv nem törölhető";
       }
     },
 
     async createItem() {
-      const token = this.stateAuth.token;
-      const url = this.urlApi;
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-
-      const data = {
-        poet: this.item.poet,
-        title: this.item.title,
-        groupId: this.item.groupId,
-      };
       try {
-        const response = await axios.post(url, data, { headers });
-        this.getCollections();
+        await axios.post(this.urlApi, this.item, {
+          headers: { Authorization: `Bearer ${this.stateAuth.token}` },
+        });
+        this.getItems();
       } catch (error) {
         this.errorMessages = "A bővítés nem sikerült.";
       }
@@ -186,33 +169,11 @@ export default {
     },
 
     async updateItem() {
-      this.loading = true;
-      const id = this.selectedRowId;
-      const url = `${this.urlApi}/${id}`;
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.stateAuth.token}`,
-      };
-    },
-    async updateItem() {
-      this.loading = true;
-      const id = this.selectedRowId;
-      const url = `${this.urlApi}/${id}`;
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.stateAuth.token}`,
-      };
-
-      const data = {
-        poet: this.item.poet,
-        title: this.item.title,
-        groupId: this.item.groupId,
-      };
       try {
-        const response = await axios.patch(url, data, { headers });
-        this.getCollections();
+        await axios.patch(`${this.urlApi}/${this.selectedRowId}`, this.item, {
+          headers: { Authorization: `Bearer ${this.stateAuth.token}` },
+        });
+        this.getItems();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
       }
@@ -222,8 +183,8 @@ export default {
     yesEventHandler() {
       if (this.state == "Delete") {
         this.deleteItemById();
-        this.goToPage(1);
       }
+      this.hideModal();
     },
 
     onClickDeleteButton(item) {
@@ -233,6 +194,7 @@ export default {
       this.yes = "Igen";
       this.no = "Nem";
       this.size = null;
+      this.showModal();
     },
 
     onClickUpdate(item) {
@@ -242,24 +204,21 @@ export default {
       this.no = "Mégsem";
       this.size = "lg";
       this.item = { ...item };
+      this.showModal();
     },
 
     onClickCreate() {
+      this.state = "Create";
       this.title = "Új könyv bevitele";
       this.yes = null;
       this.no = "Mégsem";
       this.size = "lg";
-      this.state = "Create";
       this.item = new Item();
-    },
-
-    onClickTr(id) {
-      this.selectedRowId = id;
+      this.showModal();
     },
 
     onClickCloseErrorMessage() {
       this.errorMessages = null;
-      this.loading = false;
       this.state = "Read";
     },
 
@@ -269,8 +228,19 @@ export default {
       } else if (this.state === "Create") {
         this.createItem();
       }
+      this.hideModal();
+    },
 
-      this.modal.hide();
+    showModal() {
+      if (this.modalInstance) {
+        this.modalInstance.show();
+      }
+    },
+
+    hideModal() {
+      if (this.modalInstance) {
+        this.modalInstance.hide();
+      }
     },
 
     goToPage(page) {
