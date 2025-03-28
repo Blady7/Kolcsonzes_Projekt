@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1 class="text-center my-4">Könyvek</h1>
+      <h1 class="text-center my-4">Diákok</h1>
       <ErrorMessage
         :errorMessages="errorMessages"
         @close="onClickCloseErrorMessage"
