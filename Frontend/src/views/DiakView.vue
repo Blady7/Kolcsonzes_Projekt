@@ -1,45 +1,61 @@
 <template>
     <div>
-      <table class="my-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Név</th>
-            <th>Osztály</th>
-            <th>Email</th>
-            <th>Műveletek</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(user, index) in paginatedItems" :key="index">
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.groupId }}</td>
-            <td>{{ user.email }}</td>
-            <td class="text-nowrap text-center">
-              <OperationsCrud
-                @onClickDeleteButton="onClickDeleteButton(user)"
-                @onClickUpdate="onClickUpdate(user)"
-                @onClickCreate="onClickCreate"
-                :data="user"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <Paginator
-        :totalItems="items.length"
-        :itemsPerPage="20"
-        :currentPage="currentPage"
-        @page-changed="updatePage"
+      <h1 class="text-center my-4">Könyvek</h1>
+      <ErrorMessage
+        :errorMessages="errorMessages"
+        @close="onClickCloseErrorMessage"
       />
-      <Modal
-        :title="title"
-        :yes="yes"
-        :no="no"
-        :size="size"
-        @yesEvent="yesEventHandler"
-      />
+      <div>
+        <table class="my-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Költő</th>
+              <th>Cím</th>
+              <th>Évfolyam</th>
+              <th>Műveletek</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in paginatedItems" :key="item.id || index">
+              <td>{{ item.id }}</td>
+              <td>{{ item.poet }}</td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.groupId }}</td>
+              <td class="text-nowrap text-center">
+                <Operations
+                  @onClickDeleteButton="onClickDeleteButton(item)"
+                  @onClickUpdate="onClickUpdate(item)"
+                  @onClickCreate="onClickCreate"
+                  :data="item"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <Paginator
+          :totalItems="items.length"
+          :itemsPerPage="itemsPerPage"
+          :currentPage="currentPage"
+          @page-changed="updatePage"
+        />
+        <Modal
+          :title="title"
+          :yes="yes"
+          :no="no"
+          :size="size"
+          @yesEvent="yesEventHandler"
+        >
+          <div v-if="state == 'Delete'">
+            {{ messageYesNo }}
+          </div>
+          <ItemForm
+            v-if="state == 'Create' || state == 'Update'"
+            :itemForm="item"
+            @saveItem="saveItemHandler"
+          />
+        </Modal>
+      </div>
     </div>
   </template>
   
@@ -47,25 +63,20 @@
   import Paginator from "@/components/Paginator.vue";
   import axios from "axios";
   import { BASE_URL } from "../helpers/baseUrls";
-  import DiakForm from "@/components/DiakForm.vue";
+  import ItemForm from "@/components/KonyvForm.vue";
   import ErrorMessage from "@/components/ErrorMessage.vue";
-  
-  class Item {
-    constructor(poet = null, title = null, groupId = null) {
-      this.poet = poet;
-      this.title = title;
-      this.groupId = groupId;
-    }
-  }
+  import Operations from "@/components/Operations.vue";
+  import { useAuthStore } from "@/stores/useAuthStore.js";
   
   export default {
-    components: { Paginator, DiakForm, ErrorMessage },
+    components: { Paginator, ItemForm, ErrorMessage, Operations },
     data() {
       return {
         items: [],
         currentPage: 1,
         itemsPerPage: 20,
-        item: new Item(),
+        item: {},
+        stateAuth: useAuthStore(),
         messageYesNo: null,
         state: "Read",
         title: null,
@@ -73,9 +84,8 @@
         no: null,
         size: null,
         errorMessages: null,
-        modal: null,
         selectedRowId: null,
-        token: localStorage.getItem("token") || "", // Token betöltése localStorage-ból
+        token: localStorage.getItem("token") || "",
       };
     },
     computed: {
@@ -89,11 +99,15 @@
     },
     methods: {
       async getItems() {
+        if (!this.token) {
+          console.error("Hiba: nincs token!");
+          return;
+        }
         try {
-          const response = await axios.get(`${BASE_URL}/users`, {
+          const response = await axios.get(`${BASE_URL}/books`, {
             headers: { Authorization: `Bearer ${this.token}` },
           });
-          this.items = response.data.data;
+          this.items = response.data?.data || [];
         } catch (error) {
           console.error("Hiba történt az adatok lekérése közben:", error);
         }
@@ -106,38 +120,42 @@
       async deleteItemById() {
         if (!this.selectedRowId) return;
         try {
-          await axios.delete(`${BASE_URL}/users/${this.selectedRowId}`, {
+          await axios.delete(`${BASE_URL}/books/${this.selectedRowId}`, {
             headers: { Authorization: `Bearer ${this.token}` },
           });
-          this.getItems();
+          this.items = this.items.filter(item => item.id !== this.selectedRowId);
+          this.selectedRowId = null;
         } catch (error) {
-          this.errorMessages = "A könyv nem törölhető";
+          this.errorMessages = "A könyv nem törölhető.";
         }
       },
   
       async createItem() {
+        if (!this.token) return;
         try {
-          await axios.post(`${BASE_URL}/users`, this.item, {
+          const response = await axios.post(`${BASE_URL}/books`, this.item, {
             headers: { Authorization: `Bearer ${this.token}` },
           });
-          this.getItems();
+          this.items.push(response.data);
+          this.state = "Read";
         } catch (error) {
           this.errorMessages = "A bővítés nem sikerült.";
         }
-        this.state = "Read";
       },
   
       async updateItem() {
         if (!this.selectedRowId) return;
         try {
-          await axios.patch(`${BASE_URL}/users/${this.selectedRowId}`, this.item, {
+          await axios.patch(`${BASE_URL}/books/${this.selectedRowId}`, this.item, {
             headers: { Authorization: `Bearer ${this.token}` },
           });
-          this.getItems();
+          this.items = this.items.map(item =>
+            item.id === this.selectedRowId ? { ...item, ...this.item } : item
+          );
+          this.state = "Read";
         } catch (error) {
           this.errorMessages = "A módosítás nem sikerült.";
         }
-        this.state = "Read";
       },
   
       yesEventHandler() {
@@ -150,7 +168,7 @@
         this.state = "Delete";
         this.selectedRowId = item.id;
         this.title = "Törlés";
-        this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} nevű könyvet?`;
+        this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} könyvet?`;
         this.yes = "Igen";
         this.no = "Nem";
       },
@@ -166,14 +184,10 @@
   
       onClickCreate() {
         this.state = "Create";
-        this.item = new Item();
+        this.item = {};
         this.title = "Új könyv bevitele";
         this.no = "Mégsem";
         this.size = "lg";
-      },
-  
-      onClickTr(id) {
-        this.selectedRowId = id;
       },
   
       onClickCloseErrorMessage() {
@@ -193,11 +207,6 @@
   </script>
   
   <style scoped>
-  .container {
-    margin-top: 40px;
-    text-align: center;
-  }
-  
   th {
     background-color: #c19a6b;
     color: white;
