@@ -4,7 +4,6 @@
     <p class="home-description">
       Fedezze fel könyvek széles választékát, és merüljön el az olvasás világában.
     </p>
-    <Counter />
   </div>
 </template>
 

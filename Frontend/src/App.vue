@@ -4,9 +4,11 @@ import { useCounterStore } from "@/stores/counter";
 import { useAuthStore } from "@/stores/useAuthStore.js";
 import axios from "axios";
 import { BASE_URL } from "@/helpers/baseUrls";
+import { useRouter } from 'vue-router'; // Importáld a useRouter hook-ot
 
 const state = useCounterStore();
 const stateAuth = useAuthStore();
+const router = useRouter(); // Inicializáld a routert
 
 async function Logout() {
   const url = `${BASE_URL}/users/logout`;
@@ -20,13 +22,12 @@ async function Logout() {
     console.error("Error:", error);
   }
   stateAuth.clearStoredData();
-  this.$router.push("/");
+  router.push('/'); // Használd a router.push-t a navigációhoz
 }
 </script>
 
 <template>
   <div class="container-fluid p-0">
-    <!-- Fejléc -->
     <header>
       <div class="wrapper">
         <div class="logo">
@@ -40,7 +41,7 @@ async function Logout() {
               </RouterLink>
             </li>
             <li>
-              <RouterLink to="/diákok" class="nav-link" v-if="stateAuth.user">
+              <RouterLink to="/diakok" class="nav-link" v-if="stateAuth.user">
                 Diákok <i class="bi bi-person-lines-fill"></i>
               </RouterLink>
             </li>
@@ -73,7 +74,6 @@ async function Logout() {
       </div>
     </header>
 
-    <!-- Tartalom -->
     <RouterView />
   </div>
 </template>

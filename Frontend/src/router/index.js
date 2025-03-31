@@ -41,8 +41,8 @@ const router = createRouter({
       component: () => import('../views/KonyvView.vue'),
     },
     {
-      path: '/diákok',
-      name: 'diákok',
+      path: '/diakok',
+      name: 'diakok',
       component: () => import('../views/DiakView.vue'),
     },
     {

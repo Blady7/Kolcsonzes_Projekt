@@ -10,18 +10,18 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Költő</th>
-            <th>Cím</th>
-            <th>Évfolyam</th>
+            <th>Név</th>
+            <th>Osztály</th>
+            <th>Email</th>
             <th>Műveletek</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in paginatedItems" :key="item.id || index">
             <td>{{ item.id }}</td>
-            <td>{{ item.poet }}</td>
-            <td>{{ item.title }}</td>
+            <td>{{ item.name }}</td>
             <td>{{ item.groupId }}</td>
+            <td>{{ item.email }}</td>
             <td class="text-nowrap text-center">
               <Operations
                 @onClickDeleteButton="onClickDeleteButton(item)"
@@ -63,7 +63,7 @@
 import Paginator from "@/components/Paginator.vue";
 import axios from "axios";
 import { BASE_URL } from "../helpers/baseUrls";
-import ItemForm from "@/components/KonyvForm.vue";
+import ItemForm from "@/components/DiakForm.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Operations from "@/components/Operations.vue";
 import { useAuthStore } from "@/stores/useAuthStore.js";
@@ -102,7 +102,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.get(`${BASE_URL}/books`, {
+        const response = await axios.get(`${BASE_URL}/users`, {
           headers: { Authorization: `Bearer ${this.token}` },
         });
         this.items = response.data?.data || [];
@@ -120,7 +120,7 @@ export default {
     async deleteItemById() {
       if (!this.selectedRowId) return;
       try {
-        await axios.delete(`${BASE_URL}/books/${this.selectedRowId}`, {
+        await axios.delete(`${BASE_URL}/users/${this.selectedRowId}`, {
           headers: { Authorization: `Bearer ${this.token}` },
         });
         this.items = this.items.filter(
@@ -128,14 +128,14 @@ export default {
         );
         this.selectedRowId = null;
       } catch (error) {
-        this.errorMessages = "A könyv nem törölhető.";
+        this.errorMessages = "A diák nem törölhető.";
       }
     },
 
     async createItem() {
       if (!this.token) return;
       try {
-        const response = await axios.post(`${BASE_URL}/books`, this.item, {
+        const response = await axios.post(`${BASE_URL}/users`, this.item, {
           headers: { Authorization: `Bearer ${this.token}` },
         });
         this.items.push(response.data);
@@ -149,7 +149,7 @@ export default {
       if (!this.selectedRowId) return;
       try {
         await axios.patch(
-          `${BASE_URL}/books/${this.selectedRowId}`,
+          `${BASE_URL}/users/${this.selectedRowId}`,
           this.item,
           {
             headers: { Authorization: `Bearer ${this.token}` },
@@ -174,7 +174,7 @@ export default {
       this.state = "Delete";
       this.selectedRowId = item.id;
       this.title = "Törlés";
-      this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} könyvet?`;
+      this.messageYesNo = `Valóban törölni akarod a(z) ${item.name} nevű diákot?`;
       this.yes = "Igen";
       this.no = "Nem";
     },
@@ -183,7 +183,7 @@ export default {
       this.state = "Update";
       this.selectedRowId = item.id;
       this.item = { ...item };
-      this.title = "Könyv módosítása";
+      this.title = "Diák módosítása";
       this.no = "Mégsem";
       this.size = "lg";
     },
@@ -191,7 +191,7 @@ export default {
     onClickCreate() {
       this.state = "Create";
       this.item = {};
-      this.title = "Új könyv bevitele";
+      this.title = "Új diák bevitele";
       this.no = "Mégsem";
       this.size = "lg";
     },
