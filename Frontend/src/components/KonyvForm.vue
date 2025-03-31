@@ -4,6 +4,17 @@
     class="row g-3 needs-validation was-validated"
   >
     <p v-if="debug">{{ itemForm }}</p>
+    
+    <div class="col-md-2 position-relative">
+      <label for="poet" class="form-label">Költő:</label>
+      <input
+      type="text"
+      class="form-control"
+      id="poet"
+      required
+      v-model="itemForm.poet"
+      />
+    </div>
     <div class="col-md-4 position-relative">
       <label for="title" class="form-label">Cím:</label>
       <input
@@ -14,18 +25,7 @@
         v-model="itemForm.title"
       />
     </div>
-
-    <div class="col-md-2 position-relative">
-      <label for="poet" class="form-label">író:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="poet"
-        required
-        v-model="itemForm.poet"
-      />
-    </div>
-
+    
     <div class="col-md-2 position-relative">
       <label for="groupId" class="form-label">Évfolyam:</label>
       <input

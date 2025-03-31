@@ -1,10 +1,10 @@
 <template>
-  <!-- Modal -->
   <div
-    v-if="isVisible"
     class="modal fade"
     id="modal"
     tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="none"
   >
     <div
       class="modal-dialog modal-dialog-centered"
@@ -20,8 +20,9 @@
           <button
             type="button"
             class="btn-close"
-            @click="closeModal"
+            data-bs-dismiss="modal"
             aria-label="Close"
+            @click="closeModal"
           ></button>
         </div>
         <div class="modal-body">
@@ -31,6 +32,7 @@
           <button
             type="button"
             class="btn btn-secondary"
+            data-bs-dismiss="modal"
             v-if="no"
             @click="onClickNoButton"
           >
@@ -51,20 +53,37 @@
 </template>
 
 <script>
-export default {
-  props: ["title", "yes", "no", "size", "isVisible"],
-  emits: ["yesEvent", "noEvent", "close"],
+import { Modal } from 'bootstrap'; // Importáld a Bootstrap Modal osztályt
 
+export default {
+  props: ["title", "yes", "no", "size"],
+  emits: ["yesEvent", "noEvent", "close"],
+  data() {
+    return {
+      modalInstance: null,
+    };
+  },
+  mounted() {
+    this.modalInstance = new Modal(this.$el); // Inicializáld a Bootstrap Modal-t a komponens root elemén
+  },
   methods: {
+    show() {
+      this.modalInstance.show(); // Bootstrap modal megjelenítése
+    },
+    hide() {
+      this.modalInstance.hide(); // Bootstrap modal elrejtése
+    },
     onClickYesButton() {
       this.$emit("yesEvent");
     },
     onClickNoButton() {
       this.$emit("noEvent");
+      this.hide(); // Automatikus elrejtés "Nem" gombra kattintva
     },
     closeModal() {
       this.$emit("close");
-    }
+      this.hide(); // Automatikus elrejtés a bezár gombra kattintva
+    },
   },
 };
 </script>

@@ -43,13 +43,13 @@
       />
 
       <Modal
-        ref="modal"
+        ref="myModal"
         :title="title"
         :yes="yes"
         :no="no"
         :size="size"
         @yesEvent="yesEventHandler"
-        v-if="showModal"
+        @close="hideModal"
       >
         <div v-if="state == 'Delete'">
           {{ messageYesNo }}
@@ -88,7 +88,7 @@ import ItemForm from "@/components/KonyvForm.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Operations from "@/components/Operations.vue";
 import { useAuthStore } from "@/stores/useAuthStore.js";
-import Modal from "@/components/Modal.vue";  // Frissített Modal import
+import Modal from "@/components/Modal.vue"; // Frissített Modal import
 
 class Item {
   constructor(poet = null, title = null, groupId = null) {
@@ -117,7 +117,7 @@ export default {
       selectedRowId: null,
       urlApi: `${BASE_URL}/books`,
       debug: DEBUG,
-      showModal: false,  // Egyszerűsített flag a modal megjelenítéshez
+      showModal: false, // Egyszerűsített flag a modal megjelenítéshez
     };
   },
   computed: {
@@ -196,7 +196,7 @@ export default {
       this.yes = "Igen";
       this.no = "Nem";
       this.size = null;
-      this.showModal = true;
+      this.$refs.myModal.show(); // Modal megjelenítése
     },
 
     onClickUpdate(item) {
@@ -207,7 +207,7 @@ export default {
       this.no = "Mégsem";
       this.size = "lg";
       this.item = { ...item };
-      this.showModal = true;
+      this.$refs.myModal.show(); // Modal megjelenítése
     },
 
     onClickCreate() {
@@ -218,7 +218,11 @@ export default {
       this.no = "Mégsem";
       this.size = "lg";
       this.item = new Item();
-      this.showModal = true;
+      this.$refs.myModal.show(); // Modal megjelenítése
+    },
+
+    hideModal() {
+      this.$refs.myModal.hide(); // Modal elrejtése
     },
 
     onClickCloseErrorMessage() {
@@ -233,10 +237,6 @@ export default {
         this.createItem();
       }
       this.hideModal();
-    },
-
-    hideModal() {
-      this.showModal = false;
     },
 
     goToPage(page) {
