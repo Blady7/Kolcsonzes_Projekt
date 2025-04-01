@@ -186,6 +186,7 @@ export default {
         this.deleteItemById();
       }
       this.hideModal();
+      this.getItems(); // Könyvlista frissítése
     },
 
     onClickDeleteButton(item) {
@@ -237,6 +238,7 @@ export default {
         this.createItem();
       }
       this.hideModal();
+      this.getItems(); // Könyvlista frissítése
     },
 
     goToPage(page) {

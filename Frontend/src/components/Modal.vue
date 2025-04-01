@@ -4,7 +4,7 @@
     id="modal"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
-    aria-hidden="none"
+    :inert="!isOpen"
   >
     <div
       class="modal-dialog modal-dialog-centered"
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { Modal } from 'bootstrap'; // Importáld a Bootstrap Modal osztályt
+import { Modal } from "bootstrap"; // Importáld a Bootstrap Modal osztályt
 
 export default {
   props: ["title", "yes", "no", "size"],
@@ -61,17 +61,29 @@ export default {
   data() {
     return {
       modalInstance: null,
+      isOpen: false, // Nyitott állapot figyelése
+      triggerButton: null, // Eltároljuk a modált megnyitó elemet
     };
   },
   mounted() {
-    this.modalInstance = new Modal(this.$el); // Inicializáld a Bootstrap Modal-t a komponens root elemén
+    this.modalInstance = new Modal(this.$el);
+    this.$el.addEventListener("hidden.bs.modal", this.onHidden);
   },
   methods: {
+    onHidden() {
+      document.body.classList.remove("modal-open");
+      const backdrop = document.querySelector(".modal-backdrop");
+      if (backdrop) backdrop.remove();
+    },
     show() {
+      this.triggerButton = document.activeElement; // Elmentjük a fókuszban lévő elemet
       this.modalInstance.show(); // Bootstrap modal megjelenítése
+      this.isOpen = true;
     },
     hide() {
       this.modalInstance.hide(); // Bootstrap modal elrejtése
+      this.isOpen = false;
+      this.restoreFocus(); // Visszaállítjuk a fókuszt
     },
     onClickYesButton() {
       this.$emit("yesEvent");
@@ -83,6 +95,11 @@ export default {
     closeModal() {
       this.$emit("close");
       this.hide(); // Automatikus elrejtés a bezár gombra kattintva
+    },
+    restoreFocus() {
+      if (this.triggerButton) {
+        this.triggerButton.focus(); // Visszaállítjuk a fókuszt az előző elemre
+      }
     },
   },
 };
