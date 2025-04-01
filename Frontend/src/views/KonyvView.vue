@@ -43,13 +43,11 @@
       />
 
       <Modal
-        ref="myModal"
         :title="title"
         :yes="yes"
         :no="no"
         :size="size"
         @yesEvent="yesEventHandler"
-        @close="hideModal"
       >
         <div v-if="state == 'Delete'">
           {{ messageYesNo }}
@@ -89,6 +87,7 @@ import ErrorMessage from "@/components/ErrorMessage.vue";
 import Operations from "@/components/Operations.vue";
 import { useAuthStore } from "@/stores/useAuthStore.js";
 import Modal from "@/components/Modal.vue"; // Frissített Modal import
+import * as bootstrap from "bootstrap";
 
 class Item {
   constructor(poet = null, title = null, groupId = null) {
@@ -102,6 +101,7 @@ export default {
   components: { Paginator, ItemForm, ErrorMessage, Operations, Modal },
   data() {
     return {
+      modal: null,
       items: [],
       currentPage: 1,
       itemsPerPage: 20,
@@ -132,6 +132,9 @@ export default {
   async mounted() {
     await this.getItems();
     // Töröltük a modalInstance kezelését, mert most a Modal komponens kezeli
+    this.modal = new bootstrap.Modal("#modal", {
+      keyboard: false,
+    });
   },
   methods: {
     async getItems() {
@@ -185,7 +188,7 @@ export default {
       if (this.state == "Delete") {
         this.deleteItemById();
       }
-      this.hideModal();
+      // this.hideModal();
       this.getItems(); // Könyvlista frissítése
     },
 
@@ -197,7 +200,7 @@ export default {
       this.yes = "Igen";
       this.no = "Nem";
       this.size = null;
-      this.$refs.myModal.show(); // Modal megjelenítése
+      //this.$refs.myModal.show(); // Modal megjelenítése
     },
 
     onClickUpdate(item) {
@@ -208,7 +211,7 @@ export default {
       this.no = "Mégsem";
       this.size = "lg";
       this.item = { ...item };
-      this.$refs.myModal.show(); // Modal megjelenítése
+      //this.$refs.myModal.show(); // Modal megjelenítése
     },
 
     onClickCreate() {
@@ -219,11 +222,7 @@ export default {
       this.no = "Mégsem";
       this.size = "lg";
       this.item = new Item();
-      this.$refs.myModal.show(); // Modal megjelenítése
-    },
-
-    hideModal() {
-      this.$refs.myModal.hide(); // Modal elrejtése
+      //this.$refs.myModal.show(); // Modal megjelenítése
     },
 
     onClickCloseErrorMessage() {
@@ -237,8 +236,9 @@ export default {
       } else if (this.state === "Create") {
         this.createItem();
       }
-      this.hideModal();
+      // this.hideModal();
       this.getItems(); // Könyvlista frissítése
+      this.modal.hide();
     },
 
     goToPage(page) {
