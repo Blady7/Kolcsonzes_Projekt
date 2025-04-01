@@ -46,9 +46,14 @@ const router = createRouter({
       component: () => import('../views/DiakView.vue'),
     },
     {
-      path: '/olvasónapló',
-      name: 'olvasónapló',
+      path: '/olvasonaplo',
+      name: 'olvasonaplo',
       component: () => import('../views/OlvasonaploView.vue'),
+    },
+    {
+      path: '/evfolyamok',
+      name: 'evfolyamok',
+      component: () => import('../views/EvfolyamView.vue'),
     },
     
   ],

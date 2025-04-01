@@ -34,14 +34,11 @@
           </tr>
         </tbody>
       </table>
-
       <Paginator
         :totalItems="items.length"
         :itemsPerPage="20"
         :currentPage="currentPage"
-        @page-changed="updatePage"
       />
-
       <Modal
         :title="title"
         :yes="yes"
@@ -117,55 +114,76 @@ export default {
       selectedRowId: null,
       urlApi: `${BASE_URL}/books`,
       debug: DEBUG,
-      showModal: false, // Egyszerűsített flag a modal megjelenítéshez
     };
   },
   computed: {
     paginatedItems() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
-      return this.items.slice(start, start + this.itemsPerPage);
+      const end = start + this.itemsPerPage;
+      return this.items.slice(start, end);
     },
     totalPages() {
       return Math.ceil(this.items.length / this.itemsPerPage);
     },
   },
-  async mounted() {
-    await this.getItems();
-    // Töröltük a modalInstance kezelését, mert most a Modal komponens kezeli
+   mounted() {
+    this.getCollections();
     this.modal = new bootstrap.Modal("#modal", {
       keyboard: false,
     });
   },
   methods: {
-    async getItems() {
+    async getCollections() {
+      const url = this.urlApi;
+      const headers = {
+        Accept: "application/json",
+      };
       try {
-        const response = await axios.get(`${BASE_URL}/books`);
+        const response = await axios.get(url, headers);
         this.items = response.data.data;
+        this.loading = false;
       } catch (error) {
-        console.error("Hiba történt az adatok lekérése közben:", error);
+        this.errorMessages = "Szerver hiba";
       }
-    },
-    updatePage(page) {
-      this.currentPage = page;
     },
 
     async deleteItemById() {
+      const id = this.selectedRowId;
+      const token = this.stateAuth.token;
+
+      const url = `${this.urlApi}/${id}`;
+      const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
       try {
-        await axios.delete(`${this.urlApi}/${this.selectedRowId}`, {
-          headers: { Authorization: `Bearer ${this.stateAuth.token}` },
-        });
-        this.getItems();
+        const response = await axios.delete(url, { headers });
+        this.getCollections();
       } catch (error) {
-        this.errorMessages = "A könyv nem törölhető";
+        this.errorMessages =
+          "A könyv nem törölhető";
       }
     },
 
     async createItem() {
+      const token = this.stateAuth.token;
+      const url = this.urlApi;
+      const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      const data = {
+        poet: this.item.poet,
+        title: this.item.title,
+        groupId: this.item.groupId,
+      };
       try {
-        await axios.post(this.urlApi, this.item, {
-          headers: { Authorization: `Bearer ${this.stateAuth.token}` },
-        });
-        this.getItems();
+        const response = await axios.post(url, data, { headers });
+        this.getCollections();
       } catch (error) {
         this.errorMessages = "A bővítés nem sikerült.";
       }
@@ -173,11 +191,22 @@ export default {
     },
 
     async updateItem() {
+      this.loading = true;
+      const id = this.selectedRowId;
+      const url = `${this.urlApi}/${id}`;
+      const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.stateAuth.token}`,
+      };
+      const data = {
+        poet: this.item.poet,
+        title: this.item.title,
+        groupId: this.item.groupId,
+      };
       try {
-        await axios.patch(`${this.urlApi}/${this.selectedRowId}`, this.item, {
-          headers: { Authorization: `Bearer ${this.stateAuth.token}` },
-        });
-        this.getItems();
+        const response = await axios.patch(url, data, { headers });
+        this.getCollections();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
       }
@@ -187,9 +216,8 @@ export default {
     yesEventHandler() {
       if (this.state == "Delete") {
         this.deleteItemById();
+        this.goToPage(1);
       }
-      // this.hideModal();
-      this.getItems(); // Könyvlista frissítése
     },
 
     onClickDeleteButton(item) {
@@ -200,7 +228,6 @@ export default {
       this.yes = "Igen";
       this.no = "Nem";
       this.size = null;
-      //this.$refs.myModal.show(); // Modal megjelenítése
     },
 
     onClickUpdate(item) {
@@ -211,7 +238,6 @@ export default {
       this.no = "Mégsem";
       this.size = "lg";
       this.item = { ...item };
-      //this.$refs.myModal.show(); // Modal megjelenítése
     },
 
     onClickCreate() {
@@ -222,7 +248,6 @@ export default {
       this.no = "Mégsem";
       this.size = "lg";
       this.item = new Item();
-      //this.$refs.myModal.show(); // Modal megjelenítése
     },
 
     onClickCloseErrorMessage() {
@@ -236,8 +261,6 @@ export default {
       } else if (this.state === "Create") {
         this.createItem();
       }
-      // this.hideModal();
-      this.getItems(); // Könyvlista frissítése
       this.modal.hide();
     },
 

@@ -47,11 +47,16 @@ async function Logout() {
             </li>
             <li>
               <RouterLink
-                to="/olvasónapló"
+                to="/olvasonaplo"
                 class="nav-link"
                 v-if="stateAuth.user"
               >
                 Olvasónaplók <i class="bi bi-book-half"></i>
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/evfolyamok" class="nav-link" v-if="stateAuth.user">
+                Groups <i class="bi bi-book"></i>
               </RouterLink>
             </li>
             <li>
@@ -80,27 +85,27 @@ async function Logout() {
 
 <style scoped>
 /* Alap stílusok */
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
+html, */
 
 
 /* Fejléc és navigáció */
-.wrapper {
+/* .wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background-color: rgba(240, 162, 79, 0.8); /* Átlátszó barna háttér */
+  background-color: rgba(240, 162, 79, 0.8);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 10; /* Fejléc fölé helyezés */
-}
+  z-index: 10;
+} */
 
-.logo a {
+/* .logo a {
   font-size: 32px;
   color: #164652;
   text-decoration: none;
@@ -134,10 +139,10 @@ nav li {
 .nav-link:hover {
   background-color: #164652;
   color: #fff;
-}
+} */
 
 /* Mobil reszponzív menü */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   nav {
     display: none;
   }
@@ -167,6 +172,6 @@ nav li {
     cursor: pointer;
     font-size: 30px;
     color: #fff;
-  }
-}
+  } 
+}*/
 </style>
