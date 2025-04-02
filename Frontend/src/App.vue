@@ -56,7 +56,7 @@ async function Logout() {
             </li>
             <li>
               <RouterLink to="/evfolyamok" class="nav-link" v-if="stateAuth.user">
-                Groups <i class="bi bi-book"></i>
+                Groups <i class="bi bi-people-fill"></i>
               </RouterLink>
             </li>
             <li>
