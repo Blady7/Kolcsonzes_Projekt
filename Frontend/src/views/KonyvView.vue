@@ -61,6 +61,7 @@
           v-if="state == 'Create' || state == 'Update'"
           :itemForm="item"
           :debug="debug"
+          :groups="this.groups"
           @saveItem="saveItemHandler"
         />
       </Modal>
@@ -107,6 +108,7 @@ export default {
     return {
       modal: null,
       items: [],
+      groups: [],
       currentPage: 1,
       itemsPerPage: 20,
       stateAuth: useAuthStore(),
@@ -120,6 +122,7 @@ export default {
       errorMessages: null,
       selectedRowId: null,
       urlApi: `${BASE_URL}/books`,
+      urlApi1: `${BASE_URL}/groups`,
       debug: DEBUG,
     };
   },
@@ -135,11 +138,27 @@ export default {
   },
   mounted() {
     this.getCollections();
+    this.getGroups();
     this.modal = new bootstrap.Modal("#modal", {
       keyboard: false,
     });
   },
   methods: {
+    async getGroups() {
+      const url = this.urlApi1;
+      const headers = {
+        Accept: "application/json",
+      };
+      try {
+        const response = await axios.get(url, headers);
+        this.groups = response.data.data;
+        this.loading = false;
+      } catch (error) {
+        this.errorMessages = "Szerver hiba";
+      }
+      console.log(this.groups);
+      
+    },
     async getCollections() {
       const url = this.urlApi;
       const headers = {

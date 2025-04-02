@@ -32,25 +32,34 @@
         class="form-control"
         id="groupId"
         required
-        v-model="itemForm.groups"
+        v-model="itemForm.groupId"
       >
         <option v-for="group in groups" :key="group.id" :value="group.id">
-          {{ group.name }}
+          {{ group.group }}
         </option>
       </select>
     </div>
+
     <button type="submit" class="btn btn-success">Mentés</button>
   </form>
 </template>
 
 <script>
 export default {
-  props: ["itemForm", "debug"],
+  data() {
+    return {
+      
+    };
+  },
+  props: ["itemForm", "debug","groups"],
   emits: ["saveItem"],
+  mounted(){
+    this.getGroups()
+  },
   methods: {
     onClickSubmit() {
       this.$emit("saveItem", this.itemForm);
-    },
+    }
   },
 };
 </script>
