@@ -4,15 +4,15 @@
     class="row g-3 needs-validation was-validated"
   >
     <p v-if="debug">{{ itemForm }}</p>
-    
+
     <div class="col-md-2 position-relative">
       <label for="poet" class="form-label">Költő:</label>
       <input
-      type="text"
-      class="form-control"
-      id="poet"
-      required
-      v-model="itemForm.poet"
+        type="text"
+        class="form-control"
+        id="poet"
+        required
+        v-model="itemForm.poet"
       />
     </div>
     <div class="col-md-4 position-relative">
@@ -25,16 +25,19 @@
         v-model="itemForm.title"
       />
     </div>
-    
+
     <div class="col-md-2 position-relative">
       <label for="groupId" class="form-label">Évfolyam:</label>
-      <input
-        type="text"
+      <select
         class="form-control"
         id="groupId"
         required
-        v-model="itemForm.groupId"
-      />
+        v-model="itemForm.groups"
+      >
+        <option v-for="group in groups" :key="group.id" :value="group.id">
+          {{ group.name }}
+        </option>
+      </select>
     </div>
     <button type="submit" class="btn btn-success">Mentés</button>
   </form>

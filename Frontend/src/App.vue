@@ -84,18 +84,17 @@ async function Logout() {
 </template>
 
 <style scoped>
-/* Alap stílusok */
-/* * {
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, */
+html,
 
 
-/* Fejléc és navigáció */
-/* .wrapper {
+.wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -103,9 +102,9 @@ html, */
   background-color: rgba(240, 162, 79, 0.8);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 10;
-} */
+}
 
-/* .logo a {
+.logo a {
   font-size: 32px;
   color: #164652;
   text-decoration: none;
@@ -139,10 +138,9 @@ nav li {
 .nav-link:hover {
   background-color: #164652;
   color: #fff;
-} */
+}
 
-/* Mobil reszponzív menü */
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
   nav {
     display: none;
   }
@@ -173,5 +171,5 @@ nav li {
     font-size: 30px;
     color: #fff;
   } 
-}*/
+}
 </style>

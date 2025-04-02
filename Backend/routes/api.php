@@ -9,6 +9,7 @@ use App\Http\Controllers\RentalController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SpecimenController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\QeriesController;
 
 Route::get('/', function () {
     return 'API';
@@ -17,6 +18,7 @@ Route::get('/', function () {
 //region users
 Route::post('users/login', [UserController::class, 'login']);
 Route::post('users/logout', [UserController::class, 'logout']);
+Route::get('queryTanarnevsor', [QeriesController::class, 'queryTanarnevsor']);
 Route::get('users', [UserController::class, 'index'])
     ->middleware('auth:sanctum');
 Route::get('users/{id}', [UserController::class, 'show'])

@@ -5,35 +5,42 @@
       :errorMessages="errorMessages"
       @close="onClickCloseErrorMessage"
     />
-
     <div>
-      <table class="my-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Költő</th>
-            <th>Cím</th>
-            <th>Évfolyam</th>
-            <th>Műveletek</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in paginatedItems" :key="index">
-            <td>{{ item.id }}</td>
-            <td>{{ item.poet }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.groupId }}</td>
-            <td class="text-nowrap text-center">
-              <Operations
-                @onClickDeleteButton="onClickDeleteButton"
-                @onClickUpdate="onClickUpdate"
-                @onClickCreate="onClickCreate"
-                :data="item"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div>
+        <table class="my-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Költő</th>
+              <th>Cím</th>
+              <th>Évfolyam</th>
+              <th>Műveletek</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in paginatedItems"
+                :key="item.id"
+                @click="onClickTr(item.id)"
+                :class="{
+                  updating: loading,
+                  active: item.id === selectedRowId,
+                }">
+              <td>{{ item.id }}</td>
+              <td>{{ item.poet }}</td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.groupId }}</td>
+              <td class="text-nowrap text-center">
+                <Operations
+                  @onClickDeleteButton="onClickDeleteButton"
+                  @onClickUpdate="onClickUpdate"
+                  @onClickCreate="onClickCreate"
+                  :data="item"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <Paginator
         :totalItems="items.length"
         :itemsPerPage="20"
@@ -83,7 +90,7 @@ import ItemForm from "@/components/KonyvForm.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Operations from "@/components/Operations.vue";
 import { useAuthStore } from "@/stores/useAuthStore.js";
-import Modal from "@/components/Modal.vue"; // Frissített Modal import
+import Modal from "@/components/Modal.vue";
 import * as bootstrap from "bootstrap";
 
 class Item {
@@ -126,7 +133,7 @@ export default {
       return Math.ceil(this.items.length / this.itemsPerPage);
     },
   },
-   mounted() {
+  mounted() {
     this.getCollections();
     this.modal = new bootstrap.Modal("#modal", {
       keyboard: false,
@@ -162,8 +169,7 @@ export default {
         const response = await axios.delete(url, { headers });
         this.getCollections();
       } catch (error) {
-        this.errorMessages =
-          "A könyv nem törölhető";
+        this.errorMessages = "A könyv nem törölhető";
       }
     },
 
@@ -253,6 +259,10 @@ export default {
     onClickCloseErrorMessage() {
       this.errorMessages = null;
       this.state = "Read";
+    },
+
+    onClickTr(id) {
+      this.selectedRowId = id;
     },
 
     saveItemHandler() {

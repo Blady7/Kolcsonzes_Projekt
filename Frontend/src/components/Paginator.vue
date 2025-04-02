@@ -60,6 +60,10 @@ export default {
 </script>
   
 <style scoped>
+.page-link {
+  cursor: pointer;
+}
+
 /* 🏛️ Könyvtári katalógus stílusú lapozó */
 .pagination {
   display: flex;
