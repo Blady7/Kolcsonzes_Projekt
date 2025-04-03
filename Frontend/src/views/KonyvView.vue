@@ -10,7 +10,7 @@
         <table class="my-table">
           <thead>
             <tr>
-              <th>ID</th>
+              <th v-if="debug">ID</th>
               <th>Költő</th>
               <th>Cím</th>
               <th>Évfolyam</th>
@@ -25,7 +25,7 @@
                   updating: loading,
                   active: item.id === selectedRowId,
                 }">
-              <td>{{ item.id }}</td>
+              <td v-if="debug">{{ item.id }}</td>
               <td>{{ item.poet }}</td>
               <td>{{ item.title }}</td>
               <td>{{ item.groupId }}</td>
@@ -45,6 +45,7 @@
         :totalItems="items.length"
         :itemsPerPage="20"
         :currentPage="currentPage"
+        @page-changed="goToPage"
       />
       <Modal
         :title="title"
@@ -65,19 +66,6 @@
           @saveItem="saveItemHandler"
         />
       </Modal>
-
-      <div class="d-flex justify-content-center my-3">
-        <div class="pagination-container d-flex">
-          <div
-            v-for="page in totalPages"
-            :key="page"
-            @click="goToPage(page)"
-            :class="['page-box', { 'active-page': currentPage === page }]"
-          >
-            {{ page }}
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -155,9 +143,7 @@ export default {
         this.loading = false;
       } catch (error) {
         this.errorMessages = "Szerver hiba";
-      }
-      console.log(this.groups);
-      
+      }  
     },
     async getCollections() {
       const url = this.urlApi;
@@ -166,7 +152,7 @@ export default {
       };
       try {
         const response = await axios.get(url, headers);
-        this.items = response.data.data;
+        this.items = response.data.data;        
         this.loading = false;
       } catch (error) {
         this.errorMessages = "Szerver hiba";
