@@ -28,7 +28,7 @@
               <td v-if="debug">{{ item.id }}</td>
               <td>{{ item.poet }}</td>
               <td>{{ item.title }}</td>
-              <td>{{ item.groupId }}</td>
+              <td>{{ item.group }}</td>
               <td class="text-nowrap text-center">
                 <Operations
                   @onClickDeleteButton="onClickDeleteButton"
@@ -109,7 +109,7 @@ export default {
       size: null,
       errorMessages: null,
       selectedRowId: null,
-      urlApi: `${BASE_URL}/books`,
+      urlApi: `${BASE_URL}/queryOsztalyAzon`,
       urlApi1: `${BASE_URL}/groups`,
       debug: DEBUG,
     };

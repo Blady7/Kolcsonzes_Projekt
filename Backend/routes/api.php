@@ -34,6 +34,7 @@ Route::delete('users/{id}', [UserController::class, 'destroy'])
 //region books
 Route::get('books', [BookController::class, 'index']);
 Route::get('books/{id}', [BookController::class, 'show']);
+Route::get('queryOsztalyAzon', [QeriesController::class, 'queryOsztalyAzon']);
 Route::post('books', [BookController::class, 'store'])
     ->middleware('auth:sanctum');
 Route::patch('books/{id}', [BookController::class, 'update'])

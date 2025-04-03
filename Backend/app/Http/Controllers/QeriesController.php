@@ -44,7 +44,7 @@ class QeriesController extends Controller
 
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
-    
+
     public function queryOsztalyAzon()
     {
         //natív SQL
