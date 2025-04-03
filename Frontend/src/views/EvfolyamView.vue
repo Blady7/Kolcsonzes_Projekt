@@ -137,7 +137,7 @@ export default {
       loading: false,
       modal: null,
       currentPage: 1,
-      itemsPerPage: 5,
+      itemsPerPage: 6,
       item: new Item(),
       selectedRowId: null,
       messageYesNo: null,

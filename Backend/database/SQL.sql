@@ -10,6 +10,10 @@ Select * from readingdiaries;
 Select * from roles;
 Select * from specimens;
 
+SELECT b.id, b.poet, b.title, g.group from books b
+inner join groups g on b.groupId= g.id ;
+;
+
 
 
 
