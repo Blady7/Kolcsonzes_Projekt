@@ -53,9 +53,6 @@ export default {
   },
   props: ["itemForm", "debug","groups"],
   emits: ["saveItem"],
-  mounted(){
-    this.getGroups()
-  },
   methods: {
     onClickSubmit() {
       this.$emit("saveItem", this.itemForm);
