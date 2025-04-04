@@ -118,7 +118,7 @@ export default {
     paginatedItems() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.items.slice(start, end);
+      return this.items.slice(start, end);    
     },
     totalPages() {
       return Math.ceil(this.items.length / this.itemsPerPage);
