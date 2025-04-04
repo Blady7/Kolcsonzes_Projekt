@@ -19,5 +19,27 @@ SELECT u.id, u.name, g.`group`,  u.email FROM users u
 where r.id = 2 ;
 
 
+#kikölcsönzött könyvek táblázata
+#rentedBooksByUsers
+select r.id, r.specimenId, r.userId, u.name, b.title, b.poet, s.bookId, r.startingDate, r.endingDate from rentals r
+  inner JOIN specimens s on r.specimenId = s.id
+  INNER JOIN users u on r.userId = u.id
+  inner join books b on s.bookId = b.id
+  order by u.name, b.title;
+
+#kölcsönzési form listák
+
+#user ABC
+#studentAbc
+
+SELECT name, id from users
+  where roleId = 2
+  order by name;
+
+select s.id, r.specimenId from specimens s
+  left JOIN rentals r on s.id = r.specimenId;
+
+
+
 
 
