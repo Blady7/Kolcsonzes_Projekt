@@ -6,38 +6,46 @@
       @close="onClickCloseErrorMessage"
     />
     <div>
-      <table class="my-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Név</th>
-            <th>Osztály</th>
-            <th>Email</th>
-            <th>Műveletek</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in paginatedItems" :key="item.id || index">
-            <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.groupId }}</td>
-            <td>{{ item.email }}</td>
-            <td class="text-nowrap text-center">
-              <Operations
-                @onClickDeleteButton="onClickDeleteButton(item)"
-                @onClickUpdate="onClickUpdate(item)"
-                @onClickCreate="onClickCreate"
-                :data="item"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div>
+        <table class="my-table">
+          <thead>
+            <tr>
+              <th v-if="debug">ID</th>
+              <th>Neve</th>
+              <th>Évfolyam</th>
+              <th>Email</th>
+              <th>Műveletek</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in paginatedItems"
+                :key="item.id"
+                @click="onClickTr(item.id)"
+                :class="{
+                  updating: loading,
+                  active: item.id === selectedRowId,
+                }">
+              <td v-if="debug">{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.group }}</td>
+              <td>{{ item.email }}</td>
+              <td class="text-nowrap text-center">
+                <Operations
+                  @onClickDeleteButton="onClickDeleteButton"
+                  @onClickUpdate="onClickUpdate"
+                  @onClickCreate="onClickCreate"
+                  :data="item"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <Paginator
         :totalItems="items.length"
-        :itemsPerPage="itemsPerPage"
+        :itemsPerPage="20"
         :currentPage="currentPage"
-        @page-changed="updatePage"
+        @page-changed="goToPage"
       />
       <Modal
         :title="title"
@@ -49,34 +57,50 @@
         <div v-if="state == 'Delete'">
           {{ messageYesNo }}
         </div>
+
         <ItemForm
           v-if="state == 'Create' || state == 'Update'"
           :itemForm="item"
+          :debug="debug"
+          :groups="this.groups"
           @saveItem="saveItemHandler"
         />
       </Modal>
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import Paginator from "@/components/Paginator.vue";
 import axios from "axios";
+import { DEBUG } from "../helpers/debug";
 import { BASE_URL } from "../helpers/baseUrls";
 import ItemForm from "@/components/DiakForm.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Operations from "@/components/Operations.vue";
 import { useAuthStore } from "@/stores/useAuthStore.js";
+import Modal from "@/components/Modal.vue";
+import * as bootstrap from "bootstrap";
+
+class Item {
+  constructor(name = null, groupId = null, email = null) {
+    this.name = name;
+    this.groupId = groupId;
+    this.email = email;
+  }
+}
 
 export default {
-  components: { Paginator, ItemForm, ErrorMessage, Operations },
+  components: { Paginator, ItemForm, ErrorMessage, Operations, Modal },
   data() {
     return {
+      modal: null,
       items: [],
+      groups: [],
       currentPage: 1,
       itemsPerPage: 20,
-      item: {},
       stateAuth: useAuthStore(),
+      item: new Item(),
       messageYesNo: null,
       state: "Read",
       title: null,
@@ -85,88 +109,125 @@ export default {
       size: null,
       errorMessages: null,
       selectedRowId: null,
-      token: localStorage.getItem("token") || "",
+      urlApi: `${BASE_URL}/users`,
+      urlApi1: `${BASE_URL}/groups`,
+      debug: DEBUG,
     };
   },
   computed: {
     paginatedItems() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
-      return this.items.slice(start, start + this.itemsPerPage);
+      const end = start + this.itemsPerPage;
+      return this.items.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage);
     },
   },
-
+  mounted() {
+    this.getCollections();
+    this.getGroups();
+    this.modal = new bootstrap.Modal("#modal", {
+      keyboard: false,
+    });
+  },
   methods: {
-    async getItems() {
-      if (!this.token) {
-        console.error("Hiba: nincs token!");
-        return;
-      }
+    async getGroups() {
+      const url = this.urlApi1;
+      const headers = {
+        Accept: "application/json",
+      };
       try {
-        const response = await axios.get(`${BASE_URL}/users`, {
-          headers: { Authorization: `Bearer ${this.token}` },
-        });
-        this.items = response.data?.data || [];
+        const response = await axios.get(url, headers);
+        this.groups = response.data.data;
+        this.loading = false;
       } catch (error) {
-        console.error("Hiba történt az adatok lekérése közben:", error);
+        this.errorMessages = "Szerver hiba";
+      }  
+    },
+    async getCollections() {
+      const url = this.urlApi;
+      const headers = {
+        Accept: "application/json",
+      };
+      try {
+        const response = await axios.get(url, headers);
+        this.items = response.data.data;        
+        this.loading = false;
+      } catch (error) {
+        this.errorMessages = "Szerver hiba";
       }
-    },
-    async mounted() {
-      await this.getItems();
-    },
-    updatePage(page) {
-      this.currentPage = page;
     },
 
     async deleteItemById() {
-      if (!this.selectedRowId) return;
+      const id = this.selectedRowId;
+      const token = this.stateAuth.token;
+
+      const url = `${this.urlApi}/${id}`;
+      const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
       try {
-        await axios.delete(`${BASE_URL}/users/${this.selectedRowId}`, {
-          headers: { Authorization: `Bearer ${this.token}` },
-        });
-        this.items = this.items.filter(
-          (item) => item.id !== this.selectedRowId
-        );
-        this.selectedRowId = null;
+        const response = await axios.delete(url, { headers });
+        this.getCollections();
       } catch (error) {
-        this.errorMessages = "A diák nem törölhető.";
+        this.errorMessages = "A könyv nem törölhető";
       }
     },
 
     async createItem() {
-      if (!this.token) return;
+      const token = this.stateAuth.token;
+      const url = this.urlApi;
+      const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      const data = {
+        poet: this.item.poet,
+        title: this.item.title,
+        groupId: this.item.groupId,
+      };
       try {
-        const response = await axios.post(`${BASE_URL}/users`, this.item, {
-          headers: { Authorization: `Bearer ${this.token}` },
-        });
-        this.items.push(response.data);
-        this.state = "Read";
+        const response = await axios.post(url, data, { headers });
+        this.getCollections();
       } catch (error) {
         this.errorMessages = "A bővítés nem sikerült.";
       }
+      this.state = "Read";
     },
 
     async updateItem() {
-      if (!this.selectedRowId) return;
+      this.loading = true;
+      const id = this.selectedRowId;
+      const url = `${this.urlApi}/${id}`;
+      const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.stateAuth.token}`,
+      };
+      const data = {
+        poet: this.item.poet,
+        title: this.item.title,
+        groupId: this.item.groupId,
+      };
       try {
-        await axios.patch(
-          `${BASE_URL}/users/${this.selectedRowId}`,
-          this.item,
-          {
-            headers: { Authorization: `Bearer ${this.token}` },
-          }
-        );
-        this.items = this.items.map((item) =>
-          item.id === this.selectedRowId ? { ...item, ...this.item } : item
-        );
-        this.state = "Read";
+        const response = await axios.patch(url, data, { headers });
+        this.getCollections();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
       }
+      this.state = "Read";
     },
 
     yesEventHandler() {
-      if (this.state === "Delete") {
+      if (this.state == "Delete") {
         this.deleteItemById();
+        this.goToPage(1);
       }
     },
 
@@ -174,31 +235,39 @@ export default {
       this.state = "Delete";
       this.selectedRowId = item.id;
       this.title = "Törlés";
-      this.messageYesNo = `Valóban törölni akarod a(z) ${item.name} nevű diákot?`;
+      this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} nevű könyvet?`;
       this.yes = "Igen";
       this.no = "Nem";
+      this.size = null;
     },
 
     onClickUpdate(item) {
       this.state = "Update";
       this.selectedRowId = item.id;
-      this.item = { ...item };
-      this.title = "Diák módosítása";
+      this.title = "Könyv módosítása";
+      this.yes = null;
       this.no = "Mégsem";
       this.size = "lg";
+      this.item = { ...item };
     },
 
     onClickCreate() {
       this.state = "Create";
-      this.item = {};
-      this.title = "Új diák bevitele";
+      this.selectedRowId = null;
+      this.title = "Új könyv bevitele";
+      this.yes = null;
       this.no = "Mégsem";
       this.size = "lg";
+      this.item = new Item();
     },
 
     onClickCloseErrorMessage() {
       this.errorMessages = null;
       this.state = "Read";
+    },
+
+    onClickTr(id) {
+      this.selectedRowId = id;
     },
 
     saveItemHandler() {
@@ -207,12 +276,22 @@ export default {
       } else if (this.state === "Create") {
         this.createItem();
       }
+      this.modal.hide();
+    },
+
+    goToPage(page) {
+      this.currentPage = page;
     },
   },
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
+.container {
+  margin-top: 40px;
+  text-align: center;
+}
+
 th {
   background-color: #c19a6b;
   color: white;
@@ -224,4 +303,3 @@ td {
   color: #4a3b2d;
 }
 </style>
-  

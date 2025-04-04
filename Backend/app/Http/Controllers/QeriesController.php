@@ -62,4 +62,22 @@ order by b.id;'
 
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
+
+    public function queryDiakValaszto()
+    {
+        //natív SQL
+        $rows = DB::select(
+            'SELECT b.id, b.poet, b.title, g.group from books b
+inner join groups g on b.groupId= g.id
+order by b.id;'
+        );
+
+
+        $data = [
+            'message' => 'ok',
+            'data' => $rows
+        ];
+
+        return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+    }
 }
