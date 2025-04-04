@@ -109,7 +109,7 @@ export default {
       size: null,
       errorMessages: null,
       selectedRowId: null,
-      urlApi: `${BASE_URL}/users`,
+      urlApi: `${BASE_URL}/queryDiakValaszto`,
       urlApi1: `${BASE_URL}/groups`,
       debug: DEBUG,
     };
