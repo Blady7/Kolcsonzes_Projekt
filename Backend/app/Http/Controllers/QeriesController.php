@@ -67,10 +67,9 @@ order by b.id;'
     {
         //natív SQL
         $rows = DB::select(
-            'SELECT u.id, u.name, g.`group`,  u.email FROM users u
+            'SELECT u.id, u.name, g.`group`, u.email FROM users u
         INNER JOIN groups g ON u.groupId = g.id
-        INNER JOIN roles r ON u.roleId = r.id
-        where r.id = 2 '
+        where u.roleId = 2 '
         );
 
 
