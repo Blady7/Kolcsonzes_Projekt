@@ -30,6 +30,10 @@ GET  {{host}}/api/users
 Accept: application/json
 Authorization: Bearer {{token}}
 
+### get diakok
+GET  {{host}}/api/queryDiakValaszto
+Accept: application/json
+
 ### get teachers
 GET  {{host}}/api/queryTanarnevsor
 Accept: application/json

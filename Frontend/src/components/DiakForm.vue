@@ -15,29 +15,29 @@
         v-model="itemForm.name"
       />
     </div>
+    <div class="col-md-2 position-relative">
+      <label for="groupId" class="form-label">Évfolyam:</label>
+      <select
+        class="form-control"
+        id="groupId"
+        required
+        v-model="itemForm.groupId"
+      >
+        <option v-for="group in groups" :key="group.id" :value="group.id">
+          {{ group.group }}
+        </option>
+      </select>
+    </div>
+
     <div class="col-md-4 position-relative">
-      <label for="title" class="form-label">Évfolyam:</label>
+      <label for="title" class="form-label">Email:</label>
       <input
         type="text"
         class="form-control"
         id="title"
         required
-        v-model="itemForm.groupId"
-      />
-      <option v-for="group in groups" :key="group.id" :value="group.id">
-          {{ group.group }}
-        </option>
-    </div>
-
-    <div class="col-md-2 position-relative">
-      <label for="groupId" class="form-label">Email:</label>
-      <select
-        class="form-control"
-        id="groupId"
-        required
         v-model="itemForm.email"
-      >
-      </select>
+      />
     </div>
 
     <button type="submit" class="btn btn-success">Mentés</button>

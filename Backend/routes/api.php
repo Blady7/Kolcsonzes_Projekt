@@ -18,6 +18,7 @@ Route::get('/', function () {
 //region users
 Route::post('users/login', [UserController::class, 'login']);
 Route::post('users/logout', [UserController::class, 'logout']);
+Route::get('queryDiakValaszto', [QeriesController::class, 'queryDiakValaszto']);
 Route::get('queryTanarnevsor', [QeriesController::class, 'queryTanarnevsor']);
 Route::get('users', [UserController::class, 'index'])
     ->middleware('auth:sanctum');
