@@ -51,7 +51,7 @@ class QueriesController extends Controller
         $rows = DB::select(
             'SELECT b.id, b.poet, b.title, g.group from books b
                 inner join groups g on b.groupId= g.id
-                order by b.id;'
+               ;'
         );
 
 
