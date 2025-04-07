@@ -9,7 +9,7 @@ use App\Http\Controllers\RentalController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SpecimenController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\QeriesController;
+use App\Http\Controllers\QueriesController;
 
 Route::get('/', function () {
     return 'API';
@@ -18,8 +18,8 @@ Route::get('/', function () {
 //region users
 Route::post('users/login', [UserController::class, 'login']);
 Route::post('users/logout', [UserController::class, 'logout']);
-Route::get('queryDiakValaszto', [QeriesController::class, 'queryDiakValaszto']);
-Route::get('queryTanarnevsor', [QeriesController::class, 'queryTanarnevsor']);
+Route::get('queryDiakValaszto', [QueriesController::class, 'queryDiakValaszto']);
+Route::get('queryTanarnevsor', [QueriesController::class, 'queryTanarnevsor']);
 Route::get('users', [UserController::class, 'index'])
     ->middleware('auth:sanctum');
 Route::get('users/{id}', [UserController::class, 'show'])
@@ -35,7 +35,7 @@ Route::delete('users/{id}', [UserController::class, 'destroy'])
 //region books
 Route::get('books', [BookController::class, 'index']);
 Route::get('books/{id}', [BookController::class, 'show']);
-Route::get('queryOsztalyAzon', [QeriesController::class, 'queryOsztalyAzon']);
+Route::get('queryOsztalyAzon', [QueriesController::class, 'queryOsztalyAzon']);
 Route::post('books', [BookController::class, 'store'])
     ->middleware('auth:sanctum');
 Route::patch('books/{id}', [BookController::class, 'update'])

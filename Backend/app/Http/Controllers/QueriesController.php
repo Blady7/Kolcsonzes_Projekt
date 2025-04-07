@@ -9,7 +9,7 @@ use App\Models\Role;
 use App\Models\Book;
 use Illuminate\Support\Facades\DB;
 
-class QeriesController extends Controller
+class QueriesController extends Controller
 {
     //tanárok névsora abc-be
     public function queryTanarnevsor()
@@ -50,8 +50,8 @@ class QeriesController extends Controller
         //natív SQL
         $rows = DB::select(
             'SELECT b.id, b.poet, b.title, g.group from books b
-inner join groups g on b.groupId= g.id
-order by b.id;'
+                inner join groups g on b.groupId= g.id
+                order by b.id;'
         );
 
 
