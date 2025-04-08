@@ -218,13 +218,9 @@ export default {
       };
       try {
         const response = await axios.patch(url, data, { headers });
-        console.log(response);
-        
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
-        console.log("asd");
-        
       }
       this.state = "Read";
     },
