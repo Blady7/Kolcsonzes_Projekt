@@ -111,7 +111,7 @@ Authorization: Bearer {{token}}
 {
     "poet": "Kiss Ádám",
     "title": "Almafa",
-    "groupId": "1"
+    "groupId": "3"
 }
 
 ### delete book

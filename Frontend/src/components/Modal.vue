@@ -1,7 +1,7 @@
 <template>
   <!-- Modal -->
   <div
-    class="modal fade"
+    class="modal"
     id="modal"
     tabindex="-1"
   >
