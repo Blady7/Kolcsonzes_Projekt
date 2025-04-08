@@ -11,9 +11,9 @@
           <thead>
             <tr>
               <th v-if="debug">ID</th>
-              <th>Neve</th>
-              <th>Évfolyam</th>
+              <th>Név</th>
               <th>Email</th>
+              <th>Évfolyam</th>
               <th>Műveletek</th>
             </tr>
           </thead>
@@ -27,8 +27,8 @@
                 }">
               <td v-if="debug">{{ item.id }}</td>
               <td>{{ item.name }}</td>
-              <td>{{ item.group }}</td>
               <td>{{ item.email }}</td>
+              <td>{{ item.group }}</td>
               <td class="text-nowrap text-center">
                 <Operations
                   @onClickDeleteButton="onClickDeleteButton"
@@ -83,10 +83,10 @@ import Modal from "@/components/Modal.vue";
 import * as bootstrap from "bootstrap";
 
 class Item {
-  constructor(name = null, groupId = null, email = null) {
+  constructor(name = null, title = null, groupId = null) {
     this.name = name;
+    this.title = title;
     this.groupId = groupId;
-    this.email = email;
   }
 }
 
@@ -111,6 +111,7 @@ export default {
       selectedRowId: null,
       urlApi: `${BASE_URL}/queryDiakValaszto`,
       urlApi1: `${BASE_URL}/groups`,
+      urlApi2: `${BASE_URL}/users`,
       debug: DEBUG,
     };
   },
@@ -118,7 +119,7 @@ export default {
     paginatedItems() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.items.slice(start, end);
+      return this.items.slice(start, end);    
     },
     totalPages() {
       return Math.ceil(this.items.length / this.itemsPerPage);
@@ -126,13 +127,13 @@ export default {
   },
   mounted() {
     this.getCollections();
-    this.getGroups();
+    this.getStudents();
     this.modal = new bootstrap.Modal("#modal", {
       keyboard: false,
     });
   },
   methods: {
-    async getGroups() {
+    async getStudents() {
       const url = this.urlApi1;
       const headers = {
         Accept: "application/json",
@@ -163,7 +164,7 @@ export default {
       const id = this.selectedRowId;
       const token = this.stateAuth.token;
 
-      const url = `${this.urlApi}/${id}`;
+      const url = `${this.urlApi2}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -180,7 +181,7 @@ export default {
 
     async createItem() {
       const token = this.stateAuth.token;
-      const url = this.urlApi;
+      const url = this.urlApi2;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -204,7 +205,7 @@ export default {
     async updateItem() {
       this.loading = true;
       const id = this.selectedRowId;
-      const url = `${this.urlApi}/${id}`;
+      const url = `${this.urlApi2}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -217,9 +218,13 @@ export default {
       };
       try {
         const response = await axios.patch(url, data, { headers });
+        console.log(response);
+        
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
+        console.log("asd");
+        
       }
       this.state = "Read";
     },

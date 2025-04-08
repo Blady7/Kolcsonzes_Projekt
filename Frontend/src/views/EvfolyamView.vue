@@ -5,110 +5,84 @@
       :errorMessages="errorMessages"
       @close="onClickCloseErrorMessage"
     />
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div
-          class="spinner-border m-0 p-0 text-center"
-          role="status"
-          v-if="items.length == 0"
-        >
-          <span class="visually-hidden m-0">Loading...</span>
-        </div>
-
-        <div class="col-12 col-lg-10 tabla-container" v-if="items.length > 0">
-          <!-- Táblázat -->
-          <table
-            class="table table-bordered table-hover table-striped shadow-sm rounded"
-          >
-            <thead class="table-dark">
-              <!-- Módosítás -->
-              <tr>
-                <th v-if="debug">#</th>
-                <th>évfolyam</th>
-                <th>Tanár</th>
-                <th class="text-center">Műveletek</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Módosítás -->
-              <tr
-                v-for="item in paginatedCollections"
-                :key="item.id"
-                @click="onClickTr(item.id)"
-                :class="{
-                  updating: loading,
-                  active: item.id === selectedRowId,
-                }"
-              >
-                <td data-label="ID" v-if="debug">{{ item.id }}</td>
-                <td data-label="Név">
-                  {{ item.group }}
-                  <span
-                    class="spinner-border text-primary spinner-border-sm m-0 p-0"
-                    role="status"
-                    v-if="item.id === selectedRowId && loading"
-                  >
-                    <span class="visually-hidden m-0">Loading...</span>
-                  </span>
-                </td>
-                <td>
-                  {{ item.teacherId }}
-                </td>
-
-                <!-- CRUD gombok component -->
-                <td class="text-nowrap text-center">
-                  <OperationsCrud
-                    @onClickDeleteButton="onClickDeleteButton"
-                    @onClickUpdate="onClickUpdate"
-                    @onClickCreate="onClickCreate"
-                    :data="item"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <Modal
-          :title="title"
-          :yes="yes"
-          :no="no"
-          :size="size"
-          @yesEvent="yesEventHandler"
-        >
-        <!-- Igen/Nem válasz -->
-          <div v-if="state == 'Delete'">
-            {{ messageYesNo }}
-          </div>
-
-          <!-- Beviteli form -->
-          <ItemForm
-            v-if="state == 'Create' || state == 'Update'"
-            :itemForm="item"
-            :debug="debug"
-            @saveItem="saveItemHandler"
-          />
-        </Modal>
-        
+    <div>
+      <div>
+        <table class="my-table">
+          <thead>
+            <tr>
+              <th v-if="debug">ID</th>
+              <th>Évfolyam</th>
+              <th>Tanárok</th>
+              <th>Műveletek</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="item in paginatedItems"
+              :key="item.id"
+              @click="onClickTr(item.id)"
+              :class="{
+                updating: loading,
+                active: item.id === selectedRowId,
+              }"
+            >
+              <td v-if="debug">{{ item.id }}</td>
+              <td>{{ item.group }}</td>
+              <td>{{ item.teacherId }}</td>
+              <td class="text-nowrap text-center">
+                <Operations
+                  @onClickDeleteButton="onClickDeleteButton"
+                  @onClickUpdate="onClickUpdate"
+                  @onClickCreate="onClickCreate"
+                  :data="item"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="d-flex justify-content-center my-3">
-        <div class="pagination-container d-flex">
-          <div
-            v-for="page in totalPages"
-            :key="page"
-            @click="goToPage(page)"
-            :class="['page-box', { 'active-page': currentPage === page }]"
-          >
-            {{ page }}
-          </div>
+
+      <Paginator
+        :totalItems="items.length"
+        :itemsPerPage="6"
+        :currentPage="currentPage"
+        @page-changed="goToPage"
+      />
+      
+      <Modal
+        :title="title"
+        :yes="yes"
+        :no="no"
+        :size="size"
+        @yesEvent="yesEventHandler"
+      >
+        <div v-if="state == 'Delete'">
+          {{ messageYesNo }}
         </div>
-      </div>
+
+        <ItemForm
+          v-if="state == 'Create' || state == 'Update'"
+          :itemForm="item"
+          :debug="debug"
+          @saveItem="saveItemHandler"
+        />
+      </Modal>
     </div>
   </div>
 </template>
-    
+
 <script>
-// Módosítás
+import Paginator from "@/components/Paginator.vue";
+import axios from "axios";
+import { DEBUG } from "../helpers/debug";
+import { BASE_URL } from "../helpers/baseUrls";
+import ItemForm from "@/components/GroupForm.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
+import Operations from "@/components/Operations.vue";
+import { useAuthStore } from "@/stores/useAuthStore.js";
+import Modal from "@/components/Modal.vue";
+import * as bootstrap from "bootstrap";
+
 class Item {
   constructor(id = null, group = null, teacherId = null) {
     this.id = id;
@@ -116,48 +90,32 @@ class Item {
     this.teacherId = teacherId;
   }
 }
-import { BASE_URL } from "../helpers/baseUrls";
-import { DEBUG } from "../helpers/debug";
-import ErrorMessage from "@/components/ErrorMessage.vue";
-import { useAuthStore } from "@/stores/useAuthStore.js";
-// Módosítás
-import ItemForm from "@/components/GroupForm.vue";
-import OperationsCrud from "@/components/Operations.vue";
-import axios from "axios";
-import * as bootstrap from "bootstrap";
+
 export default {
-  components: { ItemForm, OperationsCrud, ErrorMessage },
+  components: { Paginator, ItemForm, ErrorMessage, Operations, Modal },
   data() {
     return {
-      // Módosítás
-      urlBase: BASE_URL,
-      urlApi: `${BASE_URL}/groups`,
-      stateAuth: useAuthStore(),
-      items: [],
-      loading: false,
       modal: null,
+      items: [],
       currentPage: 1,
       itemsPerPage: 6,
+      stateAuth: useAuthStore(),
       item: new Item(),
-      selectedRowId: null,
       messageYesNo: null,
-      state: "Read", //CRUD: Create, Read, Update, Delete
+      state: "Read",
       title: null,
       yes: null,
       no: null,
       size: null,
       errorMessages: null,
-      debug: DEBUG
+      selectedRowId: null,
+      urlApi: `${BASE_URL}/groups`,
+      urlApi2: `${BASE_URL}/groups`,
+      debug: DEBUG,
     };
   },
-  mounted() {
-    this.getCollections();
-    this.modal = new bootstrap.Modal("#modal", {
-      keyboard: false,
-    });
-  },
   computed: {
-    paginatedCollections() {
+    paginatedItems() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
       return this.items.slice(start, end);
@@ -165,6 +123,12 @@ export default {
     totalPages() {
       return Math.ceil(this.items.length / this.itemsPerPage);
     },
+  },
+  mounted() {
+    this.getCollections();
+    this.modal = new bootstrap.Modal("#modal", {
+      keyboard: false,
+    });
   },
   methods: {
     async getCollections() {
@@ -185,7 +149,7 @@ export default {
       const id = this.selectedRowId;
       const token = this.stateAuth.token;
 
-      const url = `${this.urlApi}/${id}`;
+      const url = `${this.urlApi2}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -194,31 +158,27 @@ export default {
 
       try {
         const response = await axios.delete(url, { headers });
-        // this.items = this.items.filter((sport) => sport.id !== id);
         this.getCollections();
       } catch (error) {
-        this.errorMessages =
-          "A sport nem törölhető, mert már ilyet sportolnak a diákok.";
+        this.errorMessages = "A csoport nem törölhető";
       }
     },
 
     async createItem() {
       const token = this.stateAuth.token;
-      const url = this.urlApi;
+      const url = this.urlApi2;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
 
-      // Módosítás
       const data = {
         group: this.item.group,
-        teacherId: this.item.teacherId ?  this.item.teacherId: null
+        teacherId: this.item.teacherId ? this.item.teacherId : null,
       };
       try {
         const response = await axios.post(url, data, { headers });
-        // this.items.push(response.data.data);
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A bővítés nem sikerült.";
@@ -229,16 +189,16 @@ export default {
     async updateItem() {
       this.loading = true;
       const id = this.selectedRowId;
-      const url = `${this.urlApi}/${id}`;
+      const url = `${this.urlApi2}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.stateAuth.token}`,
       };
 
-      // Módosłtás
       const data = {
-        sportNev: this.item.sportNev,
+        group: this.item.group,
+        teacherId: this.item.teacherId,
       };
       try {
         const response = await axios.patch(url, data, { headers });
@@ -258,9 +218,9 @@ export default {
 
     onClickDeleteButton(item) {
       this.state = "Delete";
+      this.selectedRowId = item.id;
       this.title = "Törlés";
-      // Módosítás
-      this.messageYesNo = `Valóban törölni akarod a(z) ${item.group} nevű elemet?`;
+      this.messageYesNo = `Valóban törölni akarod a(z) ${item.group} nevű csoportot?`;
       this.yes = "Igen";
       this.no = "Nem";
       this.size = null;
@@ -268,30 +228,31 @@ export default {
 
     onClickUpdate(item) {
       this.state = "Update";
-      this.title = "Elem módosítása";
+      this.selectedRowId = item.id;
+      this.title = "Csoport módosítása";
       this.yes = null;
-      this.no = "Bezár";
+      this.no = "Mégsem";
       this.size = "lg";
       this.item = { ...item };
     },
 
     onClickCreate() {
-      this.title = "Új adat bevitele";
-      this.yes = null;
-      this.no = "Bezár";
-      this.size = "lg";
       this.state = "Create";
+      this.selectedRowId = null;
+      this.title = "Új csoport bevitele";
+      this.yes = null;
+      this.no = "Mégsem";
+      this.size = "lg";
       this.item = new Item();
+    },
+
+    onClickCloseErrorMessage() {
+      this.errorMessages = null;
+      this.state = "Read";
     },
 
     onClickTr(id) {
       this.selectedRowId = id;
-    },
-
-    onClickCloseErrorMessage() {
-      this.errorMessages = null;      
-      this.loading = false;
-      this.state = "Read";
     },
 
     saveItemHandler() {
@@ -300,7 +261,6 @@ export default {
       } else if (this.state === "Create") {
         this.createItem();
       }
-
       this.modal.hide();
     },
 
@@ -310,6 +270,21 @@ export default {
   },
 };
 </script>
-    
+
 <style scoped>
+.container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+th {
+  background-color: #c19a6b;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+td {
+  color: #4a3b2d;
+}
 </style>
