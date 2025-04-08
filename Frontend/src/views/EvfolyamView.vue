@@ -76,7 +76,7 @@ import Paginator from "@/components/Paginator.vue";
 import axios from "axios";
 import { DEBUG } from "../helpers/debug";
 import { BASE_URL } from "../helpers/baseUrls";
-import ItemForm from "@/components/GroupForm.vue";
+import ItemForm from "@/components/EvfolyamForm.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import Operations from "@/components/Operations.vue";
 import { useAuthStore } from "@/stores/useAuthStore.js";
@@ -109,8 +109,8 @@ export default {
       size: null,
       errorMessages: null,
       selectedRowId: null,
-      urlApi: `${BASE_URL}/groups`,
       urlApi2: `${BASE_URL}/groups`,
+      urlApi3: `${BASE_URL}/groups`,
       debug: DEBUG,
     };
   },
@@ -132,7 +132,7 @@ export default {
   },
   methods: {
     async getCollections() {
-      const url = this.urlApi;
+      const url = this.urlApi2;
       const headers = {
         Accept: "application/json",
       };
@@ -149,7 +149,7 @@ export default {
       const id = this.selectedRowId;
       const token = this.stateAuth.token;
 
-      const url = `${this.urlApi2}/${id}`;
+      const url = `${this.urlApi3}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -166,7 +166,7 @@ export default {
 
     async createItem() {
       const token = this.stateAuth.token;
-      const url = this.urlApi2;
+      const url = this.urlApi3;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -189,7 +189,7 @@ export default {
     async updateItem() {
       this.loading = true;
       const id = this.selectedRowId;
-      const url = `${this.urlApi2}/${id}`;
+      const url = `${this.urlApi3}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",

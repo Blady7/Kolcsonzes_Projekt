@@ -38,6 +38,12 @@ SELECT name, id from users
 select s.id, r.specimenId from specimens s
   left JOIN rentals r on s.id = r.specimenId;
 
+-- SELECT g.id, g.`group`, u.name FROM users u
+--   INNER JOIN groups g ON u.groupId = g.id
+-- where u.roleId = 3;
+
+  SELECT * FROM groups;
+
 
 
 
