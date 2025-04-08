@@ -90,7 +90,19 @@ class Item {
     this.teacherId = teacherId;
   }
 }
+<<<<<<< HEAD
 
+=======
+import { BASE_URL } from "../helpers/baseUrls";
+import { DEBUG } from "../helpers/debug";
+import ErrorMessage from "@/components/ErrorMessage.vue";
+import { useAuthStore } from "@/stores/useAuthStore.js";
+// Módosítás
+import ItemForm from "@/components/EvfolyamForm.vue";
+import OperationsCrud from "@/components/Operations.vue";
+import axios from "axios";
+import * as bootstrap from "bootstrap";
+>>>>>>> 4de25e178daa423210096c004338a814744a37e8
 export default {
   components: { Paginator, ItemForm, ErrorMessage, Operations, Modal },
   data() {
