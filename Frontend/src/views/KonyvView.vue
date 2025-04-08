@@ -163,7 +163,7 @@ export default {
       const id = this.selectedRowId;
       const token = this.stateAuth.token;
 
-      const url = `${this.urlApi}/${id}`;
+      const url = `${this.urlApi1}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -180,7 +180,7 @@ export default {
 
     async createItem() {
       const token = this.stateAuth.token;
-      const url = this.urlApi;
+      const url = this.urlApi1;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -204,7 +204,7 @@ export default {
     async updateItem() {
       this.loading = true;
       const id = this.selectedRowId;
-      const url = `${this.urlApi}/${id}`;
+      const url = `${this.urlApi1}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
