@@ -121,7 +121,7 @@ import { DEBUG } from "../helpers/debug";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import { useAuthStore } from "@/stores/useAuthStore.js";
 // Módosítás
-import ItemForm from "@/components/GroupForm.vue";
+import ItemForm from "@/components/EvfolyamForm.vue";
 import OperationsCrud from "@/components/Operations.vue";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
