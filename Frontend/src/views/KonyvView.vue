@@ -111,6 +111,7 @@ export default {
       selectedRowId: null,
       urlApi: `${BASE_URL}/queryOsztalyAzon`,
       urlApi1: `${BASE_URL}/groups`,
+      urlApi2: `${BASE_URL}/books`,
       debug: DEBUG,
     };
   },
@@ -163,7 +164,7 @@ export default {
       const id = this.selectedRowId;
       const token = this.stateAuth.token;
 
-      const url = `${this.urlApi1}/${id}`;
+      const url = `${this.urlApi2}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -180,7 +181,7 @@ export default {
 
     async createItem() {
       const token = this.stateAuth.token;
-      const url = this.urlApi1;
+      const url = this.urlApi2;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -204,7 +205,7 @@ export default {
     async updateItem() {
       this.loading = true;
       const id = this.selectedRowId;
-      const url = `${this.urlApi1}/${id}`;
+      const url = `${this.urlApi2}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -217,9 +218,13 @@ export default {
       };
       try {
         const response = await axios.patch(url, data, { headers });
+        console.log(response);
+        
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
+        console.log("asd");
+        
       }
       this.state = "Read";
     },
