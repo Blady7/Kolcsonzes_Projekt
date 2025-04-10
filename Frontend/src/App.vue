@@ -33,54 +33,19 @@ async function Logout() {
         <div class="logo">
           <RouterLink to="/">Könyvkölcsönző</RouterLink>
         </div>
-        <nav>
-          <ul>
-            <li>
-              <RouterLink to="/konyvek" class="nav-link" v-if="stateAuth.user">
-                Könyvek <i class="bi bi-book"></i>
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/diakok" class="nav-link" v-if="stateAuth.user">
-                Diákok <i class="bi bi-person-lines-fill"></i>
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/kolcsonzesek" class="nav-link" v-if="stateAuth.user">
-                Kölcsönzések <i class="bi bi-archive"></i>
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink
-                to="/olvasonaplo"
-                class="nav-link"
-                v-if="stateAuth.user"
-              >
-                Olvasónaplók <i class="bi bi-book-half"></i>
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/evfolyamok" class="nav-link" v-if="stateAuth.user">
-                Groups <i class="bi bi-people-fill"></i>
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink to="/login" class="nav-link" v-if="!stateAuth.user">
-                <i class="bi bi-bookmark"></i>
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink
-                class="nav-link"
-                to="#"
-                @click="Logout()"
-                v-if="stateAuth.user"
-              >
-                <i class="bi bi-bookmark-check"></i>
-              </RouterLink>
-            </li>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Menü
+          </button>
+          <ul class="dropdown-menu">
+            <li v-if="stateAuth.user"><RouterLink to="/konyvek" class="dropdown-item">Könyvek <i class="bi bi-book"></i></RouterLink></li>
+            <li v-if="stateAuth.user"><RouterLink to="/diakok" class="dropdown-item">Diákok <i class="bi bi-person-lines-fill"></i></RouterLink></li>
+            <li v-if="stateAuth.user"><RouterLink to="/kolcsonzesek" class="dropdown-item">Kölcsönzések <i class="bi bi-archive"></i></RouterLink></li>
+            <li v-if="stateAuth.user"><RouterLink to="/olvasonaplo" class="dropdown-item">Olvasónaplók <i class="bi bi-book-half"></i></RouterLink></li>
+            <li v-if="stateAuth.user"><RouterLink to="/evfolyamok" class="dropdown-item">Groups <i class="bi bi-people-fill"></i></RouterLink></li>
           </ul>
-        </nav>
+        </div>
+        
       </div>
     </header>
 
