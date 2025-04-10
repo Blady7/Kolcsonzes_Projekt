@@ -1,74 +1,80 @@
 <template>
+  <div>
+    <h1 class="text-center my-4">Kölcsönzések</h1>
+    <ErrorMessage
+      :errorMessages="errorMessages"
+      @close="onClickCloseErrorMessage"
+    />
     <div>
-      <h1 class="text-center my-4">Kölcsönzések</h1>
-      <ErrorMessage
-        :errorMessages="errorMessages"
-        @close="onClickCloseErrorMessage"
-      />
       <div>
-        <div>
-          <table class="my-table">
-            <thead>
-              <tr>
-                <th v-if="debug">ID</th>
-                <th>cím</th>
-                <th>író</th>
-                <th>Kikölcsönözve</th>
-                <th>Vissza hozva</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in paginatedItems"
-                  :key="item.id"
-                  @click="onClickTr(item.id)"
-                  :class="{
-                    updating: loading,
-                    active: item.id === selectedRowId,
-                  }">
-                <td v-if="debug">{{ item.id }}</td>
-                <td>{{ item.poet }}</td>
-                <td>{{ item.title }}</td>
-                <td>{{ item.group }}</td>
-                <td class="text-nowrap text-center">
-                  <Operations
-                    @onClickDeleteButton="onClickDeleteButton"
-                    @onClickUpdate="onClickUpdate"
-                    @onClickCreate="onClickCreate"
-                    :data="item"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <Paginator
-          :totalItems="items.length"
-          :itemsPerPage="20"
-          :currentPage="currentPage"
-          @page-changed="goToPage"
-        />
-        <Modal
-          :title="title"
-          :yes="yes"
-          :no="no"
-          :size="size"
-          @yesEvent="yesEventHandler"
-        >
-          <div v-if="state == 'Delete'">
-            {{ messageYesNo }}
-          </div>
-  
-          <ItemForm
-            v-if="state == 'Create' || state == 'Update'"
-            :itemForm="item"
-            :debug="debug"
-            :groups="this.groups"
-            @saveItem="saveItemHandler"
-          />
-        </Modal>
+        <table class="my-table">
+          <thead>
+            <tr>
+              <th v-if="debug">ID</th>
+              <th>író</th>
+              <th>cím</th>
+              <th>kölcsönző</th>
+              <th>Kikölcsönözve</th>
+              <th>Vissza hozva</th>
+              <th>Műveletek</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="item in paginatedItems"
+              :key="item.id"
+              @click="onClickTr(item.id)"
+              :class="{
+                updating: loading,
+                active: item.id === selectedRowId,
+              }"
+            >
+              <td v-if="debug">{{ item.id }}</td>
+              <td>{{ item.poet }}</td>
+              <td>{{ item.title }}</td>
+              <td> {{ item.user }}</td>
+              <td>{{ item.startingDate }}</td>
+              <td>{{ item.endingDate }}</td>
+              <td class="text-nowrap text-center">
+                <Operations
+                  @onClickDeleteButton="onClickDeleteButton"
+                  @onClickUpdate="onClickUpdate"
+                  @onClickCreate="onClickCreate"
+                  :data="item"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+      <Paginator
+        :totalItems="items.length"
+        :itemsPerPage="20"
+        :currentPage="currentPage"
+        @page-changed="goToPage"
+      />
+      <Modal
+        :title="title"
+        :yes="yes"
+        :no="no"
+        :size="size"
+        @yesEvent="yesEventHandler"
+      >
+        <div v-if="state == 'Delete'">
+          {{ messageYesNo }}
+        </div>
+
+        <ItemForm
+          v-if="state == 'Create' || state == 'Update'"
+          :itemForm="item"
+          :debug="debug"
+          :rentals="this.rentals"
+          @saveItem="saveItemHandler"
+        />
+      </Modal>
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
   import Paginator from "@/components/Paginator.vue";
@@ -83,10 +89,12 @@
   import * as bootstrap from "bootstrap";
   
   class Item {
-    constructor(poet = null, title = null, groupId = null) {
+    constructor(poet = null, title = null, user = null, startingDate = null, endingDate = null) {
       this.poet = poet;
       this.title = title;
-      this.groupId = groupId;
+      this.user = user;
+      this.startingDate = startingDate;
+      this.endingDate = endingDate;
     }
   }
   
@@ -96,7 +104,7 @@
       return {
         modal: null,
         items: [],
-        groups: [],
+        rentals: [],
         currentPage: 1,
         itemsPerPage: 20,
         stateAuth: useAuthStore(),
@@ -110,8 +118,8 @@
         errorMessages: null,
         selectedRowId: null,
         urlApi: `${BASE_URL}/queryOsztalyAzon`,
-        urlApi1: `${BASE_URL}/groups`,
-        urlApi2: `${BASE_URL}/books`,
+        urlApi1: `${BASE_URL}/books`,
+        urlApi2: `${BASE_URL}/rentals`,
         debug: DEBUG,
       };
     },
@@ -189,9 +197,11 @@
         };
   
         const data = {
-          poet: this.item.poet,
-          title: this.item.title,
-          groupId: this.item.groupId,
+          poet: this.poet,
+          title: this.title,
+          groupId: this.groupId,
+          startingDate: this.startingDate,
+          endingDate: this.ending
         };
         try {
           const response = await axios.post(url, data, { headers });
@@ -212,9 +222,11 @@
           Authorization: `Bearer ${this.stateAuth.token}`,
         };
         const data = {
-          poet: this.item.poet,
-          title: this.item.title,
-          groupId: this.item.groupId,
+          poet: this.poet,
+          title: this.title,
+          groupId: this.groupId,
+          startingDate: this.startingDate,
+          endingDate: this.ending
         };
         try {
           const response = await axios.patch(url, data, { headers });
@@ -288,19 +300,19 @@
   </script>
   
   <style scoped>
-  .container {
-    margin-top: 40px;
-    text-align: center;
-  }
-  
-  th {
-    background-color: #c19a6b;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  
-  td {
-    color: #4a3b2d;
-  }
-  </style>
+.container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+th {
+  background-color: #c19a6b;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+td {
+  color: #4a3b2d;
+}
+</style>
