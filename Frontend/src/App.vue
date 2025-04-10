@@ -46,6 +46,11 @@ async function Logout() {
               </RouterLink>
             </li>
             <li>
+              <RouterLink to="/kolcsonzesek" class="nav-link" v-if="stateAuth.user">
+                Kölcsönzések <i class="bi bi-archive"></i>
+              </RouterLink>
+            </li>
+            <li>
               <RouterLink
                 to="/olvasonaplo"
                 class="nav-link"

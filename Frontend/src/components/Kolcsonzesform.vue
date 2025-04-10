@@ -1,13 +1,81 @@
 <template>
+    <form
+      @submit.prevent="onClickSubmit"
+      class="row g-3 needs-validation was-validated"
+    >
+      <p v-if="debug">{{ itemForm }}</p>
   
-</template>
+      <div class="col-md-2 position-relative">
+        <label for="poet" class="form-label">Költő:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="poet"
+          required
+          v-model="itemForm.poet"
+        />
+      </div>
+      <div class="col-md-4 position-relative">
+        <label for="title" class="form-label">Cím:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          required
+          v-model="itemForm.title"
+        />
+      </div>
 
-<script>
-export default {
+      <div class="col-md-4 position-relative">
+        <label for="title" class="form-label">Kölcsönző:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          required
+          v-model="itemForm.user"
+        />
+      </div>
+  
+      <div class="col-md-4 position-relative">
+        <label for="title" class="form-label">Kikölcsönözve:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          required
+          v-model="itemForm.startingDate"
+        />
+      </div>
 
-}
-</script>
-
-<style>
-
-</style>
+      <div class="col-md-4 position-relative">
+        <label for="title" class="form-label">Vissza hozva:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          required
+          v-model="itemForm.endingDate"
+        />
+      </div>
+  
+      <button type="submit" class="btn btn-success">Mentés</button>
+    </form>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        
+      };
+    },
+    props: ["itemForm", "debug", "rentals"],
+    emits: ["saveItem"],
+    methods: {
+      onClickSubmit() {
+        this.$emit("saveItem", this.itemForm);
+      }
+    },
+  };
+  </script>
