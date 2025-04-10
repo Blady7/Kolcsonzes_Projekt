@@ -109,8 +109,9 @@ export default {
       size: null,
       errorMessages: null,
       selectedRowId: null,
+      urlApi: `${BASE_URL}/queryTanarValaszto`,
       urlApi2: `${BASE_URL}/groups`,
-      urlApi3: `${BASE_URL}/groups`,
+      urlApi3: `${BASE_URL}/roles`,
       debug: DEBUG,
     };
   },
