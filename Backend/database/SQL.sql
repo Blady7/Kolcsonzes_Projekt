@@ -53,6 +53,12 @@ select DISTINCT s.id, b.title, b.poet from specimens s
 
 SELECT * FROM books; 
 
+-- SELECT g.id, g.`group`, u.name FROM users u
+--   INNER JOIN groups g ON u.groupId = g.id
+-- where u.roleId = 3;
+
+  SELECT * FROM groups;
+
 
 
 

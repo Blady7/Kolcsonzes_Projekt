@@ -80,4 +80,23 @@ class QueriesController extends Controller
 
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
+
+
+    public function queryTanarValaszto()
+    {
+        //natív SQL
+        $rows = DB::select(
+            'SELECT g.id, g.`group`, u.name FROM groups g
+  INNER JOIN users u ON u.groupId = g.id
+where u.roleId = 3'
+        );
+
+
+        $data = [
+            'message' => 'ok',
+            'data' => $rows
+        ];
+
+        return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+    }
 }
