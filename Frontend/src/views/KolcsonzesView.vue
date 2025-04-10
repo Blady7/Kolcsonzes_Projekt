@@ -32,7 +32,7 @@
               <td v-if="debug">{{ item.id }}</td>
               <td>{{ item.poet }}</td>
               <td>{{ item.title }}</td>
-              <td> {{ item.user }}</td>
+              <td>{{ item.name }}</td>
               <td>{{ item.startingDate }}</td>
               <td>{{ item.endingDate }}</td>
               <td class="text-nowrap text-center">
@@ -89,10 +89,10 @@
   import * as bootstrap from "bootstrap";
   
   class Item {
-    constructor(poet = null, title = null, user = null, startingDate = null, endingDate = null) {
+    constructor(poet = null, title = null, name = null, startingDate = null, endingDate = null) {
       this.poet = poet;
       this.title = title;
-      this.user = user;
+      this.name = name;
       this.startingDate = startingDate;
       this.endingDate = endingDate;
     }
@@ -117,9 +117,8 @@
         size: null,
         errorMessages: null,
         selectedRowId: null,
-        urlApi: `${BASE_URL}/queryOsztalyAzon`,
-        urlApi1: `${BASE_URL}/books`,
-        urlApi2: `${BASE_URL}/rentals`,
+        urlApi: `${BASE_URL}/queryKolcsonzesAzon`,
+        urlApi1: `${BASE_URL}/rentals`,
         debug: DEBUG,
       };
     },
@@ -135,27 +134,27 @@
     },
     mounted() {
       this.getCollections();
-      this.getGroups();
+      this.getRentals();
       this.modal = new bootstrap.Modal("#modal", {
         keyboard: false,
       });
     },
     methods: {
-      async getGroups() {
-        const url = this.urlApi1;
+      async getRentals() {
+        const url = this.urlApi;
         const headers = {
           Accept: "application/json",
         };
         try {
           const response = await axios.get(url, headers);
-          this.groups = response.data.data;
+          this.rentals = response.data.data;
           this.loading = false;
         } catch (error) {
           this.errorMessages = "Szerver hiba";
         }  
       },
       async getCollections() {
-        const url = this.urlApi;
+        const url = this.urlApi1;
         const headers = {
           Accept: "application/json",
         };
@@ -172,7 +171,7 @@
         const id = this.selectedRowId;
         const token = this.stateAuth.token;
   
-        const url = `${this.urlApi2}/${id}`;
+        const url = `${this.urlApi1}/${id}`;
         const headers = {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -183,13 +182,13 @@
           const response = await axios.delete(url, { headers });
           this.getCollections();
         } catch (error) {
-          this.errorMessages = "A könyv nem törölhető";
+          this.errorMessages = "A kölcsönzés nem törölhető";
         }
       },
   
       async createItem() {
         const token = this.stateAuth.token;
-        const url = this.urlApi2;
+        const url = this.urlApi1;
         const headers = {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -199,7 +198,7 @@
         const data = {
           poet: this.poet,
           title: this.title,
-          groupId: this.groupId,
+          name: this.name,
           startingDate: this.startingDate,
           endingDate: this.ending
         };
@@ -215,7 +214,7 @@
       async updateItem() {
         this.loading = true;
         const id = this.selectedRowId;
-        const url = `${this.urlApi2}/${id}`;
+        const url = `${this.urlApi1}/${id}`;
         const headers = {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -224,7 +223,7 @@
         const data = {
           poet: this.poet,
           title: this.title,
-          groupId: this.groupId,
+          name: this.name,
           startingDate: this.startingDate,
           endingDate: this.ending
         };
@@ -248,7 +247,7 @@
         this.state = "Delete";
         this.selectedRowId = item.id;
         this.title = "Törlés";
-        this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} nevű könyvet?`;
+        this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} nevű kölcsönzést?`;
         this.yes = "Igen";
         this.no = "Nem";
         this.size = null;

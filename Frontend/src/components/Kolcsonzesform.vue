@@ -27,33 +27,33 @@
       </div>
 
       <div class="col-md-4 position-relative">
-        <label for="title" class="form-label">Kölcsönző:</label>
+        <label for="name" class="form-label">Kölcsönző:</label>
         <input
           type="text"
           class="form-control"
-          id="title"
+          id="name"
           required
-          v-model="itemForm.user"
+          v-model="itemForm.name"
         />
       </div>
   
       <div class="col-md-4 position-relative">
-        <label for="title" class="form-label">Kikölcsönözve:</label>
+        <label for="startingDate" class="form-label">Kikölcsönözve:</label>
         <input
           type="text"
           class="form-control"
-          id="title"
+          id="startingDate"
           required
           v-model="itemForm.startingDate"
         />
       </div>
 
       <div class="col-md-4 position-relative">
-        <label for="title" class="form-label">Vissza hozva:</label>
+        <label for="endingDate" class="form-label">Vissza hozva:</label>
         <input
           type="text"
           class="form-control"
-          id="title"
+          id="endingDate"
           required
           v-model="itemForm.endingDate"
         />
