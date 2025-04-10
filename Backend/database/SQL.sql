@@ -27,6 +27,9 @@ select r.id, r.specimenId, r.userId, u.name, b.title, b.poet, s.bookId, r.starti
   order by u.name, b.title;
 
 #kölcsönzési form listák
+#kölcsönözhetőség megszűntetése
+UPDATE rentals set endingDate = NULL
+  WHERE id = 2;
 
 #user ABC
 #studentAbc
@@ -35,8 +38,20 @@ SELECT name, id from users
   where roleId = 2
   order by name;
 
-select s.id, r.specimenId from specimens s
-  left JOIN rentals r on s.id = r.specimenId;
+#kikölcsönözhető példányok
+#nem kölcsönözhető könyvek dátum alapján
+SELECT specimenId FROM rentals
+  where endingDate is NULL;
+
+#api/canRentSpecimens
+select DISTINCT s.id, b.title, b.poet from specimens s
+  left JOIN rentals r on s.id = r.specimenId
+  inner JOIN books b on s.bookId = b.id
+  where r.specimenId is NULL OR not s.id in (SELECT specimenId FROM rentals
+  where endingDate is NULL)
+  ORDER BY b.title;
+
+SELECT * FROM books; 
 
 
 

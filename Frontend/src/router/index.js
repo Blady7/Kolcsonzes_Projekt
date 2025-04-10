@@ -55,6 +55,11 @@ const router = createRouter({
       name: 'evfolyamok',
       component: () => import('../views/EvfolyamView.vue'),
     },
+    {
+      path: '/kolcsonzesek',
+      name: 'koclsonzesek',
+      component: () => import('../views/KolcsonzesView.vue'),
+    },
     
   ],
 })
