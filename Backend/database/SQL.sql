@@ -13,8 +13,9 @@ Select * from specimens;
 SELECT b.id, b.poet, b.title, g.group from books b
 inner join groups g on b.groupId= g.id ;
 
-SELECT u.id, u.name, g.`group`,  u.email FROM users u
+SELECT u.id, u.name, g.`group`,  u.email, u.roleId, r.role, u.groupId FROM users u
   INNER JOIN groups g ON u.groupId = g.id
+  inner join  roles r on r.id = u.roleId
 where u.roleId = 2 ;
 
 
