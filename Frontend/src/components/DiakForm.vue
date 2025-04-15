@@ -3,9 +3,9 @@
     @submit.prevent="onClickSubmit"
     class="row g-3 needs-validation was-validated"
   >
-    <p v-if="debug">{{ itemForm }}</p>
+    <!-- <p v-if="debug">{{ itemForm }}</p> -->
 
-    <div class="col-md-2 position-relative">
+    <div class="col-md-3 position-relative">
       <label for="poet" class="form-label">Neve:</label>
       <input
         type="text"
@@ -37,6 +37,17 @@
         id="title"
         required
         v-model="itemForm.email"
+      />
+    </div>
+
+    <div class="col-md-3 position-relative">
+      <label for="title" class="form-label">Jelszó:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        required
+        v-model="itemForm.password"
       />
     </div>
 

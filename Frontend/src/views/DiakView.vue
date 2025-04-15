@@ -83,10 +83,11 @@ import Modal from "@/components/Modal.vue";
 import * as bootstrap from "bootstrap";
 
 class Item {
-  constructor(name = null, title = null, groupId = null) {
+  constructor(name = null, email = null, groupId = null, roleId = 2) {
     this.name = name;
-    this.title = title;
+    this.email = email;
     this.groupId = groupId;
+    this.roleId = roleId;
   }
 }
 
@@ -189,12 +190,17 @@ export default {
       };
 
       const data = {
-        poet: this.item.poet,
-        title: this.item.title,
+        name: this.item.name,
+        email: this.item.email,
+        password: this.item.password,
         groupId: this.item.groupId,
+        roleId: this.item.roleId
+
       };
+
       try {
         const response = await axios.post(url, data, { headers });
+        
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A bővítés nem sikerült.";
@@ -212,9 +218,9 @@ export default {
         Authorization: `Bearer ${this.stateAuth.token}`,
       };
       const data = {
-        poet: this.item.poet,
-        title: this.item.title,
-        groupId: this.item.groupId,
+        name: this.item.name,
+        email: this.item.email,
+        group: this.item.group,
       };
       try {
         const response = await axios.patch(url, data, { headers });
