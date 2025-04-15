@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-center my-4">Könyvek</h1>
+    <h1 class="text-center my-4">Könyvek ({{ itemsLength }})</h1>
     <ErrorMessage
       :errorMessages="errorMessages"
       @close="onClickCloseErrorMessage"
@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in paginatedItems"
+            <tr v-for="item in items"
                 :key="item.id"
                 @click="onClickTr(item.id)"
                 :class="{
@@ -42,8 +42,8 @@
         </table>
       </div>
       <Paginator
-        :totalItems="items.length"
-        :itemsPerPage="20"
+        :totalItems="itemsLength"
+        :itemsPerPage="itemsPerPage"
         :currentPage="currentPage"
         @page-changed="goToPage"
       />
@@ -99,6 +99,7 @@ export default {
       groups: [],
       currentPage: 1,
       itemsPerPage: 20,
+      offsetBooks: 0,
       stateAuth: useAuthStore(),
       item: new Item(),
       messageYesNo: null,
@@ -112,18 +113,15 @@ export default {
       urlApi: `${BASE_URL}/queryOsztalyAzon`,
       urlApi1: `${BASE_URL}/groups`,
       urlApi2: `${BASE_URL}/books`,
+      urlApi3: `${BASE_URL}/queryBooksCount`,
       debug: DEBUG,
+      itemsLength: 0,
     };
   },
-  computed: {
-    paginatedItems() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.items.slice(start, end);    
-    },
-    totalPages() {
-      return Math.ceil(this.items.length / this.itemsPerPage);
-    },
+  watch:{
+    currentPage(){
+      this.getCollections();
+    }
   },
   mounted() {
     this.getCollections();
@@ -147,13 +145,19 @@ export default {
       }  
     },
     async getCollections() {
-      const url = this.urlApi;
+      let url = `${this.urlApi}/${this.itemsPerPage}/${this.offsetBooks}`;
       const headers = {
         Accept: "application/json",
       };
       try {
-        const response = await axios.get(url, headers);
-        this.items = response.data.data;        
+        let response = await axios.get(url, headers);
+        this.items = response.data.data;
+        url = this.urlApi3;
+        response = await axios.get(url, headers);
+        this.itemsLength = response.data.data[0].booksCount;
+
+        console.log(this.items);
+              
         this.loading = false;
       } catch (error) {
         this.errorMessages = "Szerver hiba";
@@ -228,7 +232,6 @@ export default {
     yesEventHandler() {
       if (this.state == "Delete") {
         this.deleteItemById();
-        this.goToPage(1);
       }
     },
 
@@ -243,6 +246,8 @@ export default {
     },
 
     onClickUpdate(item) {
+      console.log("update:", item);
+      
       this.state = "Update";
       this.selectedRowId = item.id;
       this.title = "Könyv módosítása";
@@ -282,6 +287,7 @@ export default {
 
     goToPage(page) {
       this.currentPage = page;
+      this.offsetBooks = this.itemsPerPage * (this.currentPage - 1);
     },
   },
 };

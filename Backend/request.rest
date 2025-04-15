@@ -81,7 +81,11 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### get booksWithGroups
-GET {{host}}/api/queryOsztalyAzon
+GET {{host}}/api/queryOsztalyAzon/20/20
+Accept: application/json
+
+### get booksWithGroups
+GET {{host}}/api/queryBooksCount
 Accept: application/json
 
 ### get book by id

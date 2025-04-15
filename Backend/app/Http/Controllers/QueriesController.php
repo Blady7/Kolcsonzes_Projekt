@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Group;
@@ -45,13 +46,17 @@ class QueriesController extends Controller
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
 
-    public function queryOsztalyAzon()
+    public function queryOsztalyAzon($limit, $offset)
     {
+        $query = '
+        SELECT b.id, b.poet, b.title, g.group, g.id groupId from books b
+                inner join groups g on b.groupId= g.id
+                order by b.id
+                limit ? offset ?
+        ';
         //natív SQL
         $rows = DB::select(
-            'SELECT b.id, b.poet, b.title, g.group from books b
-                inner join groups g on b.groupId= g.id
-                order by b.id;'
+            $query, [$limit, $offset]
         );
 
 
@@ -63,13 +68,73 @@ class QueriesController extends Controller
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
 
-    public function queryDiakValaszto()
+    public function queryBooksCount()
     {
+        $query = '
+        SELECT count(*) booksCount from books
+        ';
         //natív SQL
         $rows = DB::select(
-            'SELECT u.id, u.name, g.`group`, u.email FROM users u
+            $query
+        );
+
+
+        $data = [
+            'message' => 'ok',
+            'data' => $rows
+        ];
+
+        return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+    }
+    public function queryRentalsCount()
+    {
+        $query = '
+        SELECT count(*) RentalsCount from rentals
+        ';
+        //natív SQL
+        $rows = DB::select(
+            $query
+        );
+
+
+        $data = [
+            'message' => 'ok',
+            'data' => $rows
+        ];
+
+        return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+    }
+
+    public function queryStudentsCount()
+    {
+        $query = '
+        SELECT count(*) studentsCount from users
+        ';
+        //natív SQL
+        $rows = DB::select(
+            $query
+        );
+
+
+        $data = [
+            'message' => 'ok',
+            'data' => $rows
+        ];
+
+        return response()->json($data, options: JSON_UNESCAPED_UNICODE);
+    }
+
+    public function queryDiakValaszto($limit, $offset)
+    {
+        $query = '
+            SELECT u.id, u.name, g.`group`, u.email FROM users u
                 INNER JOIN groups g ON u.groupId = g.id
-                where u.roleId = 2 '
+                where u.roleId = 2 
+                limit ? offset ?
+        ';
+        //natív SQL
+        $rows = DB::select(
+            $query, [$limit, $offset]
         );
 
 
@@ -103,24 +168,15 @@ class QueriesController extends Controller
     public function queryKolcsonzesAzon($limit, $offset)
     {
         //natív SQL
-        // $query = '
-        // SELECT r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate from rentals r
-        //         inner JOIN specimens s on r.specimenId = s.id
-        //         INNER JOIN users u on r.userId = u.id
-        //         inner join books b on s.bookId = b.id
-        //         order by r.id
-        //         limit ? offset ?
-        // ';
         $query = '
         SELECT r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate from rentals r
                 inner JOIN specimens s on r.specimenId = s.id
                 INNER JOIN users u on r.userId = u.id
                 inner join books b on s.bookId = b.id
-                order by r.id;
+                order by r.id
+                limit ? offset ?
         ';
-        //$rows = DB::select($query, [$limit, $offset]);
-        $rows = DB::select($query);
-
+        $rows = DB::select($query, [$limit, $offset]);
 
         $data = [
             'message' => 'ok',

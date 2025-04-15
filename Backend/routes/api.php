@@ -18,7 +18,7 @@ Route::get('/', function () {
 //region users
 Route::post('users/login', [UserController::class, 'login']);
 Route::post('users/logout', [UserController::class, 'logout']);
-Route::get('queryDiakValaszto', [QueriesController::class, 'queryDiakValaszto']);
+Route::get('queryDiakValaszto/${limit}/${offset}', [QueriesController::class, 'queryDiakValaszto']);
 Route::get('queryTanarnevsor', [QueriesController::class, 'queryTanarnevsor']);
 Route::get('users', [UserController::class, 'index'])
     ->middleware('auth:sanctum');
@@ -35,7 +35,8 @@ Route::delete('users/{id}', [UserController::class, 'destroy'])
 //region books
 Route::get('books', [BookController::class, 'index']);
 Route::get('books/{id}', [BookController::class, 'show']);
-Route::get('queryOsztalyAzon', [QueriesController::class, 'queryOsztalyAzon']);
+Route::get('queryOsztalyAzon/{limit}/{offset}', [QueriesController::class, 'queryOsztalyAzon']);
+Route::get('queryBooksCount', [QueriesController::class, 'queryBooksCount']);
 Route::post('books', [BookController::class, 'store'])
     ->middleware('auth:sanctum');
 Route::patch('books/{id}', [BookController::class, 'update'])
@@ -75,6 +76,7 @@ Route::delete('readingdiaries/{id}', [ReadingdiarieController::class, 'destroy']
 //region rentals
 Route::get('rentals', [RentalController::class, 'index']);
 Route::get('queryKolcsonzesAzon/{limit}/{offset}', [ QueriesController::class, 'queryKolcsonzesAzon']);
+Route::get('queryRentalsCount', [QueriesController::class, 'queryRentalsCount']);
 Route::get('rentals/{id}', [RentalController::class, 'show']);
 Route::post('rentals', [RentalController::class, 'store'])
     ->middleware('auth:sanctum');
