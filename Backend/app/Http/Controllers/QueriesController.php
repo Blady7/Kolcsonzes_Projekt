@@ -100,16 +100,26 @@ class QueriesController extends Controller
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
 
-    public function queryKolcsonzesAzon()
+    public function queryKolcsonzesAzon($limit, $offset)
     {
         //natív SQL
-        $rows = DB::select(
-            'SELECT r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate from rentals r
+        // $query = '
+        // SELECT r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate from rentals r
+        //         inner JOIN specimens s on r.specimenId = s.id
+        //         INNER JOIN users u on r.userId = u.id
+        //         inner join books b on s.bookId = b.id
+        //         order by r.id
+        //         limit ? offset ?
+        // ';
+        $query = '
+        SELECT r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate from rentals r
                 inner JOIN specimens s on r.specimenId = s.id
                 INNER JOIN users u on r.userId = u.id
                 inner join books b on s.bookId = b.id
-                order by r.id;'
-        );
+                order by r.id;
+        ';
+        //$rows = DB::select($query, [$limit, $offset]);
+        $rows = DB::select($query);
 
 
         $data = [

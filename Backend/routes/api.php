@@ -74,6 +74,7 @@ Route::delete('readingdiaries/{id}', [ReadingdiarieController::class, 'destroy']
 
 //region rentals
 Route::get('rentals', [RentalController::class, 'index']);
+Route::get('queryKolcsonzesAzon/{limit}/{offset}', [ QueriesController::class, 'queryKolcsonzesAzon']);
 Route::get('rentals/{id}', [RentalController::class, 'show']);
 Route::post('rentals', [RentalController::class, 'store'])
     ->middleware('auth:sanctum');

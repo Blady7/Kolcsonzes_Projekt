@@ -49,7 +49,7 @@
       </div>
       <Paginator
         :totalItems="items.length"
-        :itemsPerPage="20"
+        :itemsPerPage="50"
         :currentPage="currentPage"
         @page-changed="goToPage"
       />
@@ -106,7 +106,7 @@
         items: [],
         rentals: [],
         currentPage: 1,
-        itemsPerPage: 20,
+        itemsPerPage: 50,
         stateAuth: useAuthStore(),
         item: new Item(),
         messageYesNo: null,
@@ -126,7 +126,7 @@
       paginatedItems() {
         const start = (this.currentPage - 1) * this.itemsPerPage;
         const end = start + this.itemsPerPage;
-        return this.items.slice(start, end);    
+        return this.items.slice(start, end); 
       },
       totalPages() {
         return Math.ceil(this.items.length / this.itemsPerPage);
@@ -141,7 +141,7 @@
     },
     methods: {
       async getRentals() {
-        const url = this.urlApi;
+        const url = `${this.urlApi}/${10}/${100}`;
         const headers = {
           Accept: "application/json",
         };
@@ -154,13 +154,15 @@
         }  
       },
       async getCollections() {
-        const url = this.urlApi1;
+        const url = `${this.urlApi}/${10}/${100}`;
         const headers = {
           Accept: "application/json",
         };
         try {
           const response = await axios.get(url, headers);
-          this.items = response.data.data;        
+          this.items = response.data.data;    
+          console.log(this.items);
+              
           this.loading = false;
         } catch (error) {
           this.errorMessages = "Szerver hiba";

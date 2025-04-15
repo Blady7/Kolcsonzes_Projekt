@@ -20,11 +20,12 @@ where u.roleId = 2 ;
 
 #kikölcsönzött könyvek táblázata
 #rentedBooksByUsers
-select r.id, r.specimenId, r.userId, u.name, b.title, b.poet, s.bookId, r.startingDate, r.endingDate from rentals r
+select r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate from rentals r
   inner JOIN specimens s on r.specimenId = s.id
   INNER JOIN users u on r.userId = u.id
   inner join books b on s.bookId = b.id
-  order by u.name, b.title;
+  order by u.name, b.title
+  limit 50 OFFSET 50;
 
 #kölcsönzési form listák
 #kölcsönözhetőség megszűntetése
@@ -57,7 +58,11 @@ SELECT * FROM books;
 --   INNER JOIN groups g ON u.groupId = g.id
 -- where u.roleId = 3;
 
-  SELECT * FROM groups;
+SELECT * FROM groups;
+
+SELECT u.name, r.startingDate, r.endingDate FROM rentals r
+  inner join users u on r.userId = u.id
+  ORDER BY r.id;
 
 
 

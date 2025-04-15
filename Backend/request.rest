@@ -205,7 +205,7 @@ Authorization: Bearer {{token}}
 # ------------- rental -------------
 
 ### get rentals
-GET {{host}}/api/rentals?limit=100
+GET {{host}}/api/queryKolcsonzesAzon/10/10
 Accept: application/json
 Authorization: Bearer {{token}}
 
