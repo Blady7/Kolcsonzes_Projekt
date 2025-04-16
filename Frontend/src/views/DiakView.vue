@@ -176,7 +176,7 @@ export default {
         const response = await axios.delete(url, { headers });
         this.getCollections();
       } catch (error) {
-        this.errorMessages = "A könyv nem törölhető";
+        this.errorMessages = "A diák nem törölhető";
       }
     },
 
@@ -245,7 +245,7 @@ export default {
       this.state = "Delete";
       this.selectedRowId = item.id;
       this.title = "Törlés";
-      this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} nevű könyvet?`;
+      this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} nevű diákot?`;
       this.yes = "Igen";
       this.no = "Nem";
       this.size = null;
@@ -254,7 +254,7 @@ export default {
     onClickUpdate(item) {
       this.state = "Update";
       this.selectedRowId = item.id;
-      this.title = "Könyv módosítása";
+      this.title = "Diák módosítása";
       this.yes = null;
       this.no = "Mégsem";
       this.size = "lg";
@@ -264,7 +264,7 @@ export default {
     onClickCreate() {
       this.state = "Create";
       this.selectedRowId = null;
-      this.title = "Új könyv bevitele";
+      this.title = "Új diák bevitele";
       this.yes = null;
       this.no = "Mégsem";
       this.size = "lg";
