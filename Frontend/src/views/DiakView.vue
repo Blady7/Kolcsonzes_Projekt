@@ -18,13 +18,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in items"
-                :key="item.id"
-                @click="onClickTr(item.id)"
-                :class="{
-                  updating: loading,
-                  active: item.id === selectedRowId,
-                }">
+            <tr
+              v-for="item in items"
+              :key="item.id"
+              @click="onClickTr(item.id)"
+              :class="{
+                updating: loading,
+                active: item.id === selectedRowId,
+              }"
+            >
               <td v-if="debug">{{ item.id }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.email }}</td>
@@ -119,10 +121,10 @@ export default {
       itemsLength: 0,
     };
   },
-  watch:{
-    currentPage(){
+  watch: {
+    currentPage() {
       this.getCollections();
-    }
+    },
   },
   mounted() {
     this.getCollections();
@@ -143,7 +145,7 @@ export default {
         this.loading = false;
       } catch (error) {
         this.errorMessages = "Szerver hiba";
-      }  
+      }
     },
     async getCollections() {
       let url = `${this.urlApi}/${this.itemsPerPage}/${this.offsetStudents}`;
@@ -155,7 +157,7 @@ export default {
         this.items = response.data.data;
         url = this.urlApi3;
         response = await axios.get(url, headers);
-        this.itemsLength = response.data.data[0].studentsCount;   
+        this.itemsLength = response.data.data[0].studentsCount;
         this.loading = false;
       } catch (error) {
         this.errorMessages = "Szerver hiba";
@@ -193,15 +195,14 @@ export default {
       const data = {
         name: this.item.name,
         email: this.item.email,
-        password: this.item.password,
+        password: this.item.password, 
         groupId: this.item.groupId,
-        roleId: this.item.roleId
-
+        roleId: this.item.roleId,
       };
 
       try {
         const response = await axios.post(url, data, { headers });
-        
+
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A bővítés nem sikerült.";
@@ -226,12 +227,11 @@ export default {
       try {
         const response = await axios.patch(url, data, { headers });
         console.log(response);
-        
+
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
         console.log("asd");
-        
       }
       this.state = "Read";
     },
@@ -246,7 +246,7 @@ export default {
       this.state = "Delete";
       this.selectedRowId = item.id;
       this.title = "Törlés";
-      this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} nevű diákot?`;
+      this.messageYesNo = `Valóban törölni akarod a(z) ${item.name} nevű diákot?`;
       this.yes = "Igen";
       this.no = "Nem";
       this.size = null;
@@ -292,7 +292,7 @@ export default {
 
     goToPage(page) {
       this.currentPage = page;
-      this.offsetBooks = this.itemsPerPage * (this.currentPage - 1);
+      this.offsetStudents = this.itemsPerPage * (this.currentPage - 1);
     },
   },
 };
