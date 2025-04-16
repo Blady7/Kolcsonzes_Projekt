@@ -6,7 +6,7 @@
       @close="onClickCloseErrorMessage"
     />
     <div>
-      <div>
+      <div class="table-responsive">
         <table class="my-table">
           <thead>
             <tr>
@@ -293,7 +293,7 @@
   
       goToPage(page) {
       this.currentPage = page;
-      this.offsetBooks = this.itemsPerPage * (this.currentPage - 1);
+      this.offsetRentals = this.itemsPerPage * (this.currentPage - 1);
     },
     },
   };

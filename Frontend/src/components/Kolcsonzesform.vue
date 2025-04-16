@@ -40,7 +40,7 @@
       <div class="col-md-4 position-relative">
         <label for="startingDate" class="form-label">Kikölcsönözve:</label>
         <input
-          type="text"
+          type="datetime-local"
           class="form-control"
           id="startingDate"
           required
@@ -51,7 +51,7 @@
       <div class="col-md-4 position-relative">
         <label for="endingDate" class="form-label">Vissza hozva:</label>
         <input
-          type="text"
+          type="datetime-local"
           class="form-control"
           id="endingDate"
           required
