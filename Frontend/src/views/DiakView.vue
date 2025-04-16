@@ -114,6 +114,7 @@ export default {
       urlApi: `${BASE_URL}/queryDiakValaszto`,
       urlApi1: `${BASE_URL}/groups`,
       urlApi2: `${BASE_URL}/users`,
+      urlApi3: `${BASE_URL}/studentsCount`,
       debug: DEBUG,
       itemsLength: 0,
     };

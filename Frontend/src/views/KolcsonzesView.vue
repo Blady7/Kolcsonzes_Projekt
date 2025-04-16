@@ -120,7 +120,7 @@
         selectedRowId: null,
         urlApi: `${BASE_URL}/queryKolcsonzesAzon`,
         urlApi1: `${BASE_URL}/rentals`,
-        urlApi3: `${BASE_URL}/queryRentalsCount`,
+        urlApi2: `${BASE_URL}/queryRentalsCount`,
         debug: DEBUG,
         itemsLength: 0,
       };
@@ -159,7 +159,7 @@
       try {
         let response = await axios.get(url, headers);
         this.items = response.data.data;
-        url = this.urlApi3;
+        url = this.urlApi2;
         response = await axios.get(url, headers);
         this.itemsLength = response.data.data[0].RentalsCount;   
         this.loading = false;
@@ -201,7 +201,7 @@
           title: this.title,
           name: this.name,
           startingDate: this.startingDate,
-          endingDate: this.ending
+          endingDate: this.endingDate
         };
         try {
           const response = await axios.post(url, data, { headers });
@@ -226,7 +226,7 @@
           title: this.title,
           name: this.name,
           startingDate: this.startingDate,
-          endingDate: this.ending
+          endingDate: this.endingDate
         };
         try {
           const response = await axios.patch(url, data, { headers });
