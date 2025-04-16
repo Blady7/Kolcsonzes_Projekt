@@ -139,7 +139,7 @@
     },
     methods: {
       async getRentals() {
-        const url = `${this.urlApi}/${this.limit}/${this.offsetRentals}`;
+        const url = this.urlApi1;
         const headers = {
           Accept: "application/json",
         };
@@ -152,7 +152,7 @@
         }  
       },
       async getCollections() {
-      let url = `${this.urlApi}/${this.itemsPerPage}/${this.offsetBooks}`;
+      let url = `${this.urlApi}/${this.itemsPerPage}/${this.offsetRentals}`;
       const headers = {
         Accept: "application/json",
       };

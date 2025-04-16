@@ -17,7 +17,7 @@ Route::get('/', function () {
 //region users
 Route::post('users/login', [UserController::class, 'login']);
 Route::post('users/logout', [UserController::class, 'logout']);
-Route::get('queryDiakValaszto', [QueriesController::class, 'queryDiakValaszto']);
+Route::get('queryDiakValaszto/{limit}/{offset}', [QueriesController::class, 'queryDiakValaszto']);
 Route::get('queryTanarnevsor', [QueriesController::class, 'queryTanarnevsor']);
 Route::get('queryStudentsCount', [QueriesController::class, 'queryStudentsCount']);
 Route::get('users', [UserController::class, 'index'])
