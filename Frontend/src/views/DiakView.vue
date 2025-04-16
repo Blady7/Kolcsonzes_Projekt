@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in items"
+            <tr v-for="item in paginatedItems"
                 :key="item.id"
                 @click="onClickTr(item.id)"
                 :class="{
@@ -42,8 +42,8 @@
         </table>
       </div>
       <Paginator
-        :totalItems="itemsLength"
-        :itemsPerPage="itemsPerPage"
+        :totalItems="items.length"
+        :itemsPerPage="20"
         :currentPage="currentPage"
         @page-changed="goToPage"
       />
@@ -100,7 +100,6 @@ export default {
       groups: [],
       currentPage: 1,
       itemsPerPage: 20,
-      offsetStudents: 0,
       stateAuth: useAuthStore(),
       item: new Item(),
       messageYesNo: null,
@@ -114,15 +113,18 @@ export default {
       urlApi: `${BASE_URL}/queryDiakValaszto`,
       urlApi1: `${BASE_URL}/groups`,
       urlApi2: `${BASE_URL}/users`,
-      urlApi3: `${BASE_URL}/queryStudentsCount`,
       debug: DEBUG,
-      itemsLength: 0,
     };
   },
-  watch:{
-    currentPage(){
-      this.getCollections();
-    }
+  computed: {
+    paginatedItems() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.items.slice(start, end);    
+    },
+    totalPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage);
+    },
   },
   mounted() {
     this.getCollections();
@@ -146,16 +148,13 @@ export default {
       }  
     },
     async getCollections() {
-      let url = `${this.urlApi}/${this.itemsPerPage}/${this.offsetStudents}`;
+      const url = this.urlApi;
       const headers = {
         Accept: "application/json",
       };
       try {
-        let response = await axios.get(url, headers);
-        this.items = response.data.data;
-        url = this.urlApi3;
-        response = await axios.get(url, headers);
-        this.itemsLength = response.data.data[0].studentsCount;          
+        const response = await axios.get(url, headers);
+        this.items = response.data.data;        
         this.loading = false;
       } catch (error) {
         this.errorMessages = "Szerver hiba";
@@ -239,6 +238,7 @@ export default {
     yesEventHandler() {
       if (this.state == "Delete") {
         this.deleteItemById();
+        this.goToPage(1);
       }
     },
 
@@ -292,7 +292,6 @@ export default {
 
     goToPage(page) {
       this.currentPage = page;
-      this.offsetBooks = this.itemsPerPage * (this.currentPage - 1);
     },
   },
 };
