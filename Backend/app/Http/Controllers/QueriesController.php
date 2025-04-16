@@ -109,6 +109,7 @@ class QueriesController extends Controller
     {
         $query = '
         SELECT count(*) studentsCount from users
+            where roleId = 2
         ';
         //natív SQL
         $rows = DB::select(

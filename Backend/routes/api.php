@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\GroupController;
-use App\Http\Controllers\ReadingdiarieController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SpecimenController;
@@ -20,6 +19,7 @@ Route::post('users/login', [UserController::class, 'login']);
 Route::post('users/logout', [UserController::class, 'logout']);
 Route::get('queryDiakValaszto/${limit}/${offset}', [QueriesController::class, 'queryDiakValaszto']);
 Route::get('queryTanarnevsor', [QueriesController::class, 'queryTanarnevsor']);
+Route::get('queryStudentsCount', [QueriesController::class, 'queryStudentsCount']);
 Route::get('users', [UserController::class, 'index'])
     ->middleware('auth:sanctum');
 Route::get('users/{id}', [UserController::class, 'show'])

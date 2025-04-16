@@ -31,11 +31,15 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### get diakok
-GET  {{host}}/api/queryDiakValaszto
+GET  {{host}}/api/queryDiakValaszto/20/0
 Accept: application/json
 
 ### get teachers
 GET  {{host}}/api/queryTanarnevsor
+Accept: application/json
+
+### get teachers
+GET  {{host}}/api/queryStudentsCount
 Accept: application/json
 
 ### get user by id
