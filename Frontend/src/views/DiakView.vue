@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-center my-4">Diákok</h1>
+    <h1 class="text-center my-4">Diákok ({{ itemsLength }})</h1>
     <ErrorMessage
       :errorMessages="errorMessages"
       @close="onClickCloseErrorMessage"
@@ -18,13 +18,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in items"
-                :key="item.id"
-                @click="onClickTr(item.id)"
-                :class="{
-                  updating: loading,
-                  active: item.id === selectedRowId,
-                }">
+            <tr
+              v-for="item in items"
+              :key="item.id"
+              @click="onClickTr(item.id)"
+              :class="{
+                updating: loading,
+                active: item.id === selectedRowId,
+              }"
+            >
               <td v-if="debug">{{ item.id }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.email }}</td>
@@ -114,15 +116,15 @@ export default {
       urlApi: `${BASE_URL}/queryDiakValaszto`,
       urlApi1: `${BASE_URL}/groups`,
       urlApi2: `${BASE_URL}/users`,
-      urlApi3: `${BASE_URL}/studentsCount`,
+      urlApi3: `${BASE_URL}/queryStudentsCount`,
       debug: DEBUG,
       itemsLength: 0,
     };
   },
-  watch:{
-    currentPage(){
+  watch: {
+    currentPage() {
       this.getCollections();
-    }
+    },
   },
   mounted() {
     this.getCollections();
@@ -143,7 +145,7 @@ export default {
         this.loading = false;
       } catch (error) {
         this.errorMessages = "Szerver hiba";
-      }  
+      }
     },
     async getCollections() {
       let url = `${this.urlApi}/${this.itemsPerPage}/${this.offsetStudents}`;
@@ -155,7 +157,7 @@ export default {
         this.items = response.data.data;
         url = this.urlApi3;
         response = await axios.get(url, headers);
-        this.itemsLength = response.data.data[0].studentsCount;   
+        this.itemsLength = response.data.data[0].studentsCount;
         this.loading = false;
       } catch (error) {
         this.errorMessages = "Szerver hiba";
@@ -177,7 +179,7 @@ export default {
         const response = await axios.delete(url, { headers });
         this.getCollections();
       } catch (error) {
-        this.errorMessages = "A könyv nem törölhető";
+        this.errorMessages = "A diák nem törölhető";
       }
     },
 
@@ -193,15 +195,14 @@ export default {
       const data = {
         name: this.item.name,
         email: this.item.email,
-        password: this.item.password,
+        password: this.item.password, 
         groupId: this.item.groupId,
-        roleId: this.item.roleId
-
+        roleId: this.item.roleId,
       };
 
       try {
         const response = await axios.post(url, data, { headers });
-        
+
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A bővítés nem sikerült.";
@@ -226,12 +227,11 @@ export default {
       try {
         const response = await axios.patch(url, data, { headers });
         console.log(response);
-        
+
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
         console.log("asd");
-        
       }
       this.state = "Read";
     },
@@ -246,7 +246,7 @@ export default {
       this.state = "Delete";
       this.selectedRowId = item.id;
       this.title = "Törlés";
-      this.messageYesNo = `Valóban törölni akarod a(z) ${item.title} nevű könyvet?`;
+      this.messageYesNo = `Valóban törölni akarod a(z) ${item.name} nevű diákot?`;
       this.yes = "Igen";
       this.no = "Nem";
       this.size = null;
@@ -255,7 +255,7 @@ export default {
     onClickUpdate(item) {
       this.state = "Update";
       this.selectedRowId = item.id;
-      this.title = "Könyv módosítása";
+      this.title = "Diák módosítása";
       this.yes = null;
       this.no = "Mégsem";
       this.size = "lg";
@@ -265,7 +265,7 @@ export default {
     onClickCreate() {
       this.state = "Create";
       this.selectedRowId = null;
-      this.title = "Új könyv bevitele";
+      this.title = "Új diák bevitele";
       this.yes = null;
       this.no = "Mégsem";
       this.size = "lg";
@@ -292,7 +292,7 @@ export default {
 
     goToPage(page) {
       this.currentPage = page;
-      this.offsetBooks = this.itemsPerPage * (this.currentPage - 1);
+      this.offsetStudents = this.itemsPerPage * (this.currentPage - 1);
     },
   },
 };
