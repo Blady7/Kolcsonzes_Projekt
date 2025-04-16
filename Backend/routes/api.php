@@ -59,20 +59,6 @@ Route::delete('groups/{id}', [GroupController::class, 'destroy'])
 
 //endregion
 
-//region readingdiaries
-Route::get('readingdiaries', [ReadingdiarieController::class, 'index']);
-Route::get('readingdiaries/{id}', [ReadingdiarieController::class, 'show']);
-Route::post('readingdiaries', [ReadingdiarieController::class, 'store'])
-    ->middleware('auth:sanctum');
-
-Route::patch('readingdiaries/{id}', [ReadingdiarieController::class, 'update'])
-    ->middleware('auth:sanctum');
-
-Route::delete('readingdiaries/{id}', [ReadingdiarieController::class, 'destroy'])
-    ->middleware('auth:sanctum');
-
-//endregion
-
 //region rentals
 Route::get('rentals', [RentalController::class, 'index']);
 Route::get('queryKolcsonzesAzon/{limit}/{offset}', [ QueriesController::class, 'queryKolcsonzesAzon']);
