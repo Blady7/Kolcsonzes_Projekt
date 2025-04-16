@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-center my-4">Diákok</h1>
+    <h1 class="text-center my-4">Diákok ({{ itemsLength }})</h1>
     <ErrorMessage
       :errorMessages="errorMessages"
       @close="onClickCloseErrorMessage"
@@ -114,7 +114,7 @@ export default {
       urlApi: `${BASE_URL}/queryDiakValaszto`,
       urlApi1: `${BASE_URL}/groups`,
       urlApi2: `${BASE_URL}/users`,
-      urlApi3: `${BASE_URL}/studentsCount`,
+      urlApi3: `${BASE_URL}/queryStudentsCount`,
       debug: DEBUG,
       itemsLength: 0,
     };
