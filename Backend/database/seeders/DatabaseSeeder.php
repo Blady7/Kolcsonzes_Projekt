@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        DB::statement('DELETE FROM Readingdiaries');
         DB::statement('DELETE FROM Rentals');
         DB::statement('DELETE FROM Specimens');
         DB::statement('DELETE FROM Books');
@@ -36,7 +35,7 @@ class DatabaseSeeder extends Seeder
             BookSeeder::class,
             SpecimenSeeder::class,
             RentalSeeder::class,
-            ReadingdiarieSeeder::class,
+
         ]);
 
 
