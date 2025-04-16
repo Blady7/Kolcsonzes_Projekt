@@ -125,17 +125,17 @@ class QueriesController extends Controller
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
 
-    public function queryDiakValaszto($limit, $offset)
+    public function queryDiakValaszto()
     {
         $query = '
             SELECT u.id, u.name, g.`group`, u.email FROM users u
                 INNER JOIN groups g ON u.groupId = g.id
                 where u.roleId = 2 
-                limit ? offset ?
+                
         ';
         //natív SQL
         $rows = DB::select(
-            $query, [$limit, $offset]
+            $query
         );
 
 
