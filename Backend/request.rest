@@ -168,48 +168,6 @@ Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{token}}
 
-# ------------- readingDiare -------------
-
-### get readingDiare
-GET {{host}}/api/readingdiaries
-Accept: application/json
-Authorization: Bearer {{token}}
-
-### get readingDiare by id
-GET  {{host}}/api/readingdiaries/1
-Accept: application/json
-Authorization: Bearer {{token}}
-
-### post readingDiare
-POST {{host}}/api/readingdiaries
-Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{token}}
-
-{
-    "userId": "4",
-    "studentOpinion": "jó",
-    "bookId": "2",
-    "grade": "5"
-}
-
-### patch readingDiare
-PATCH {{host}}/api/readingdiaries/9
-Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{token}}
-
-{
-    "group": "1",
-    "teacherId": "3"
-}
-
-### delete readingDiare
-DELETE {{host}}/api/readingdiaries/11
-Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{token}}
-
 # ------------- rental -------------
 
 ### get rentals
