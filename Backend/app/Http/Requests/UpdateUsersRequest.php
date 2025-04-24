@@ -26,6 +26,8 @@ class UpdateUsersRequest extends FormRequest
             'name' => 'nullable|string',
             'email' => 'nullable|email',
             'password' => 'nullable',
+            'groupId' => 'required|integer',
+            'roleId' => 'required|integer',  
         ];
     }
 }
