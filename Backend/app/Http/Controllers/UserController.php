@@ -35,16 +35,14 @@ class UserController extends Controller
         //Kitöröljük az esetleges tokenjeit
         // $user->tokens()->delete();
 
-        //itt adjuk az új tokent
-        $token = $user->createToken('access')->plainTextToken;
-        $user->token = $token;
+        $abilities = match ($user->roleId) {
+            1 => ['*'], // Admin: mindenhez hozzáférés
+            2 => ['rentals:view'],
+            3 => ['rentals:view'],
+            default => [], // Alapértelmezett: semmihez nincs joga
+        };
 
-        //visszaadjuk a usert, ami a tokent is tartalmazni fogja
-        //A fejlécben elküldjük a httpOnly sütit
-        $data = [
-            'message' => 'ok',
-            'data' => $user
-        ];
+        $user->token = $user->createToken('access-token', $abilities)->plainTextToken;
         return response()
             ->json($data, options: JSON_UNESCAPED_UNICODE);
     }
