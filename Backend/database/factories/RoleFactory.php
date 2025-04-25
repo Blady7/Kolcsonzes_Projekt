@@ -17,7 +17,7 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'role' => $this->faker->lexify(str_repeat('?', rand(5, 7))),
+            //
         ];
     }
 }
