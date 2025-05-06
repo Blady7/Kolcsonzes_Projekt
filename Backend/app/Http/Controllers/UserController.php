@@ -43,6 +43,10 @@ class UserController extends Controller
         };
 
         $user->token = $user->createToken('access-token', $abilities)->plainTextToken;
+        $data = [
+            'message' => 'ok',
+            'data' => $user
+        ];
         return response()
             ->json($data, options: JSON_UNESCAPED_UNICODE);
     }

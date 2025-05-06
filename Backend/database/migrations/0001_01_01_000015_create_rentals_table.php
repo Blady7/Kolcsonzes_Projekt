@@ -19,6 +19,7 @@ return new class extends Migration
             //$table->foreign('userId')->references('id')->on('users');
             $table->date('startingDate')-> nullable();
             $table->date('endingDate')-> nullable();
+            $table->string('opinion', 250)-> nullable();
             
             $table->timestamps();
         });

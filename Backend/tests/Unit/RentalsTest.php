@@ -37,6 +37,7 @@ class RentalsTest extends TestCase
             'userId' => '4',
             'startingDate' => 'null',
             'endingDate' => 'null',
+            'opinion' => 'null',
         ]);
     }
 }

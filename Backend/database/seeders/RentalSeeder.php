@@ -35,6 +35,7 @@ class RentalSeeder extends Seeder
                     'userId' => $row[2],
                     'startingDate' => $row[3],
                     'endingDate' => $endingDate,
+                    'opinion' => $row[5]
                 ];
             }
             fclose($handle);

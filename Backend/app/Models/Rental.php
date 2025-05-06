@@ -20,6 +20,7 @@ class Rental extends Model
         'studentId',
         'startingDate',
         'endingDate',
+        'opinion'
     ];
 
     // public function specimen()
