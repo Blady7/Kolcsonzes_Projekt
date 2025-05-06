@@ -3,7 +3,7 @@
     @submit.prevent="onClickSubmit"
     class="row g-3 needs-validation was-validated"
   >
-    <!-- <p v-if="debug">{{ itemForm }}</p> -->
+    <p v-if="true">{{ itemForm }} </p>
 
     <div class="col-md-3 position-relative">
       <label for="poet" class="form-label">Neve:</label>
@@ -56,10 +56,11 @@
 </template>
 
 <script>
+import { DEBUG } from "../helpers/debug";
 export default {
   data() {
     return {
-      
+      debug:DEBUG,
     };
   },
   props: ["itemForm", "debug","groups"],

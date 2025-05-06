@@ -16,6 +16,17 @@ Content-Type: application/json
     "password": "admin"
 }
 
+### login 2
+# @name login
+POST {{host}}/api/users/login 
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "stabb.otto@gmail.com",
+    "password": "otto"
+}
+
 ###
 @token = {{login.response.body.data.token}}
 
@@ -54,21 +65,24 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 {
-    "name":  "test2",
-    "email": "test2@example.com",
+    "name":  "test3",
+    "email": "test3@example.com",
     "password": "123",
-    "roleId": 1,
+    "roleId": 2,
     "groupId": 1
 }
 
 ### patch user
-PATCH {{host}}/api/users/5
+PATCH {{host}}/api/users/22
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{token}}
 
 {
-    "password": "1234"
+    "name": "Stabb Ottó", 
+    "email": "stabb.otto@gmail.com", 
+    "groupId": 1, 
+    "password": "otto"
 }
 
 ### delete user

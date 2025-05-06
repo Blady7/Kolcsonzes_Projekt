@@ -128,7 +128,7 @@ class QueriesController extends Controller
     public function queryDiakValaszto($limit, $offset)
     {
         $query = '
-            SELECT u.id, u.name, g.`group`, u.email FROM users u
+            SELECT u.id, u.name, g.`group`, u.email, g.id groupId FROM users u
                 INNER JOIN groups g ON u.groupId = g.id
                 where u.roleId = 2
                 limit ? offset ?

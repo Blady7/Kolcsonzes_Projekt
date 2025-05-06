@@ -45,10 +45,11 @@
 </template>
 
 <script>
+import { DEBUG } from "../helpers/debug";
 export default {
   data() {
     return {
-      
+      debug:DEBUG,
     };
   },
   props: ["itemForm", "debug","groups"],

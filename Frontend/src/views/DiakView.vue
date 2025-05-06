@@ -222,8 +222,11 @@ export default {
       const data = {
         name: this.item.name,
         email: this.item.email,
-        group: this.item.group,
-      };
+        groupId: this.item.groupId,
+        password: this.item.password
+      };  
+      // console.log("data", data, url, headers);
+      // return
       try {
         const response = await axios.patch(url, data, { headers });
         console.log(response);

@@ -149,24 +149,12 @@ class UserController extends Controller
     {
         $row = User::find($id);
         if ($row) {
-            $rows = User::where('email', $request['email'])
-                ->get();
-            if (count($rows) != 0) {
-                # már van ilyen email
-                $data = [
-                    'message' => 'This email alredy exists',
-                    'data' => [
-                        'email' => $request['email']
-                    ]
-                ];
-            } else {
                 //nincs még ilyen email
                 $row->update($request->all());
                 $data = [
                     'message' => 'ok',
                     'data' => $row
                 ];
-            }
         } else {
             $data = [
                 'message' => 'Not found',
