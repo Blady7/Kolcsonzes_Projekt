@@ -60,7 +60,7 @@
       </div>
 
       <div class="col-md-4 position-relative">
-        <label for="opinion" class="form-label">Olvasónapló:</label>
+        <label for="title" class="form-label">Olvasónapló:</label>
         <input
           type="text"
           class="form-control"

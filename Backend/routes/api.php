@@ -48,7 +48,7 @@ Route::delete('books/{id}', [BookController::class, 'destroy'])
 
 //region groups
 Route::get('groups', [GroupController::class, 'index']);
-Route::get('queryTanarValaszto/{id}', [QueriesController::class, 'show']);
+Route::get('queryTanarValaszto', [QueriesController::class, 'show']);
 Route::post('groups', [GroupController::class, 'store'])
     ->middleware('auth:sanctum');
 
