@@ -35,9 +35,27 @@ class DatabaseSeeder extends Seeder
             BookSeeder::class,
             SpecimenSeeder::class,
             RentalSeeder::class,
-
         ]);
 
+        // Tanárok hozzárendelése a csoportokhoz
+        DB::table('groups')
+            ->where('group', '9')
+            ->update(['teacherId' => 269]);
 
+        DB::table('groups')
+            ->where('group', '10')
+            ->update(['teacherId' => 270]);
+
+        DB::table('groups')
+            ->where('group', '11')
+            ->update(['teacherId' => 271]);
+
+        DB::table('groups')
+            ->where('group', '12')
+            ->update(['teacherId' => 272]);
+
+        DB::table('groups')
+            ->where('group', 'admin')
+            ->update(['teacherId' => 273]);
     }
 }
