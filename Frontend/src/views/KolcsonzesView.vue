@@ -1,10 +1,7 @@
 <template>
   <div>
-    <h1 class="text-center my-4">Kölcsönzések</h1>
-    <ErrorMessage
-      :errorMessages="errorMessages"
-      @close="onClickCloseErrorMessage"
-    />
+    <h1 class="text-center my-4">Kölcsönzések ({{ itemsLength }})</h1>
+    <ErrorMessage :errorMessages="errorMessages" @close="onClickCloseErrorMessage" />
     <div>
       <div class="table-responsive">
         <table class="my-table">
@@ -21,15 +18,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="item in items"
-              :key="item.id"
-              @click="onClickTr(item.id)"
-              :class="{
-                updating: loading,
-                active: item.id === selectedRowId,
-              }"
-            >
+            <tr v-for="item in items" :key="item.id" @click="onClickTr(item.id)" :class="{
+              updating: loading,
+              active: item.id === selectedRowId,
+            }">
               <td v-if="debug">{{ item.id }}</td>
               <td>{{ item.poet }}</td>
               <td>{{ item.title }}</td>
@@ -38,47 +30,28 @@
               <td>{{ item.endingDate }}</td>
               <td>{{ item.opinion }}</td>
               <td class="text-nowrap text-center">
-                <Operations
-                  @onClickDeleteButton="onClickDeleteButton"
-                  @onClickUpdate="onClickUpdate"
-                  @onClickCreate="onClickCreate"
-                  :data="item"
-                />
+                <Operations @onClickDeleteButton="onClickDeleteButton" @onClickUpdate="onClickUpdate"
+                  @onClickCreate="onClickCreate" :data="item" />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <Paginator
-        :totalItems="itemsLength"
-        :itemsPerPage="itemsPerPage"
-        :currentPage="currentPage"
-        @page-changed="goToPage"
-      />
-      <Modal
-        :title="title"
-        :yes="yes"
-        :no="no"
-        :size="size"
-        @yesEvent="yesEventHandler"
-      >
+      <Paginator :totalItems="itemsLength" :itemsPerPage="itemsPerPage" :currentPage="currentPage"
+        @page-changed="goToPage" />
+      <Modal :title="title" :yes="yes" :no="no" :size="size" @yesEvent="yesEventHandler">
         <div v-if="state == 'Delete'">
           {{ messageYesNo }}
         </div>
 
-        <ItemForm
-          v-if="state == 'Create' || state == 'Update'"
-          :itemForm="item"
-          :debug="debug"
-          :rentals="this.rentals"
-          @saveItem="saveItemHandler"
-        />
+        <ItemForm v-if="state == 'Create' || state == 'Update'" :itemForm="item" :debug="debug" :books="books"
+          :students="students" @saveItem="saveItemHandler" />
       </Modal>
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import Paginator from "@/components/Paginator.vue";
 import axios from "axios";
 import { DEBUG } from "../helpers/debug";
@@ -149,7 +122,7 @@ export default {
   },
   methods: {
     async getRentals() {
-      const url = this.urlApi1;
+      const url = this.urlApi;
       const headers = {
         Accept: "application/json",
       };
@@ -207,20 +180,21 @@ export default {
       };
 
       const data = {
-        poet: this.poet,
-        title: this.title,
-        name: this.name,
-        startingDate: this.startingDate,
-        endingDate: this.endingDate,
-        opinion: this.opinion,
+        specimenId: this.item.specimenId, // Használd a kiválasztott könyv ID-ját
+        userId: this.item.userId,       // Használd a kiválasztott diák ID-ját
+        startingDate: this.item.startingDate,
+        endingDate: this.item.endingDate,
+        opinion: this.item.opinion,
       };
       try {
         const response = await axios.post(url, data, { headers });
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A bővítés nem sikerült.";
+        console.error("Hiba a létrehozáskor:", error.response?.data);
+      } finally {
+        this.state = "Read";
       }
-      this.state = "Read";
     },
 
     async updateItem() {
@@ -233,20 +207,22 @@ export default {
         Authorization: `Bearer ${this.stateAuth.token}`,
       };
       const data = {
-        poet: this.poet,
-        title: this.title,
-        name: this.name,
-        startingDate: this.startingDate,
-        endingDate: this.endingDate,
-        opinion: this.opinion,
+        specimenId: this.item.specimenId, // Használd a kiválasztott könyv ID-ját
+        userId: this.item.userId,       // Használd a kiválasztott diák ID-ját
+        startingDate: this.item.startingDate,
+        endingDate: this.item.endingDate,
+        opinion: this.item.opinion,
       };
       try {
         const response = await axios.patch(url, data, { headers });
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
+        console.error("Hiba a módosításkor:", error.response?.data);
+      } finally {
+        this.loading = false;
+        this.state = "Read";
       }
-      this.state = "Read";
     },
 
     yesEventHandler() {
@@ -294,7 +270,8 @@ export default {
       this.selectedRowId = id;
     },
 
-    saveItemHandler() {
+    saveItemHandler(itemToSave) {
+      this.item = { ...this.item, ...itemToSave };
       if (this.state === "Update") {
         this.updateItem();
       } else if (this.state === "Create") {
@@ -310,8 +287,8 @@ export default {
   },
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .container {
   margin-top: 40px;
   text-align: center;
