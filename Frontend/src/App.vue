@@ -4,11 +4,15 @@ import { useCounterStore } from "@/stores/counter";
 import { useAuthStore } from "@/stores/useAuthStore.js";
 import axios from "axios";
 import { BASE_URL } from "@/helpers/baseUrls";
-import { useRouter } from 'vue-router'; // Importáld a useRouter hook-ot
+import { useRouter } from "vue-router";
+import { computed } from "vue";
 
 const state = useCounterStore();
 const stateAuth = useAuthStore();
-const router = useRouter(); // Inicializáld a routert
+const router = useRouter();
+
+// Computed roleId a könnyebb kezeléshez
+const roleId = computed(() => stateAuth.user?.roleId);
 
 async function Logout() {
   const url = `${BASE_URL}/users/logout`;
@@ -22,7 +26,7 @@ async function Logout() {
     console.error("Error:", error);
   }
   stateAuth.clearStoredData();
-  router.push('/'); // Használd a router.push-t a navigációhoz
+  router.push("/");
 }
 </script>
 
@@ -35,22 +39,22 @@ async function Logout() {
         </div>
         <nav>
           <ul>
-            <li>
+            <li v-if="roleId === 1">
               <RouterLink to="/konyvek" class="nav-link" v-if="stateAuth.user">
                 Könyvek <i class="bi bi-book"></i>
               </RouterLink>
             </li>
-            <li>
+            <li v-if="roleId === 1">
               <RouterLink to="/diakok" class="nav-link" v-if="stateAuth.user">
                 Diákok <i class="bi bi-person-lines-fill"></i>
               </RouterLink>
             </li>
-            <li>
+            <li v-if="[1, 2, 3].includes(roleId)">
               <RouterLink to="/kolcsonzesek" class="nav-link" v-if="stateAuth.user">
                 Kölcsönzések <i class="bi bi-archive"></i>
               </RouterLink>
             </li>
-            <li>
+            <li v-if="roleId === 1">
               <RouterLink to="/evfolyamok" class="nav-link" v-if="stateAuth.user">
                 Groups <i class="bi bi-people-fill"></i>
               </RouterLink>
@@ -80,15 +84,11 @@ async function Logout() {
 </template>
 
 <style scoped>
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
-html,
-
 
 .wrapper {
   display: flex;
@@ -166,6 +166,6 @@ nav li {
     cursor: pointer;
     font-size: 30px;
     color: #fff;
-  } 
+  }
 }
 </style>

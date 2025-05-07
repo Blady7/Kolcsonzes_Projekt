@@ -1,5 +1,4 @@
 <template>
-  <!-- <h1>Lenin</h1> -->
   <div class="contanier">
     <div class="row my-5">
       <div class="col-md-6 mx-auto">

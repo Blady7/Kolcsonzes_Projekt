@@ -29,5 +29,4 @@ class CheckAbilities
 
         return response()->json(['message' => 'Unauthorized.'], 403);
     }
-    //próba
 }

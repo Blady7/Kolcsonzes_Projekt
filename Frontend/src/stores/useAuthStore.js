@@ -23,7 +23,7 @@ export const useAuthStore = defineStore('auth', {
     },
     setRoleId(roleId) {
       sessionStorage.setItem('roleId', roleId);
-      this.token = token;
+      this.roleId = roleId;
     },
     clearStoredData() {
       sessionStorage.removeItem('id');
