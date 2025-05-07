@@ -12,7 +12,10 @@ const stateAuth = useAuthStore();
 const router = useRouter();
 
 // Computed roleId a könnyebb kezeléshez
-const roleId = computed(() => stateAuth.user?.roleId);
+const roleId = computed(() => {
+  console.log('stateAuth.user:', stateAuth.user); // Add this line
+  return stateAuth.user?.roleId;
+});
 
 async function Logout() {
   const url = `${BASE_URL}/users/logout`;
@@ -39,23 +42,23 @@ async function Logout() {
         </div>
         <nav>
           <ul>
-            <li v-if="roleId === 1">
-              <RouterLink to="/konyvek" class="nav-link" v-if="stateAuth.user">
+            <li v-if="stateAuth.user">
+              <RouterLink to="/konyvek" class="nav-link">
                 Könyvek <i class="bi bi-book"></i>
               </RouterLink>
             </li>
-            <li v-if="roleId === 1">
-              <RouterLink to="/diakok" class="nav-link" v-if="stateAuth.user">
+            <li v-if="stateAuth.user">
+              <RouterLink to="/diakok" class="nav-link">
                 Diákok <i class="bi bi-person-lines-fill"></i>
               </RouterLink>
             </li>
-            <li v-if="[1, 2, 3].includes(roleId)">
-              <RouterLink to="/kolcsonzesek" class="nav-link" v-if="stateAuth.user">
+            <li v-if="stateAuth.user">
+              <RouterLink to="/kolcsonzesek" class="nav-link">
                 Kölcsönzések <i class="bi bi-archive"></i>
               </RouterLink>
             </li>
-            <li v-if="roleId === 1">
-              <RouterLink to="/evfolyamok" class="nav-link" v-if="stateAuth.user">
+            <li v-if="stateAuth.user">
+              <RouterLink to="/evfolyamok" class="nav-link">
                 Groups <i class="bi bi-people-fill"></i>
               </RouterLink>
             </li>
@@ -78,7 +81,6 @@ async function Logout() {
         </nav>
       </div>
     </header>
-
     <RouterView />
   </div>
 </template>
