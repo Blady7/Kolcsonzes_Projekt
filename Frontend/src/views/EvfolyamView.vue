@@ -28,7 +28,7 @@
             >
               <td v-if="debug">{{ item.id }}</td>
               <td>{{ item.group }}</td>
-              <td>{{ item.teacherId }}</td>
+              <td>{{ item.name }}</td>
               <td class="text-nowrap text-center">
                 <Operations
                   @onClickDeleteButton="onClickDeleteButton"

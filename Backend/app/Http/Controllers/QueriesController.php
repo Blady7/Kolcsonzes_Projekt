@@ -56,7 +56,8 @@ class QueriesController extends Controller
         ';
         //natív SQL
         $rows = DB::select(
-            $query, [$limit, $offset]
+            $query,
+            [$limit, $offset]
         );
 
 
@@ -151,9 +152,8 @@ class QueriesController extends Controller
     {
         //natív SQL
         $rows = DB::select(
-            'SELECT g.id, g.`group`, u.name FROM groups g
-                INNER JOIN users u ON u.groupId = g.id
-                where u.roleId = 3'
+            'select g.id, g.`group`, u.name from  groups g 
+  inner join users u on g.teacherId = u.id;'
         );
 
 

@@ -64,11 +64,29 @@ SELECT u.name, r.startingDate, r.endingDate FROM rentals r
   inner join users u on r.userId = u.id
   ORDER BY r.id;
 
+-- teacherId feltöltése
+update groups
+  set teacherId = 269
+  where `group`= 9;
 
-select g.id, g.`group`, u.name from groups g
-inner join users u
-limit 5;
+update groups
+  set teacherId = 270
+  where `group`= 10;
 
+update groups
+  set teacherId = 271
+  where `group`= 11;
+
+update groups
+  set teacherId = 272
+  where `group`= 12;
+
+update groups
+  set teacherId = 273
+  where `group`= "admin";
+
+select g.id, g.`group`, u.name from  groups g 
+  inner join users u on g.teacherId = u.id
 
 
 
