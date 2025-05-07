@@ -43,7 +43,7 @@ GET  {{host}}/api/queryStudentsCount
 Accept: application/json
 
 ### get user by id
-GET  {{host}}/api/users/22
+GET  {{host}}/api/users/24
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -186,7 +186,7 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### get rental by id
-GET  {{host}}/api/rentals/1044
+GET  {{host}}/api/rentals/1037
 Accept: application/json
 Authorization: Bearer {{token}}
 

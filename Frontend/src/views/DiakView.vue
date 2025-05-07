@@ -195,19 +195,33 @@ export default {
       const data = {
         name: this.item.name,
         email: this.item.email,
-        groupId: this.item.groupId, // Használd a groupId-t
-        roleId: 2,
+        groupId: this.item.groupId,
+        roleId: 2, // Fixen 2, ahogy korábban megbeszéltük
       };
       try {
         const response = await axios.patch(url, data, { headers });
         console.log(response);
-        this.getCollections();
+        // Frissítsd a items tömböt a módosított elemmel
+        const updatedItemIndex = this.items.findIndex(item => item.id === id);
+        if (updatedItemIndex !== -1) {
+          // Keresd meg a megfelelő csoportot az groups tömbben az groupId alapján
+          const updatedGroup = this.groups.find(group => group.id === this.item.groupId)?.group;
+          if (updatedGroup) {
+            // Hozd létre az item tömb egy új példányát a módosítás kiváltásához
+            this.items = this.items.map((item, index) =>
+              index === updatedItemIndex ? { ...item, group: updatedGroup } : item
+            );
+          }
+        }
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
-        console.log("Hiba a módosításkor:", error.response.data);
+        console.log("Hiba a módosításkor:", error.response?.data);
+      } finally {
+        this.loading = false;
+        this.state = "Read";
       }
-      this.state = "Read";
     },
+
     yesEventHandler() {
       if (this.state == "Delete") {
         this.deleteItemById();
@@ -225,14 +239,15 @@ export default {
     },
 
     onClickUpdate(item) {
-  this.state = "Update";
-  this.selectedRowId = item.id;
-  this.title = "Diák módosítása";
-  this.yes = null;
-  this.no = "Mégsem";
-  this.size = "lg";
-  this.item = { ...item, groupId: item.group }; // Ha az eredeti adatban 'group' a kulcs
-},
+      this.state = "Update";
+      this.selectedRowId = item.id;
+      this.title = "Diák módosítása";
+      this.yes = null;
+      this.no = "Mégsem";
+      this.size = "lg";
+      this.item = { ...item, groupId: item.group }; // Feltételezve, hogy az eredeti adatban 'group' a kulcs
+    },
+
     onClickCreate() {
       this.state = "Create";
       this.selectedRowId = null;
@@ -264,6 +279,7 @@ export default {
     goToPage(page) {
       this.currentPage = page;
       this.offsetStudents = this.itemsPerPage * (this.currentPage - 1);
+      this.getCollections();
     },
   },
 };
