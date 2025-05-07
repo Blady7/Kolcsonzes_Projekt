@@ -14,7 +14,7 @@ class RentalController extends Controller
     public function index()
     {
         $rows = Rental::all();
-        
+
         $data = [
             'message' => 'ok',
             'data' => $rows
@@ -28,21 +28,23 @@ class RentalController extends Controller
     public function store(StoreRentalRequest $request)
     {
         try {
-            $row = Rental::create($request->all());
+            $rentalData = $request->validated(); // Használd a validált adatokat
+            $rentalData['user_id'] = $request->user()->id; // A bejelentkezett felhasználó ID-ja
+
+            $row = Rental::create($rentalData);
             $data = [
                 'message' => 'ok',
                 'data' => $row
             ];
         } catch (\Illuminate\Database\QueryException $e) {
             $data = [
-                'message' => 'The post failed',
+                'message' => 'A létrehozás sikertelen.',
                 'data' => $request->all()
             ];
         }
 
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
-
     /**
      * Display the specified resource.
      */
@@ -85,7 +87,6 @@ class RentalController extends Controller
                     'data' => $request->all()
                 ];
             }
-
         } else {
             $data = [
                 'message' => 'Not found',

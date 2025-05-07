@@ -20,7 +20,7 @@ where u.roleId = 2 ;
 
 #kikölcsönzött könyvek táblázata
 #rentedBooksByUsers
-select r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate from rentals r
+select r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate, r.opinion from rentals r
   inner JOIN specimens s on r.specimenId = s.id
   INNER JOIN users u on r.userId = u.id
   inner join books b on s.bookId = b.id
@@ -63,6 +63,14 @@ SELECT * FROM groups;
 SELECT u.name, r.startingDate, r.endingDate FROM rentals r
   inner join users u on r.userId = u.id
   ORDER BY r.id;
+
+
+select g.id, g.`group`, u.name from groups g
+inner join users u
+limit 5;
+
+
+
 
 
 

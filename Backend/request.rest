@@ -177,7 +177,7 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### get rental by id
-GET  {{host}}/api/rentals/1039
+GET  {{host}}/api/rentals/1044
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -188,15 +188,15 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 {
-    "specimenId": "760",
-    "userId": "20",
+    "specimenId": "780",
+    "userId": "254",
     "startingDate": "2009-07-06",
     "endingDate": "2009-07-23",
     "opinion": "finom"
 }
 
 ### patch rental
-PATCH {{host}}/api/rentals/9
+PATCH {{host}}/api/rentals/1041
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{token}}
@@ -231,10 +231,7 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 {
-    "userId": "4",
-    "studentOpinion": "jó",
-    "bookId": "2",
-    "grade": "5"
+    "role": "gondnok"
 }
 
 ### patch roles
