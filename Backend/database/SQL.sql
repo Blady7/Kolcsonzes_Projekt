@@ -82,11 +82,15 @@ update groups
   where `group`= 12;
 
 update groups
+  set teacherId = ""
+  where `group`= "tanar";
+
+update groups
   set teacherId = 273
   where `group`= "admin";
 
 select g.id, g.`group`, u.name from  groups g 
-  inner join users u on g.teacherId = u.id
+  inner join users u on g.teacherId = u.id;
 
 
 

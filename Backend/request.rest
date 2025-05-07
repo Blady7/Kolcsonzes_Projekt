@@ -135,6 +135,11 @@ GET {{host}}/api/groups
 Accept: application/json
 Authorization: Bearer {{token}}
 
+### get group
+GET {{host}}/api/queryTanarValaszto
+Accept: application/json
+
+
 ### get group by id
 GET  {{host}}/api/groups/1
 Accept: application/json

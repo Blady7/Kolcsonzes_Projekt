@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     async getCollections() {
-      const url = this.urlApi2;
+      const url = this.urlApi;
       const headers = {
         Accept: "application/json",
       };
@@ -150,7 +150,7 @@ export default {
       const id = this.selectedRowId;
       const token = this.stateAuth.token;
 
-      const url = `${this.urlApi3}/${id}`;
+      const url = `${this.urlApi2}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -167,7 +167,7 @@ export default {
 
     async createItem() {
       const token = this.stateAuth.token;
-      const url = this.urlApi3;
+      const url = this.urlApi2;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -190,7 +190,7 @@ export default {
     async updateItem() {
       this.loading = true;
       const id = this.selectedRowId;
-      const url = `${this.urlApi3}/${id}`;
+      const url = `${this.urlApi2}/${id}`;
       const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
