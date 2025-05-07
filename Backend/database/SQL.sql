@@ -24,7 +24,7 @@ select r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate from rentals 
   inner JOIN specimens s on r.specimenId = s.id
   INNER JOIN users u on r.userId = u.id
   inner join books b on s.bookId = b.id
-  order by u.name, b.title
+  order by r.id
   limit 50 OFFSET 50;
 
 #kölcsönzési form listák

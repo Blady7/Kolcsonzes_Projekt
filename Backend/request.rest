@@ -172,12 +172,12 @@ Authorization: Bearer {{token}}
 # ------------- rental -------------
 
 ### get rentals
-GET {{host}}/api/queryKolcsonzesAzon/10/10
+GET {{host}}/api/queryKolcsonzesAzon/1100/10
 Accept: application/json
 Authorization: Bearer {{token}}
 
 ### get rental by id
-GET  {{host}}/api/rentals/1017
+GET  {{host}}/api/rentals/1038
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -189,7 +189,7 @@ Authorization: Bearer {{token}}
 
 {
     "specimenId": "760",
-    "userId": "20",
+    "userId": "10",
     "startingDate": "2009-07-06",
     "endingDate": "2009-07-23",
     "opinion": "finom"

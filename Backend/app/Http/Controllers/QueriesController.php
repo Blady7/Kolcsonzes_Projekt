@@ -169,7 +169,7 @@ class QueriesController extends Controller
     {
         //natív SQL
         $query = '
-        SELECT r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate from rentals r
+        SELECT r.id, b.poet, b.title, u.name, r.startingDate, r.endingDate, r.opinion from rentals r
                 inner JOIN specimens s on r.specimenId = s.id
                 INNER JOIN users u on r.userId = u.id
                 inner join books b on s.bookId = b.id
