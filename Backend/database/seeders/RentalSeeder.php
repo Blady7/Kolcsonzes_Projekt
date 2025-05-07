@@ -23,7 +23,7 @@ class RentalSeeder extends Seeder
             //print_r($row[4]);
            //die;
             while (($row = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                if (count($row) < 5) {
+                if (count($row) < 6) {
                     $endingDate = null;
                 }
                 else{

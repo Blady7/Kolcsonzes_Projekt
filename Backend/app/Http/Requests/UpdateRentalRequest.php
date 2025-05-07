@@ -26,6 +26,7 @@ class UpdateRentalRequest extends FormRequest
             'userId' => 'required|integer',
             'startingDate' => 'nullable|date',
             'endingDate' => 'nullable|date',
+            'opinion' => 'nullable|string|max:250',
         ];
     }
 }
