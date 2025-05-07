@@ -167,6 +167,7 @@ export default {
 
     async createItem() {
       const token = this.stateAuth.token;
+      console.log("Token:", token);
       const url = this.urlApi2;
       const headers = {
         Accept: "application/json",
@@ -176,7 +177,7 @@ export default {
 
       const data = {
         group: this.item.group,
-        teacherId: this.item.teacherId ? this.item.teacherId : null,
+        teacherId: this.item.teacherId,
       };
       try {
         const response = await axios.post(url, data, { headers });

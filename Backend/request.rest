@@ -43,7 +43,7 @@ GET  {{host}}/api/queryStudentsCount
 Accept: application/json
 
 ### get user by id
-GET  {{host}}/api/users/4
+GET  {{host}}/api/users/22
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -54,7 +54,7 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 {
-    "name":  "test2",
+    "name":  "test4",
     "email": "test2@example.com",
     "password": "123",
     "roleId": 1,
@@ -62,13 +62,17 @@ Authorization: Bearer {{token}}
 }
 
 ### patch user
-PATCH {{host}}/api/users/5
+PATCH {{host}}/api/users/276
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{token}}
 
 {
-    "password": "1234"
+    "name":  "test4",
+    "email": "test3@example.com",
+    "password": "1234",
+    "roleId": 2,
+    "groupId": 3
 }
 
 ### delete user

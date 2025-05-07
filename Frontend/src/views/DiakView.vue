@@ -1,10 +1,7 @@
 <template>
   <div>
     <h1 class="text-center my-4">Diákok ({{ itemsLength }})</h1>
-    <ErrorMessage
-      :errorMessages="errorMessages"
-      @close="onClickCloseErrorMessage"
-    />
+    <ErrorMessage :errorMessages="errorMessages" @close="onClickCloseErrorMessage" />
     <div>
       <div>
         <table class="my-table">
@@ -18,55 +15,31 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="item in items"
-              :key="item.id"
-              @click="onClickTr(item.id)"
-              :class="{
-                updating: loading,
-                active: item.id === selectedRowId,
-              }"
-            >
+            <tr v-for="item in items" :key="item.id" @click="onClickTr(item.id)" :class="{
+              updating: loading,
+              active: item.id === selectedRowId,
+            }">
               <td v-if="debug">{{ item.id }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.group }}</td>
               <td class="text-nowrap text-center">
-                <Operations
-                  @onClickDeleteButton="onClickDeleteButton"
-                  @onClickUpdate="onClickUpdate"
-                  @onClickCreate="onClickCreate"
-                  :data="item"
-                />
+                <Operations @onClickDeleteButton="onClickDeleteButton" @onClickUpdate="onClickUpdate"
+                  @onClickCreate="onClickCreate" :data="item" />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <Paginator
-        :totalItems="itemsLength"
-        :itemsPerPage="itemsPerPage"
-        :currentPage="currentPage"
-        @page-changed="goToPage"
-      />
-      <Modal
-        :title="title"
-        :yes="yes"
-        :no="no"
-        :size="size"
-        @yesEvent="yesEventHandler"
-      >
+      <Paginator :totalItems="itemsLength" :itemsPerPage="itemsPerPage" :currentPage="currentPage"
+        @page-changed="goToPage" />
+      <Modal :title="title" :yes="yes" :no="no" :size="size" @yesEvent="yesEventHandler">
         <div v-if="state == 'Delete'">
           {{ messageYesNo }}
         </div>
 
-        <ItemForm
-          v-if="state == 'Create' || state == 'Update'"
-          :itemForm="item"
-          :debug="debug"
-          :groups="this.groups"
-          @saveItem="saveItemHandler"
-        />
+        <ItemForm v-if="state == 'Create' || state == 'Update'" :itemForm="item" :debug="debug" :groups="this.groups"
+          @saveItem="saveItemHandler" />
       </Modal>
     </div>
   </div>
@@ -195,7 +168,7 @@ export default {
       const data = {
         name: this.item.name,
         email: this.item.email,
-        password: this.item.password, 
+        password: this.item.password,
         groupId: this.item.groupId,
         roleId: this.item.roleId,
       };
@@ -222,20 +195,19 @@ export default {
       const data = {
         name: this.item.name,
         email: this.item.email,
-        group: this.item.group,
+        groupId: this.item.groupId, // Használd a groupId-t
+        roleId: 2,
       };
       try {
         const response = await axios.patch(url, data, { headers });
         console.log(response);
-
         this.getCollections();
       } catch (error) {
         this.errorMessages = "A módosítás nem sikerült.";
-        console.log("asd");
+        console.log("Hiba a módosításkor:", error.response.data);
       }
       this.state = "Read";
     },
-
     yesEventHandler() {
       if (this.state == "Delete") {
         this.deleteItemById();
@@ -253,15 +225,14 @@ export default {
     },
 
     onClickUpdate(item) {
-      this.state = "Update";
-      this.selectedRowId = item.id;
-      this.title = "Diák módosítása";
-      this.yes = null;
-      this.no = "Mégsem";
-      this.size = "lg";
-      this.item = { ...item };
-    },
-
+  this.state = "Update";
+  this.selectedRowId = item.id;
+  this.title = "Diák módosítása";
+  this.yes = null;
+  this.no = "Mégsem";
+  this.size = "lg";
+  this.item = { ...item, groupId: item.group }; // Ha az eredeti adatban 'group' a kulcs
+},
     onClickCreate() {
       this.state = "Create";
       this.selectedRowId = null;
