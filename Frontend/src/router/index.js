@@ -1,15 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 
-function checkIfNotLogged() {
-  const storeAuth = useAuthStore();
-  if (!storeAuth.user) {
-    return "/login";
-  } else {
-    
-  }
-}
+function checkIfNotLogged(to, from, next) {
+  const store = useAuthStore();
 
+  if (!store.user) {
+    return next("/login"); // Ha nincs bejelentkezve, átirányít a bejelentkezési oldalra
+  }
+
+  // Ha admin jogosultságú oldalra próbál belépni a felhasználó, és nem admin
+  if (to.meta.requiresAdmin && store.roleId !== 1) {
+    return next("/"); // Ha nem admin, átirányítás a kezdőlapra
+  }
+
+  next(); // Ha minden rendben, folytatás
+}
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
