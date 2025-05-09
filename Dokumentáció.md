@@ -34,6 +34,8 @@ A feladat, egy online kötelező olvasmány kölcsönzés adminisztrálásáról
     - name (nev): A felhasználó megnevezése.
     - roleId (szerepkor): A felhasználó jogosultságait meghatározó köre.
     - groupId (evfolyamId):A felhasználó évfolyama.
+    - email: Mindenkinek a saját megadott e-mailje.
+    - password (jelszo): A bejelentkezéshez szükséges jelszó
 
 - Groups (Evfolyamok)
     - id: Az évfolyamok azonosírója.
@@ -43,21 +45,17 @@ A feladat, egy online kötelező olvasmány kölcsönzés adminisztrálásáról
 - Rentals (Kolcsonzesek)
     - id: A kikölcsözött művek azonosítója.
     - specimenId (peldanyId): X mű példánynak azonosítója.
-    - studentId (diakId): X kölcsönző diák azonosítója.
+    - userId (diakId): X kölcsönző diák azonosítója.
     - startingDate (kezdpDatum): Kikölcsönzés kezdeti dátuma.
     - endingDate (befejezesDatum): Kikölcsönzés befejezési dátuma.
+    - opinion (vélemény): A diák véleménye a könyvről.
 
 - Specimen (Peldanyok)
     - id: A művek pélányainak azonosítója
     - bookId (muId): X mű azonosítója
     - price (ar): A példánynak az ára
     - acquisitionDate (beszerzesDatum): A mű beszerzési dátuma a könyvtárba.
-
-- readingDiaries (Olvasonaplok)
-    - id: Az olvasónaplók azonosítója
-    - studentOpinion (diakVelemeny): A diák(ok) véleménye X műhöz
-    - bookId (muId): X mű azonosítója
-    - grade (ertekeles): A tanár értékelése
+  - grade (ertekeles): A tanár értékelése
 
 - Roles (szerepkorok)
     - id: A szerepkörök azonosítója.
@@ -66,4 +64,4 @@ A feladat, egy online kötelező olvasmány kölcsönzés adminisztrálásáról
 
 ## *Diagram*
 
-![diagram](Kép.png)
+![diagram](Diagramm.png)
