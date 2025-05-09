@@ -16,12 +16,12 @@ class RoleTest extends TestCase
     public function test_the_get_sports_tabla_all_record_example(): void
     {
         $row=Role::create([
-            'role' => 'xxx'
+            'role' => '1'
         ]);
 
         $response = $this->get('/api/roles');
         //A táblába bekerült a rekord
-        $response -> assertSee('xxx');
+        $response -> assertSee('1');
         $response->assertStatus(200);
 
     
