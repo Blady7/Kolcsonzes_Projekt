@@ -64,4 +64,6 @@ A feladat, egy online kötelező olvasmány kölcsönzés adminisztrálásáról
 
 ## *Diagram*
 
-![diagram](Diagramm.png)
+![diagram](diagram.png)
+
+
