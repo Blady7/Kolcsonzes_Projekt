@@ -7,7 +7,6 @@ export const useAuthStore = defineStore('auth', {
     token: sessionStorage.getItem('currentToken') || null,
     roleId: sessionStorage.getItem('roleId') || null,
   }),
-  getters: {},
   actions: {
     setId(id) {
       sessionStorage.setItem('id', id);
