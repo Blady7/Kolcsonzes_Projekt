@@ -17,7 +17,7 @@ class Rental extends Model
     protected $fillable = [
         'id',
         'specimenId',
-        'studentId',
+        'userId',
         'startingDate',
         'endingDate',
         'opinion'

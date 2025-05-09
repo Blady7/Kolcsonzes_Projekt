@@ -186,7 +186,7 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### get rental by id
-GET  {{host}}/api/rentals/1037
+GET  {{host}}/api/rentals/1038
 Accept: application/json
 Authorization: Bearer {{token}}
 
